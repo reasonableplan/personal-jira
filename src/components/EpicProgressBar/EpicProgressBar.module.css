@@ -1,0 +1,53 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.percentage {
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
+}
+
+.count {
+  font-variant-numeric: tabular-nums;
+}
+
+.track {
+  display: flex;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-bg-tertiary, #e5e7eb);
+  overflow: hidden;
+}
+
+.segmentDone {
+  background: var(--color-success, #22c55e);
+  transition: width 0.3s ease;
+}
+
+.segmentInProgress {
+  background: var(--color-warning, #f59e0b);
+  transition: width 0.3s ease;
+}
+
+.skeleton {
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #d1d5db 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

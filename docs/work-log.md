@@ -317,3 +317,22 @@
 - **Summary**: 키보드 단축키 시스템 구현: (1) types/keyboard.ts — KeyboardShortcut, KeyboardShortcutGroup, UseKeyboardShortcutsOptions 타입 정의, (2) hooks/useKeyboardShortcuts.ts — 글로벌 keydown 리스너, C=생성/J=아래/K=위/?=도움말 매핑, input/t
 - **Files**: 7개
 
+### [2026-03-23 04:27:44] Director Review
+**Director Review: Approved**
+- Task: 키보드 단축키 (C=생성, K/J=이동) (#348)
+- Agent: agent-frontend
+- Feedback: 핵심 구현이 올바르고 테스트가 충분합니다. (1) 타입 정의가 깔끔하고, (2) useKeyboardShortcuts 훅이 input/textarea/contentEditable 무시, modifier 키 무시, enabled 플래그를 모두 처리하며, (3) KeyboardShortcutHelp 모달이 Escape/backdrop 닫기와 aria-label을 지원하고, (4) 총 29개 테스트(12+8+9)가 포함되어 있습니다. 일부 파일이 잘려 있으나 핵심 로직과 패턴은 확인 가능하며, 후속 작업에서 보완 가능합니다.
+
+- [2026-03-23 04:27:55] **agent-frontend** → busy (task: 2229b7f1-ce2d-448a-8cc1-95c80fa53ccd)
+### [2026-03-23 04:31:30] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: 2229b7f1-ce2d-448a-8cc1-95c80fa53ccd
+- **Summary**: Epic 프로그레스 바 + 드래그 우선순위 변경 구현. (1) EpicProgressBar: done(초록)/in_progress(노랑) 세그먼트로 하위 이슈 진행률 시각화, 로딩 스켈레톤 지원. (2) KanbanBoard: HTML5 Drag & Drop으로 카드 우선순위 순서 변경, 옵티미스틱 UI + 실패 시 롤백. (3) useKanbanDrag 
+- **Files**: 17개
+
+### [2026-03-23 04:31:45] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: e2599671-968a-4467-b593-43d980ac58d4
+- **Summary**: 의존성 관리 API 구현: POST/GET/DELETE /api/v1/issues/{id}/dependencies 엔드포인트, IssueDependency 모델(UniqueConstraint + CheckConstraint), BFS 기반 순환 의존성 검증, DependencyService/DependencyReleaseService 계층, 5개 테스트 파
+- **Files**: 17개
+

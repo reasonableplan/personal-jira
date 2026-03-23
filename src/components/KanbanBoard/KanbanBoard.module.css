@@ -1,0 +1,199 @@
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  height: 100%;
+}
+
+.epicSection {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.epicItem {
+  flex: 1;
+  min-width: 200px;
+  max-width: 400px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--color-bg-secondary, #f9fafb);
+  border: 1px solid var(--color-border, #e5e7eb);
+}
+
+.epicTitle {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.columns {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  overflow-x: auto;
+}
+
+.column {
+  flex: 1;
+  min-width: 240px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-secondary, #f9fafb);
+  border-radius: 8px;
+  border: 1px solid var(--color-border, #e5e7eb);
+}
+
+.columnHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+}
+
+.columnTitle {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.columnCount {
+  background: var(--color-bg-tertiary, #e5e7eb);
+  color: var(--color-text-secondary, #6b7280);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.columnBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.card {
+  background: var(--color-bg-primary, #ffffff);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 6px;
+  padding: 10px;
+  cursor: grab;
+  transition: box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+.dragging {
+  opacity: 0.4;
+}
+
+.dragOver {
+  border-color: var(--color-primary, #3b82f6);
+  box-shadow: 0 0 0 2px var(--color-primary-light, rgba(59, 130, 246, 0.3));
+}
+
+.cardHeader {
+  margin-bottom: 6px;
+}
+
+.cardTitle {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.cardMeta {
+  display: flex;
+  gap: 6px;
+}
+
+.badge {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--color-bg-tertiary, #e5e7eb);
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.badge_bug {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.badge_story {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.badge_task {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.badge_epic {
+  background: #faf5ff;
+  color: #9333ea;
+}
+
+.badge_sub_task {
+  background: #fefce8;
+  color: #ca8a04;
+}
+
+.priority_critical {
+  background: #fef2f2;
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.priority_high {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.priority_medium {
+  background: #fefce8;
+  color: #ca8a04;
+}
+
+.priority_low {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.loading,
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  font-size: 14px;
+}
+
+.error {
+  color: #dc2626;
+}
+
+.savingIndicator {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background: var(--color-bg-primary, #ffffff);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
