@@ -1,38 +1,52 @@
-import { useCallback, useEffect, useState } from 'react';
-import type { DashboardData } from '@/types/dashboard';
-import { fetchDashboardData } from '@/api/dashboard';
+import { useEffect, useState, useCallback } from 'react';
+import type { DashboardStats, WsEvent } from '../types/issue';
+import { api } from '../services/api';
 
-const POLL_INTERVAL_MS = 30_000;
-
-interface UseDashboardResult {
-  data: DashboardData | null;
+interface UseDashboardReturn {
+  stats: DashboardStats | null;
   loading: boolean;
   error: string | null;
-  refetch: () => void;
+  refresh: () => Promise<void>;
 }
 
-export function useDashboard(): UseDashboardResult {
-  const [data, setData] = useState<DashboardData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+export function useDashboard(): UseDashboardReturn {
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const refetch = useCallback(() => {
+  const refresh = useCallback(async () => {
     setLoading(true);
     setError(null);
-    fetchDashboardData()
-      .then(setData)
-      .catch((err: unknown) => {
-        const message = err instanceof Error ? err.message : 'Failed to fetch dashboard data';
-        setError(message);
-      })
-      .finally(() => setLoading(false));
+    try {
+      const data = await api.getDashboardStats();
+      setStats(data);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to load dashboard';
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
-    refetch();
-    const interval = setInterval(refetch, POLL_INTERVAL_MS);
-    return () => clearInterval(interval);
-  }, [refetch]);
+    refresh();
+  }, [refresh]);
 
-  return { data, loading, error, refetch };
+  return { stats, loading, error, refresh };
+}
+
+export function applyWsEventToStats(stats: DashboardStats, event: WsEvent): DashboardStats {
+  const updated = { ...stats, status_counts: { ...stats.status_counts }, priority_counts: { ...stats.priority_counts } };
+  const { type, payload } = event;
+
+  if (type === 'issue_created') {
+    updated.status_counts[payload.status] = (updated.status_counts[payload.status] ?? 0) + 1;
+    updated.priority_counts[payload.priority] = (updated.priority_counts[payload.priority] ?? 0) + 1;
+  }
+
+  if (type === 'issue_status_changed') {
+    updated.status_counts[payload.status] = (updated.status_counts[payload.status] ?? 0) + 1;
+  }
+
+  return updated;
 }

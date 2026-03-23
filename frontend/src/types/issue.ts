@@ -1,63 +1,52 @@
-export const ISSUE_STATUSES = [
-  'Backlog',
-  'Ready',
-  'InProgress',
-  'InReview',
-  'Done',
-  'Blocked',
-  'Abandoned',
-] as const;
+export enum IssueStatus {
+  BACKLOG = 'backlog',
+  TODO = 'todo',
+  IN_PROGRESS = 'in_progress',
+  IN_REVIEW = 'in_review',
+  DONE = 'done',
+  CANCELLED = 'cancelled',
+}
 
-export type IssueStatus = (typeof ISSUE_STATUSES)[number];
+export enum IssuePriority {
+  CRITICAL = 'critical',
+  HIGH = 'high',
+  MEDIUM = 'medium',
+  LOW = 'low',
+}
 
-export const ISSUE_PRIORITIES = ['Low', 'Medium', 'High', 'Critical'] as const;
-export type IssuePriority = (typeof ISSUE_PRIORITIES)[number];
+export enum IssueType {
+  EPIC = 'epic',
+  STORY = 'story',
+  TASK = 'task',
+  BUG = 'bug',
+  SUBTASK = 'subtask',
+}
 
 export interface Issue {
   id: string;
   title: string;
-  description: string | null;
+  description?: string;
+  issue_type: IssueType;
   status: IssueStatus;
   priority: IssuePriority;
-  parent_id: string | null;
+  assignee?: string;
+  parent_id?: string;
+  labels: string[];
   created_at: string;
   updated_at: string;
 }
 
-export interface IssueCreate {
-  title: string;
-  description?: string;
-  priority?: IssuePriority;
-  parent_id?: string;
+export interface DashboardStats {
+  status_counts: Record<IssueStatus, number>;
+  priority_counts: Record<IssuePriority, number>;
+  daily_created: { date: string; count: number }[];
+  daily_resolved: { date: string; count: number }[];
 }
 
-export interface IssueTransition {
-  status: IssueStatus;
+export type WsEventType = 'issue_created' | 'issue_updated' | 'issue_deleted' | 'issue_status_changed';
+
+export interface WsEvent {
+  type: WsEventType;
+  payload: Issue;
+  timestamp: string;
 }
-
-export const COLUMN_ORDER: IssueStatus[] = [
-  'Backlog',
-  'Ready',
-  'InProgress',
-  'InReview',
-  'Done',
-  'Blocked',
-  'Abandoned',
-];
-
-export const COLUMN_LABELS: Record<IssueStatus, string> = {
-  Backlog: '백로그',
-  Ready: '준비',
-  InProgress: '진행 중',
-  InReview: '리뷰 중',
-  Done: '완료',
-  Blocked: '차단됨',
-  Abandoned: '포기',
-};
-
-export const PRIORITY_COLORS: Record<IssuePriority, string> = {
-  Low: '#6b7280',
-  Medium: '#3b82f6',
-  High: '#f59e0b',
-  Critical: '#ef4444',
-};
