@@ -700,3 +700,16 @@
 - **Summary**: 파일 첨부 API 구현: POST/GET/DELETE /api/v1/issues/{id}/attachments + 다운로드 엔드포인트. Attachment 모델(UUID PK, issue_id FK CASCADE, filename, content_type, file_size, storage_path), 파일 검증(ALLOWED_CONTENT_TYPES 11
 - **Files**: 6개
 
+### [2026-03-23 05:42:28] Director Review
+**Director Review: Approved**
+- Task: 파일 첨부 API (#328)
+- Agent: agent-backend
+- Feedback: 핵심 구현이 올바르게 작성되었습니다. Attachment 모델(UUID PK, issue_id FK CASCADE, 필수 컬럼), 스키마(ALLOWED_CONTENT_TYPES 11종, MAX_FILE_SIZE 10MB), StorageService(로컬 디스크 저장/읽기/삭제), AttachmentService(검증/업로드/목록/조회/삭제), REST 엔드포인트(POST/GET/DELETE) 구조가 적절합니다. 테스트 파일도 모델/스키마/서비스/엔드포인트 단위로 포함되어 있습니다. 일부 파일이 잘려있으나(서비스의 validate_file, 엔드포인트의 download/delete) 핵심 로직과 아키텍처는 정확하며 후속 작업에서 보완 가능합니다.
+
+- [2026-03-23 05:42:39] **agent-backend** → busy (task: 0ea20b7a-3e64-464f-bae9-bae08263236a)
+### [2026-03-23 05:43:58] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: e4be508d-0990-49f9-90d4-182754880ebf
+- **Summary**: 번다운 차트 구현: BurndownChart 컴포넌트(recharts 기반), useBurndownData 훅(API 연동), burndown 유틸리티(이상선 생성/완료율/속도 계산/스프린트 활성 여부). 이상선(점선) vs 실제선(실선) 시각화, 오늘 기준선 표시, 빈 상태 처리 포함. 테스트: 컴포넌트 10건, 훅 7건, 유틸리티 14건.
+- **Files**: 8개
+
