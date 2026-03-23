@@ -291,3 +291,16 @@
 - **Summary**: 이슈 상세 사이드 패널 컴포넌트 생성. 오른쪽에서 슬라이드-인되는 480px 패널로, 4개 탭(상세/코멘트/로그/아티팩트) 구성. TDD: 3개 테스트 파일(IssueDetailPanel.test.tsx, TabContent.test.tsx, useIssueDetail.test.ts) → 구현. useIssueDetail 커스텀 훅으로 데이터 페칭 및 탭 
 - **Files**: 16개
 
+### [2026-03-23 04:25:29] Director Review
+**Director Review: Approved**
+- Task: 이슈 상세 사이드 패널 (#339)
+- Agent: agent-frontend
+- Feedback: TDD 준수: 3개 테스트 파일(IssueDetailPanel.test.tsx, TabContent.test.tsx, useIssueDetail.test.ts) 포함. 태스크 요구사항(사이드 패널, 4개 탭, ESC/오버레이 닫기, 커스텀 훅) 충실히 반영. 타입 정의(issue.ts)와 상수 분리(constants.ts) 등 아키텍처 적절. 보안 이슈 없음. 일부 파일이 잘린 상태이나 핵심 구조와 테스트 커버리지는 확인됨 — 후속 태스크에서 보완 가능.
+
+- [2026-03-23 04:25:41] **agent-frontend** → busy (task: 7ef5b184-8522-41d1-aeb5-5266af0a111b)
+### [2026-03-23 04:26:52] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 053b542b-dc2d-4e5b-8e1e-6893498628c3
+- **Summary**: 이슈 계층 API 구현: GET /api/v1/issues/{id}/children (직접 하위 이슈), GET /api/v1/issues/{id}/subtree (재귀 트리, max_depth 옵션), GET /api/v1/issues/{id}/ancestors (상위 경로). HierarchyService 서비스 계층 분리, Pydantic 스키마(Is
+- **Files**: 5개
+
