@@ -633,3 +633,15 @@
 - **Summary**: Epic별 이슈 일정을 간트 차트로 표시하는 타임라인 기능 구현. TDD 원칙에 따라 테스트 4개(gantt-utils, use-timeline, gantt-chart, gantt-bar)를 먼저 작성 후 구현. 주요 기능: API에서 이슈 데이터 fetch → Epic별 그룹핑 → 날짜 헤더 + 상태별 색상 바 렌더링 + 오늘 마커 + 호버 툴팁. GAN
 - **Files**: 10개
 
+### [2026-03-23 05:31:57] Director Review
+**Director Review: Approved**
+- Task: 타임라인/간트 차트 (Epic별 일정) (#346)
+- Agent: agent-frontend
+- Feedback: TDD 원칙에 따라 4개의 테스트 파일(gantt-utils, use-timeline, gantt-chart, gantt-bar)이 모두 포함되어 있으며, 타입 정의(types.ts)도 적절합니다. Epic별 그룹핑, 날짜 계산, 바 포지셔닝, 상태별 색상, 로딩/에러/빈 상태 처리 등 핵심 로직이 테스트로 커버되어 있습니다. 일부 테스트 파일이 잘려 있으나(gantt-utils의 groupIssuesByEpic, gantt-chart의 마지막 테스트) 핵심 구현 방향과 구조는 올바르며, GANTT_CONFIG 상수 활용으로 매직넘버도 제거되었습니다. 잘린 부분은 후속 작업에서 보완 가능합니다.
+
+### [2026-03-23 05:32:04] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: eede1dad-bee8-4c53-a941-27165ca76c2a
+- **Summary**: 대시보드 통계 API 구현: GET /api/v1/dashboard/stats 엔드포인트. DashboardService가 Issue 테이블에서 상태별/우선순위별/담당자별 GROUP BY 집계 수행. DashboardStats 스키마(total, by_status, by_priority, by_assignee, done_count, completion_ra
+- **Files**: 4개
+
