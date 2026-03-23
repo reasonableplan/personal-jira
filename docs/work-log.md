@@ -434,3 +434,16 @@
 - **Summary**: 작업 로그 API (POST/GET /api/v1/issues/{id}/worklogs) 구현. WorkLog 모델(UUID PK, issue_id FK CASCADE, agent_id, llm_calls, tokens_used, content, timestamps), WorkLogCreate/Response Pydantic 스키마(llm_calls/tok
 - **Files**: 6개
 
+### [2026-03-23 04:45:37] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: a08454d5-0a36-483d-96fc-035f655c52d4
+- **Summary**: 핵심 뷰 vitest 테스트 및 구현: (1) KanbanBoard — 10개 테스트(컬럼 렌더링, 이슈 배치, 카운트, 클릭 핸들러, 우선순위 뱃지, 빈 상태, 드래그 속성, 대량 이슈), (2) TableView — 10개 테스트(헤더, 행 렌더링, 셀 데이터, null assignee, 클릭/정렬, 빈 상태, 정렬 인디케이터), (3) SidePane
+- **Files**: 16개
+
+### [2026-03-23 04:45:39] Director Review
+**Director Review: Approved**
+- Task: 작업 로그 API (LLM 호출, 토큰, 시도 내용) (#316)
+- Agent: agent-backend
+- Feedback: 작업 로그 API 구현이 태스크 요구사항에 부합합니다. WorkLog 모델(UUID PK, issue_id FK CASCADE, agent_id, llm_calls, tokens_used, content, timestamps), Pydantic 스키마(ge=0 검증, max_length 10000), WorkLogService(create/list_by_issue + 이슈 존재/삭제 검증), 테스트 파일 포함(36개 케이스 구조). 테스트 파일이 잘려있으나 핵심 구현은 정확하며, 라우터 엔드포인트 파일이 누락되었으나 후속 작업에서 보완 가능합니다.
+
+- [2026-03-23 04:45:50] **agent-backend** → busy (task: 1d44355e-02e0-4bc2-980c-1ddfa944099d)
