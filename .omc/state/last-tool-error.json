@@ -1,7 +1,7 @@
 {
   "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"uv run python -c \\\"\\nimport sys\\nsys.path.insert(0, 'src')\\nfrom personal_jira.app import create_app\\napp = create_app()\\nprint('app.py OK, routes:', len(app.routes))\\n\\\" 2>&1\",\"descriptio...",
-  "error": "Exit code 1\nTraceback (most recent call last):\r\n  File \"<string>\", line 5, in <module>\r\n  File \"C:\\Users\\juwon\\OneDrive\\Desktop\\agent\\backend\\workspace\\src\\personal_jira\\app.py\", line 7, in create_app\r\n    from personal_jira.routers import comments, sprints, hierarchy, delete_issue, ws\r\n  File \"C:\\Users\\juwon\\OneDrive\\Desktop\\agent\\backend\\workspace\\src\\personal_jira\\routers\\comments.py\", line 11, in <module>\r\n    from personal_jira.models.comment import Comment, CommentType\r\nImportError: cannot...",
-  "timestamp": "2026-03-23T06:47:55.432Z",
-  "retry_count": 3
+  "tool_input_preview": "{\"command\":\"uv run python -c \\\"\\nimport sys\\nsys.path.insert(0, 'src')\\nfrom personal_jira.app import create_app\\napp = create_app()\\nprint('app.py OK, routes:', len(app.routes))\\nfrom personal_jira.m...",
+  "error": "Exit code 1\nTraceback (most recent call last):\r\n  File \"<string>\", line 5, in <module>\r\n  File \"C:\\Users\\juwon\\OneDrive\\Desktop\\agent\\backend\\workspace\\src\\personal_jira\\app.py\", line 7, in create_app\r\n    from personal_jira.routers import comments, sprints, hierarchy, delete_issue, ws\r\n  File \"C:\\Users\\juwon\\OneDrive\\Desktop\\agent\\backend\\workspace\\src\\personal_jira\\routers\\sprints.py\", line 9, in <module>\r\n    from personal_jira.schemas.sprint import (\r\nImportError: cannot import name 'SprintI...",
+  "timestamp": "2026-03-23T06:49:44.399Z",
+  "retry_count": 1
 }

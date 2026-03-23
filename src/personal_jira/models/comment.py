@@ -1,11 +1,18 @@
+import enum
 import uuid as uuid_mod
 from datetime import datetime, timezone
 
-from sqlalchemy import DateTime, ForeignKey, String, Text
+from sqlalchemy import DateTime, Enum, ForeignKey, String, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from personal_jira.database import Base
+
+
+class CommentType(str, enum.Enum):
+    GENERAL = "general"
+    REVIEW = "review"
+    SYSTEM = "system"
 
 
 class Comment(Base):

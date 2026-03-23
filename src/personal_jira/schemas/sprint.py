@@ -38,3 +38,12 @@ class SprintResponse(BaseModel):
     end_date: date
 
     model_config = {"from_attributes": True}
+
+
+class SprintListResponse(BaseModel):
+    items: list[SprintResponse]
+    total: int
+
+
+class SprintIssueAdd(BaseModel):
+    issue_id: UUID

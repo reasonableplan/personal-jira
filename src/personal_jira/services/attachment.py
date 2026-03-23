@@ -15,6 +15,17 @@ class FileTooLargeError(Exception):
     pass
 
 
+class StorageService:
+    """Static helper for reading files from storage."""
+
+    @staticmethod
+    async def read_file(storage_path: str) -> bytes:
+        if not os.path.exists(storage_path):
+            raise FileNotFoundError(f"File not found: {storage_path}")
+        with open(storage_path, "rb") as f:
+            return f.read()
+
+
 class AttachmentService:
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
