@@ -39,3 +39,7 @@ class CreateFromTemplateRequest(BaseModel):
 class CloneIssueRequest(BaseModel):
     title_prefix: str | None = None
     reset_status: bool = True
+
+
+class TemplateIssueCreate(BaseModel):
+    summary: str

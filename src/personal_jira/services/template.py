@@ -10,6 +10,10 @@ from personal_jira.schemas.template import CloneIssueRequest, TemplateCreate
 DEFAULT_STATUS = "backlog"
 
 
+class DuplicateTemplateNameError(Exception):
+    """Raised when a template with the same name already exists."""
+
+
 class TemplateService:
     async def create(self, db: AsyncSession, data: TemplateCreate) -> IssueTemplate:
         template = IssueTemplate(

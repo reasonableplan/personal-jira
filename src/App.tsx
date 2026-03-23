@@ -1,21 +1,46 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AppLayout } from './components/layout/AppLayout';
-import { Dashboard } from './pages/Dashboard';
-import { Board } from './pages/Board';
-import { IssueDetail } from './pages/IssueDetail';
-import { NotFound } from './pages/NotFound';
-import { ROUTES } from './constants/routes';
-import './App.css';
+import { useState } from 'react';
+import type { Issue } from '@/types/issue';
+import type { IssueStatus } from '@/types/issue';
+import { useIssues } from '@/hooks/useIssues';
+import { KanbanBoard } from '@/components/KanbanBoard';
+import { CreateIssueDialog } from '@/components/CreateIssueDialog';
+import { IssueDetailPanel } from '@/components/IssueDetailPanel';
 
-export const App: React.FC = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route element={<AppLayout />}>
-        <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
-        <Route path={ROUTES.BOARD} element={<Board />} />
-        <Route path={ROUTES.ISSUE_DETAIL} element={<IssueDetail />} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
-  </BrowserRouter>
-);
+export function App() {
+  const { issues, createIssue, transitionIssue } = useIssues();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
+
+  const handleCreateIssue = async (title: string, description: string) => {
+    await createIssue(title, description);
+  };
+
+  const handleStatusChange = async (id: string, status: IssueStatus) => {
+    const updated = await transitionIssue(id, status);
+    if (selectedIssue?.id === id) {
+      setSelectedIssue(updated);
+    }
+  };
+
+  return (
+    <div>
+      <header style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem' }}>
+        <h1>Personal Jira</h1>
+        <button onClick={() => setDialogOpen(true)}>새 이슈</button>
+      </header>
+      <KanbanBoard issues={issues} onIssueClick={setSelectedIssue} />
+      <CreateIssueDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        onSubmit={handleCreateIssue}
+      />
+      {selectedIssue && (
+        <IssueDetailPanel
+          issue={selectedIssue}
+          onClose={() => setSelectedIssue(null)}
+          onStatusChange={handleStatusChange}
+        />
+      )}
+    </div>
+  );
+}

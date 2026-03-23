@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, UploadFile, status
 from fastapi.responses import Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from personal_jira.core.database import get_db
+from personal_jira.database import get_db
 from personal_jira.schemas.attachment import AttachmentResponse
 from personal_jira.services.attachment import AttachmentService, StorageService
 

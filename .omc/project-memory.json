@@ -197,9 +197,27 @@
   },
   "hotPaths": [
     {
+      "path": "tests\\conftest.py",
+      "accessCount": 7,
+      "lastAccessed": 1774248328127,
+      "type": "file"
+    },
+    {
       "path": "src\\personal_jira\\services\\dependency.py",
       "accessCount": 5,
       "lastAccessed": 1774231373119,
+      "type": "file"
+    },
+    {
+      "path": "pyproject.toml",
+      "accessCount": 4,
+      "lastAccessed": 1774248238566,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\app.py",
+      "accessCount": 3,
+      "lastAccessed": 1774248158280,
       "type": "file"
     },
     {
@@ -227,9 +245,39 @@
       "type": "file"
     },
     {
-      "path": "tests\\conftest.py",
+      "path": "src\\personal_jira\\database.py",
       "accessCount": 2,
-      "lastAccessed": 1774231407789,
+      "lastAccessed": 1774248123498,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\config.py",
+      "accessCount": 2,
+      "lastAccessed": 1774248132974,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\constants.py",
+      "accessCount": 2,
+      "lastAccessed": 1774248134148,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\dependencies.py",
+      "accessCount": 2,
+      "lastAccessed": 1774248180784,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\schemas\\template.py",
+      "accessCount": 2,
+      "lastAccessed": 1774248412319,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\services\\template.py",
+      "accessCount": 2,
+      "lastAccessed": 1774248439503,
       "type": "file"
     },
     {
@@ -257,12 +305,6 @@
       "type": "file"
     },
     {
-      "path": "src\\personal_jira\\app.py",
-      "accessCount": 1,
-      "lastAccessed": 1774231247719,
-      "type": "file"
-    },
-    {
       "path": "src\\personal_jira\\schemas\\dependency.py",
       "accessCount": 1,
       "lastAccessed": 1774231378562,
@@ -278,6 +320,12 @@
       "path": "src\\personal_jira\\routers\\delete_issue.py",
       "accessCount": 1,
       "lastAccessed": 1774231449132,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\main.py",
+      "accessCount": 1,
+      "lastAccessed": 1774248171967,
       "type": "file"
     }
   ],

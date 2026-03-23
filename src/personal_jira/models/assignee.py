@@ -5,7 +5,7 @@ from sqlalchemy import DateTime, ForeignKey, String, UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
-from personal_jira.core.database import Base
+from personal_jira.database import Base
 
 
 class Assignee(Base):

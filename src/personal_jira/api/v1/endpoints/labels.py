@@ -4,7 +4,7 @@ from typing import Sequence
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from personal_jira.core.database import get_db
+from personal_jira.database import get_db
 from personal_jira.schemas.label import LabelCreate, LabelResponse
 from personal_jira.services.label_service import LabelService
 
