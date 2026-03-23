@@ -1,20 +1,15 @@
-import { Routes, Route } from 'react-router-dom';
-import { AppLayout } from '@/layouts/AppLayout';
-import { DashboardPage } from '@/pages/DashboardPage';
-import { BoardPage } from '@/pages/BoardPage';
-import { IssueDetailPage } from '@/pages/IssueDetailPage';
-import { NotFoundPage } from '@/pages/NotFoundPage';
-import { ROUTES } from '@/constants/routes';
+import { KanbanBoard } from '@/components/KanbanBoard';
+import styles from './App.module.css';
 
 export default function App() {
   return (
-    <Routes>
-      <Route element={<AppLayout />}>
-        <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
-        <Route path={ROUTES.BOARD} element={<BoardPage />} />
-        <Route path={ROUTES.ISSUE_DETAIL} element={<IssueDetailPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Route>
-    </Routes>
+    <div className={styles.app}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Personal JIRA</h1>
+      </header>
+      <main>
+        <KanbanBoard />
+      </main>
+    </div>
   );
 }

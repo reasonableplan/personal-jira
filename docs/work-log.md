@@ -263,3 +263,16 @@
 - **Summary**: 코멘트 CRUD API 구현: POST/GET/GET(단건)/PUT/DELETE /api/v1/issues/{id}/comments. CommentCreate(author, content, comment_type 검증), CommentUpdate(partial update via model_dump(exclude_unset=True)), CommentRes
 - **Files**: 3개
 
+### [2026-03-23 04:19:13] Director Review
+**Director Review: Approved**
+- Task: 코멘트 CRUD API (POST/GET/PUT/DELETE /api/v1/issues/{id}/comments) (#309)
+- Agent: agent-backend
+- Feedback: 코어 구현이 올바르게 작성되었습니다. 스키마(CommentCreate/CommentUpdate/CommentResponse), 라우터(CRUD 엔드포인트), 테스트 파일 모두 포함되어 있습니다. 일부 파일이 잘려있으나(test_comment_crud.py, comment.py 라우터) 핵심 로직과 구조는 정확합니다. 마크다운 content 지원, field_validator를 통한 입력 검증, 이슈/코멘트 404 처리, 페이지네이션 파라미터, model_config from_attributes 설정 등 요구사항을 충실히 반영했습니다. 보안 이슈 없으며, 테스트 30개 케이스 구성도 적절합니다. 잘린 파일은 후속 작업에서 보완하면 
+
+- [2026-03-23 04:19:26] **agent-backend** → busy (task: fc513c60-83db-4bd9-905b-007c4033ed2d)
+### [2026-03-23 04:21:37] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: 5c67cd9e-df91-46ff-b2c3-b423ebaa6269
+- **Summary**: 칸반 보드 구현: @dnd-kit 기반 드래그&드롭, 7개 상태 컬럼(Backlog/Ready/InProgress/InReview/Done/Blocked/Abandoned), IssueCard 컴포넌트, 낙관적 업데이트(optimistic update) + API 롤백, CSS Modules 스타일링. 테스트 6개 파일(types/api/useIssues/
+- **Files**: 26개
+
