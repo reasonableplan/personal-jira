@@ -565,3 +565,16 @@
 - **Summary**: 활동 로그 API (Activity Feed) 구현: (1) ActivityLog 모델 — UUID PK, issue_id(인덱스), ActivityType enum(10종: status/assignee/comment/priority/title/description/dependency_added/dependency_removed/created/deleted
 - **Files**: 10개
 
+### [2026-03-23 05:12:27] Director Review
+**Director Review: Approved**
+- Task: 활동 로그 API (Activity Feed) (#325)
+- Agent: agent-backend
+- Feedback: 핵심 구현이 올바르게 구성되어 있습니다. (1) ActivityLog 모델: UUID PK, issue_id, ActivityType enum 10종, actor, old_value, new_value, detail, created_at 컬럼 포함. (2) ActivityService: record(), get_timeline(), count() 메서드 구현. (3) GET /api/v1/issues/{id}/activities 엔드포인트: 페이지네이션, 타입 필터링, ActivityListResponse 포함. (4) 이벤트 핸들러 4개 구현. (5) 테스트 4파일(model, service, api, handlers) + conftest 포함. 일부 파일이 잘려 있으나 핵심 로직과 테스트 구조
+
+- [2026-03-23 05:12:40] **agent-backend** → busy (task: 4e312b0c-3fb1-4277-9d4b-73e406b803c4)
+### [2026-03-23 05:17:09] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 4e312b0c-3fb1-4277-9d4b-73e406b803c4
+- **Summary**: WebSocket 연결 관리 및 이벤트 브로드캐스트 구현: (1) ConnectionManager — client_id 기반 연결 관리, broadcast/send_personal/exclude 지원, 실패 시 자동 제거, (2) EventBroadcaster — IssueEvent 스키마 기반으로 issue_created/updated/deleted/as
+- **Files**: 9개
+
