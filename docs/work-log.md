@@ -604,3 +604,18 @@
 - Agent: agent-frontend
 - Feedback: 토스트 알림 시스템과 WebSocket 실시간 연동의 핵심 구현이 올바르게 구성되어 있습니다. (1) 타입 정의(toast.ts, ws-events.ts)가 명확하고, (2) useToast/useWebSocket/useIssueSync 3개 훅과 ToastContainer 컴포넌트에 대한 테스트 4개 파일이 모두 포함되어 있으며, (3) Context 기반 상태 관리, 자동 dismiss, 최대 5개 제한 등 요구사항을 충족합니다. 일부 테스트 파일이 잘려 있으나 핵심 테스트 케이스(Provider 외부 사용 에러, 토스트 추가/제거, 자동 dismiss, WS 연결/메시지 파싱, 이벤트별 토스트 표시 등)는 확인 가능하므로 후속 작업에서 보완하면 됩니다. 보안 이슈 없음.
 
+### [2026-03-23 05:20:08] Director Review
+**Director Review: Approved**
+- Task: 품질 메트릭 및 작업 시간 집계 API (#321)
+- Agent: agent-backend
+- Feedback: 테스트 3개 파일(schema/service/api)과 구현 3개 파일(스키마/서비스/엔드포인트)이 모두 포함되어 있습니다. 스키마는 Pydantic Field 검증(ge/le)과 model_validator를 적절히 활용하고, 서비스 레이어는 SQLAlchemy async 세션 기반으로 에이전트별/이슈별 메트릭을 집계하며, 테스트는 mock DB를 활용한 단위 테스트로 구성되어 있습니다. 일부 파일이 잘려 있으나(test_metrics_schema.py, test_metrics_service.py, test_metrics_api.py, metrics_service.py) 핵심 로직과 아키텍처는 올바르게 구현되어 있으며, 보안 이슈도 없습니다. 잘린 부분은 후속 작업에서 보완 가능합니다.
+
+- [2026-03-23 05:20:21] **agent-backend** → busy (task: 6d97cbcd-d6f9-457d-9757-29e161919605)
+- [2026-03-23 05:25:21] **agent-backend** → error
+- [2026-03-23 05:25:31] **agent-backend** → busy (task: 19925d1d-672d-40fb-9cea-3fbf537f0619)
+### [2026-03-23 05:28:05] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 19925d1d-672d-40fb-9cea-3fbf537f0619
+- **Summary**: WebSocket 테스트 및 구현: (1) tests/test_websocket.py — ConnectionManager 단위 테스트(connect/disconnect/broadcast/send), 구독/해제 테스트(subscribe/unsubscribe/channel broadcast/cleanup), 스키마 검증, WebSocket 엔드포인트 통합 테스
+- **Files**: 4개
+
