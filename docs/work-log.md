@@ -382,3 +382,16 @@
 - **Summary**: TanStack Table 기반 이슈 테이블 뷰 구현. 테스트 3개 파일(API/hook/컴포넌트, 총 30+ 케이스) + 구현 8개 파일. 서버사이드 정렬·필터(status/priority/type)·검색(debounce 300ms)·페이지네이션 지원. useIssues 훅으로 상태 관리, 필터/정렬 변경 시 자동 page=1 리셋, AbortContro
 - **Files**: 12개
 
+### [2026-03-23 04:39:41] Director Review
+**Director Review: Approved**
+- Task: 테이블 뷰 (TanStack Table) (#337)
+- Agent: agent-frontend
+- Feedback: TanStack Table 기반 이슈 테이블 뷰 구현이 태스크 요구사항에 부합합니다. 테스트 3개 파일(컴포넌트/API/hook)이 포함되어 있고, 타입 정의·상수·API·훅·컴포넌트로 합리적인 아키텍처 구조를 갖추고 있습니다. API URL은 환경변수(VITE_API_BASE_URL)로 관리되어 하드코딩된 시크릿이 없습니다. useIssues 훅의 AbortController 기반 요청 취소, 필터/정렬 변경 시 page 리셋 로직, debounce 검색 등 서버사이드 상태 관리가 적절합니다. 일부 파일이 잘려 있으나(useIssues.ts, IssueTable.test.tsx) 핵심 구현 패턴과 방향성은 확인 가능하며, 후속 태스크에서 보완 가능합니다.
+
+- [2026-03-23 04:39:54] **agent-frontend** → busy (task: 6dab17d0-9ac3-410a-8fa2-6068d275c0e9)
+### [2026-03-23 04:40:06] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: e2574cc0-c306-4979-812e-36b9973a5fed
+- **Summary**: 계층/의존성/검색 API에 대한 3개 테스트 파일 생성: (1) test_issue_hierarchy.py — parent-child 관계 모델 테스트 5개 + API 테스트 6개 (3단계 계층, 다중 자식, 자식 존재 시 삭제 409 등), (2) test_dependency_release.py — DependencyReleaseService 자동 해제 
+- **Files**: 4개
+
