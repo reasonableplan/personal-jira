@@ -276,3 +276,18 @@
 - **Summary**: 칸반 보드 구현: @dnd-kit 기반 드래그&드롭, 7개 상태 컬럼(Backlog/Ready/InProgress/InReview/Done/Blocked/Abandoned), IssueCard 컴포넌트, 낙관적 업데이트(optimistic update) + API 롤백, CSS Modules 스타일링. 테스트 6개 파일(types/api/useIssues/
 - **Files**: 26개
 
+### [2026-03-23 04:22:31] Director Review
+**Director Review: Approved**
+- Task: 칸반 보드 (dnd-kit 드래그&드롭) (#336)
+- Agent: agent-frontend
+- Feedback: 설정 파일(package.json, tsconfig, vite/vitest config)이 올바르게 구성되어 있고, @dnd-kit 의존성과 테스트 라이브러리가 적절히 포함되어 있습니다. 요약에 따르면 6개의 테스트 파일이 포함되어 있어 TDD 기준을 충족합니다. 구조적으로 CSS Modules, 낙관적 업데이트, API 롤백 패턴은 칸반 보드에 적합한 아키텍처입니다. 단, 실제 src/ 내 구현 파일의 내용을 직접 확인하지 못했으므로, 후속으로 (1) 드래그&드롭 시 상태 변경 로직의 엣지 케이스 처리 (2) API 실패 시 롤백이 UI에 정확히 반영되는지 (3) 접근성(키보드 드래그 지원) 확인을 권장합니다.
+
+- [2026-03-23 04:22:43] **agent-frontend** → busy (task: b4fc7d08-fab1-4491-b8c9-a7b3bf1a19b4)
+- [2026-03-23 04:24:26] **agent-backend** → error
+- [2026-03-23 04:24:37] **agent-backend** → busy (task: 053b542b-dc2d-4e5b-8e1e-6893498628c3)
+### [2026-03-23 04:25:19] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: b4fc7d08-fab1-4491-b8c9-a7b3bf1a19b4
+- **Summary**: 이슈 상세 사이드 패널 컴포넌트 생성. 오른쪽에서 슬라이드-인되는 480px 패널로, 4개 탭(상세/코멘트/로그/아티팩트) 구성. TDD: 3개 테스트 파일(IssueDetailPanel.test.tsx, TabContent.test.tsx, useIssueDetail.test.ts) → 구현. useIssueDetail 커스텀 훅으로 데이터 페칭 및 탭 
+- **Files**: 16개
+
