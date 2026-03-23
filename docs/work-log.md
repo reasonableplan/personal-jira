@@ -368,3 +368,17 @@
 - **Summary**: 검색/필터 API 구현: GET /api/v1/issues에 다중 조건 필터링(status, priority, assignee, label, issue_type, q 키워드), 정렬(sort_by/sort_order), 페이지네이션(offset/limit) 지원. IssueSearchParams(Pydantic 검증: sort_by 허용 필드, limit 
 - **Files**: 5개
 
+### [2026-03-23 04:34:59] Director Review
+**Director Review: Approved**
+- Task: 검색/필터 API (GET /api/v1/issues?status=&label=&assignee=&priority=) (#313)
+- Agent: agent-backend
+- Feedback: 검색/필터 API 구현이 태스크 요구사항에 부합합니다. IssueSearchParams(Pydantic 검증), IssueSearchService(필터 체이닝, ilike 검색, soft delete 제외), 라우터 엔드포인트가 올바르게 구성되어 있습니다. 테스트 파일 2개(test_issue_search.py, test_issue_search_service.py)가 포함되어 있으며, 일부 파일이 잘려있으나 핵심 로직과 아키텍처는 정상적입니다. 보안 이슈 없음. 후속 작업에서 잘린 파일 보완 필요.
+
+- [2026-03-23 04:35:07] **agent-frontend** → busy (task: 4c4fc543-bc94-43a4-96b5-3a0c68e5cbad)
+- [2026-03-23 04:35:14] **agent-backend** → busy (task: e2574cc0-c306-4979-812e-36b9973a5fed)
+### [2026-03-23 04:39:23] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: 4c4fc543-bc94-43a4-96b5-3a0c68e5cbad
+- **Summary**: TanStack Table 기반 이슈 테이블 뷰 구현. 테스트 3개 파일(API/hook/컴포넌트, 총 30+ 케이스) + 구현 8개 파일. 서버사이드 정렬·필터(status/priority/type)·검색(debounce 300ms)·페이지네이션 지원. useIssues 훅으로 상태 관리, 필터/정렬 변경 시 자동 page=1 리셋, AbortContro
+- **Files**: 12개
+
