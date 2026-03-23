@@ -578,3 +578,23 @@
 - **Summary**: WebSocket 연결 관리 및 이벤트 브로드캐스트 구현: (1) ConnectionManager — client_id 기반 연결 관리, broadcast/send_personal/exclude 지원, 실패 시 자동 제거, (2) EventBroadcaster — IssueEvent 스키마 기반으로 issue_created/updated/deleted/as
 - **Files**: 9개
 
+### [2026-03-23 05:17:20] Director Review
+**Director Review: Approved**
+- Task: WebSocket 연결 관리 및 이벤트 브로드캐스트 (#330)
+- Agent: agent-backend
+- Feedback: 핵심 구현이 올바르게 작성되었습니다. (1) EventType StrEnum + IssueEvent Pydantic 모델이 깔끔하게 정의됨, (2) ConnectionManager/EventBroadcaster 구조가 적절함, (3) 테스트 4개 파일 모두 포함 (connection_manager, event_broadcaster, ws_endpoint, event_schemas), (4) 보안 이슈 없음. 일부 테스트 파일이 잘려있으나(test_connection_manager.py의 broadcast_skips_failed 테스트, test_event_broadcaster.py의 broadcast_issue_assigned 테스트) 핵심 로직과 테스트 커버리지는 충분하며, 후속 작업에서 
+
+- [2026-03-23 05:17:29] **agent-frontend** → busy (task: 4020d342-3bcb-4f08-9dd1-5918eb57e103)
+- [2026-03-23 05:17:34] **agent-backend** → busy (task: 9a33c5ae-ed6f-4e53-bca4-a50a6025f2c6)
+### [2026-03-23 05:19:51] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: 4020d342-3bcb-4f08-9dd1-5918eb57e103
+- **Summary**: 토스트 알림 시스템 + WebSocket 실시간 연동 구현. (1) Toast 타입/상수 정의 (types/toast.ts, types/ws-events.ts), (2) useToast 훅 - Context 기반 토스트 상태 관리 (자동 dismiss, 최대 5개 제한), (3) useWebSocket 훅 - WebSocket 연결/재연결/메시지 파싱, (
+- **Files**: 11개
+
+### [2026-03-23 05:19:56] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 9a33c5ae-ed6f-4e53-bca4-a50a6025f2c6
+- **Summary**: 품질 메트릭 및 작업 시간 집계 API 구현: GET /api/v1/metrics/agents/{agent_id} (에이전트별 리뷰 통과율/재작업/평균완료시간), GET /api/v1/metrics/issues/{issue_id} (이슈별 리뷰횟수/작업시간/경과시간), GET /api/v1/metrics/summary (전체 프로젝트 요약). 테스트 3개 
+- **Files**: 6개
+
