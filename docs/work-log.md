@@ -395,3 +395,16 @@
 - **Summary**: 계층/의존성/검색 API에 대한 3개 테스트 파일 생성: (1) test_issue_hierarchy.py — parent-child 관계 모델 테스트 5개 + API 테스트 6개 (3단계 계층, 다중 자식, 자식 존재 시 삭제 409 등), (2) test_dependency_release.py — DependencyReleaseService 자동 해제 
 - **Files**: 4개
 
+### [2026-03-23 04:40:16] Director Review
+**Director Review: Approved**
+- Task: 계층/의존성/검색 API 테스트 (#314)
+- Agent: agent-backend
+- Feedback: 3개 테스트 파일(test_issue_hierarchy.py, test_dependency_release.py, test_search_filter.py)과 conftest.py가 모두 포함되어 있으며, 태스크 요구사항(계층/의존성/검색 API 테스트)에 부합합니다. SQLite in-memory 비동기 세션 설정, fixture 구성, 테스트 클래스 구조가 적절합니다. 파일이 잘려 있으나 핵심 구조와 테스트 패턴은 올바르게 구현되어 있으므로 후속 작업에서 보완 가능합니다. 보안 이슈 없음.
+
+- [2026-03-23 04:40:27] **agent-backend** → busy (task: 798fb908-f97a-4193-8ad0-c12578b539ca)
+### [2026-03-23 04:42:26] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: 6dab17d0-9ac3-410a-8fa2-6068d275c0e9
+- **Summary**: 보드↔테이블 뷰 토글 구현: ViewType 타입 + 상수(view.ts), localStorage 기반 뷰 상태 유지 훅(useViewToggle.ts), 토글 UI 컴포넌트(ViewToggle.tsx + CSS Module). 테스트: 훅 8건(기본값/저장값 읽기/유효하지 않은 값 폴백/토글/persist/setView/파생상태), 컴포넌트 7건(렌더링
+- **Files**: 6개
+
