@@ -1,133 +1,152 @@
-import React, { useRef, useState, useCallback } from 'react';
-import { useSearchAutocomplete } from '../hooks/useSearchAutocomplete';
-import { SearchResult, SearchAutocompleteProps } from '../types/issue';
-import { SEARCH_DEBOUNCE_MS, SEARCH_MIN_QUERY_LENGTH } from '../constants/api';
-import styles from './SearchAutocomplete.module.css';
+import { useState, useRef, useCallback, useEffect } from 'react';
+import type { SearchSuggestion } from '../types/search';
 
-export const SearchAutocomplete: React.FC<SearchAutocompleteProps> = ({
+const DEFAULT_DEBOUNCE_MS = 300;
+const DEFAULT_MIN_QUERY_LENGTH = 1;
+
+interface SearchAutocompleteProps {
+  onSearch: (query: string) => void;
+  onSelect: (suggestion: SearchSuggestion) => void;
+  fetchSuggestions: (query: string) => Promise<SearchSuggestion[]>;
+  placeholder?: string;
+  minQueryLength?: number;
+  debounceMs?: number;
+}
+
+export function SearchAutocomplete({
+  onSearch,
   onSelect,
-  placeholder = '이슈 검색...',
-  debounceMs = SEARCH_DEBOUNCE_MS,
-  minQueryLength = SEARCH_MIN_QUERY_LENGTH,
-  className,
-}) => {
-  const { query, setQuery, results, isLoading, isOpen, error, close } =
-    useSearchAutocomplete({ debounceMs, minQueryLength });
+  fetchSuggestions,
+  placeholder = 'Search...',
+  minQueryLength = DEFAULT_MIN_QUERY_LENGTH,
+  debounceMs = DEFAULT_DEBOUNCE_MS,
+}: SearchAutocompleteProps) {
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [highlightIndex, setHighlightIndex] = useState(-1);
+  const [isLoading, setIsLoading] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const [activeIndex, setActiveIndex] = useState(-1);
-  const listRef = useRef<HTMLUListElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const handleChange = useCallback(
+    (value: string) => {
+      setQuery(value);
+      setHighlightIndex(-1);
 
-  const handleSelect = useCallback(
-    (result: SearchResult) => {
-      onSelect(result);
-      close();
-      setActiveIndex(-1);
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+
+      if (value.length < minQueryLength) {
+        setSuggestions([]);
+        setIsOpen(false);
+        return;
+      }
+
+      setIsLoading(true);
+      debounceRef.current = setTimeout(async () => {
+        try {
+          const results = await fetchSuggestions(value);
+          setSuggestions(results);
+          setIsOpen(true);
+        } catch (err) {
+          console.error('Failed to fetch suggestions:', err);
+          setSuggestions([]);
+        } finally {
+          setIsLoading(false);
+        }
+      }, debounceMs);
     },
-    [onSelect, close]
+    [fetchSuggestions, minQueryLength, debounceMs]
+  );
+
+  const selectSuggestion = useCallback(
+    (suggestion: SearchSuggestion) => {
+      onSelect(suggestion);
+      setQuery(suggestion.text);
+      setIsOpen(false);
+      setSuggestions([]);
+    },
+    [onSelect]
   );
 
   const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (!isOpen || results.length === 0) return;
+    (e: React.KeyboardEvent) => {
+      if (!isOpen) return;
 
       switch (e.key) {
         case 'ArrowDown':
           e.preventDefault();
-          setActiveIndex((prev) =>
-            prev < results.length - 1 ? prev + 1 : prev
+          setHighlightIndex((prev) =>
+            prev < suggestions.length - 1 ? prev + 1 : prev
           );
           break;
         case 'ArrowUp':
           e.preventDefault();
-          setActiveIndex((prev) => (prev > 0 ? prev - 1 : prev));
+          setHighlightIndex((prev) => (prev > 0 ? prev - 1 : prev));
           break;
         case 'Enter':
           e.preventDefault();
-          if (activeIndex >= 0 && activeIndex < results.length) {
-            handleSelect(results[activeIndex]);
+          if (highlightIndex >= 0 && highlightIndex < suggestions.length) {
+            selectSuggestion(suggestions[highlightIndex]);
           }
           break;
         case 'Escape':
-          e.preventDefault();
-          close();
-          setActiveIndex(-1);
+          setIsOpen(false);
+          setSuggestions([]);
           break;
       }
     },
-    [isOpen, results, activeIndex, handleSelect, close]
+    [isOpen, suggestions, highlightIndex, selectSuggestion]
   );
 
-  const listboxId = 'search-autocomplete-listbox';
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      onSearch(query);
+    },
+    [onSearch, query]
+  );
+
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, []);
 
   return (
-    <div className={`${styles.container} ${className ?? ''}`}>
-      <input
-        ref={inputRef}
-        role="combobox"
-        aria-autocomplete="list"
-        aria-expanded={isOpen}
-        aria-controls={isOpen ? listboxId : undefined}
-        aria-activedescendant={
-          activeIndex >= 0 ? `search-option-${activeIndex}` : undefined
-        }
-        type="text"
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-          setActiveIndex(-1);
-        }}
-        onKeyDown={handleKeyDown}
-        placeholder={placeholder}
-        className={styles.input}
-      />
+    <form onSubmit={handleSubmit} className="search-autocomplete">
+      <div className="search-input-wrapper">
+        <input
+          role="combobox"
+          type="text"
+          value={query}
+          onChange={(e) => handleChange(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          aria-autocomplete="list"
+          aria-expanded={isOpen}
+          aria-controls="search-suggestions"
+        />
+        {isLoading && <span data-testid="search-spinner" className="spinner" />}
+      </div>
 
-      {isLoading && (
-        <div role="status" className={styles.loading}>
-          <span className={styles.spinner} aria-label="검색 중" />
-        </div>
-      )}
-
-      {error && (
-        <div role="alert" className={styles.error}>
-          {error}
-        </div>
-      )}
-
-      {isOpen && results.length > 0 && (
-        <ul
-          ref={listRef}
-          id={listboxId}
-          role="listbox"
-          className={styles.dropdown}
-        >
-          {results.map((result, index) => (
+      {isOpen && suggestions.length > 0 && (
+        <ul id="search-suggestions" role="listbox" className="suggestions-list">
+          {suggestions.map((suggestion, index) => (
             <li
-              key={result.id}
-              id={`search-option-${index}`}
+              key={suggestion.id}
               role="option"
-              aria-selected={index === activeIndex}
-              className={`${styles.option} ${
-                index === activeIndex ? styles.optionActive : ''
-              }`}
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => handleSelect(result)}
-              onMouseEnter={() => setActiveIndex(index)}
+              aria-selected={index === highlightIndex}
+              className={index === highlightIndex ? 'highlighted' : ''}
+              onClick={() => selectSuggestion(suggestion)}
             >
-              <span className={styles.title}>{result.title}</span>
-              {result.labels.length > 0 && (
-                <span className={styles.labels}>
-                  {result.labels.map((label) => (
-                    <span key={label} className={styles.badge}>
-                      {label}
-                    </span>
-                  ))}
-                </span>
+              <span className="suggestion-text">{suggestion.text}</span>
+              {suggestion.status && (
+                <span className="suggestion-status">{suggestion.status}</span>
               )}
             </li>
           ))}
         </ul>
       )}
-    </div>
+    </form>
   );
-};
+}

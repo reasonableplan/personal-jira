@@ -1,67 +1,69 @@
-import { useCallback, useEffect, useMemo } from 'react';
-import type { KeyboardShortcutGroup, UseKeyboardShortcutsOptions } from '../types/keyboard';
+import { useEffect, useMemo } from 'react';
+import type { ShortcutMap, ShortcutInfo } from '../types/shortcuts';
 
-const IGNORED_TAG_NAMES = new Set(['INPUT', 'TEXTAREA', 'SELECT']);
+const IGNORED_TAGS = new Set(['INPUT', 'TEXTAREA', 'SELECT']);
 
-const isEditableTarget = (target: EventTarget | null): boolean => {
-  if (!(target instanceof HTMLElement)) return false;
-  if (IGNORED_TAG_NAMES.has(target.tagName)) return true;
-  return target.isContentEditable;
-};
+interface UseKeyboardShortcutsOptions {
+  enabled?: boolean;
+}
 
-const hasModifier = (e: KeyboardEvent): boolean =>
-  e.ctrlKey || e.metaKey || e.altKey;
+function parseCombo(combo: string) {
+  const parts = combo.toLowerCase().split('+');
+  return {
+    ctrl: parts.includes('ctrl'),
+    shift: parts.includes('shift'),
+    alt: parts.includes('alt'),
+    meta: parts.includes('meta'),
+    key: parts.filter((p) => !['ctrl', 'shift', 'alt', 'meta'].includes(p))[0],
+  };
+}
 
-export const useKeyboardShortcuts = (options: UseKeyboardShortcutsOptions) => {
-  const {
-    onCreateIssue,
-    onNavigateUp,
-    onNavigateDown,
-    onToggleHelp,
-    enabled = true,
-  } = options;
-
-  const shortcutGroups: KeyboardShortcutGroup[] = useMemo(() => [
-    {
-      name: '이슈',
-      shortcuts: [
-        { key: 'C', description: '새 이슈 생성', handler: onCreateIssue },
-        { key: 'J', description: '다음 이슈로 이동', handler: onNavigateDown },
-        { key: 'K', description: '이전 이슈로 이동', handler: onNavigateUp },
-      ],
-    },
-    {
-      name: '일반',
-      shortcuts: [
-        { key: '?', description: '단축키 도움말', handler: onToggleHelp },
-      ],
-    },
-  ], [onCreateIssue, onNavigateDown, onNavigateUp, onToggleHelp]);
-
-  const keyMap = useMemo(() => {
-    const map = new Map<string, () => void>();
-    map.set('c', onCreateIssue);
-    map.set('j', onNavigateDown);
-    map.set('k', onNavigateUp);
-    map.set('?', onToggleHelp);
-    return map;
-  }, [onCreateIssue, onNavigateDown, onNavigateUp, onToggleHelp]);
-
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (!enabled) return;
-    if (isEditableTarget(e.target)) return;
-    if (hasModifier(e)) return;
-
-    const handler = keyMap.get(e.key.toLowerCase());
-    if (handler) {
-      handler();
-    }
-  }, [enabled, keyMap]);
+export function useKeyboardShortcuts(
+  shortcuts: ShortcutMap,
+  options: UseKeyboardShortcutsOptions = {}
+) {
+  const { enabled = true } = options;
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [handleKeyDown]);
+    if (!enabled) return;
 
-  return { shortcutGroups };
-};
+    const handler = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        IGNORED_TAGS.has(target.tagName) ||
+        target.isContentEditable
+      ) {
+        return;
+      }
+
+      for (const [combo, entry] of Object.entries(shortcuts)) {
+        const parsed = parseCombo(combo);
+        if (
+          e.key.toLowerCase() === parsed.key &&
+          e.ctrlKey === parsed.ctrl &&
+          e.shiftKey === parsed.shift &&
+          e.altKey === parsed.alt &&
+          e.metaKey === parsed.meta
+        ) {
+          e.preventDefault();
+          entry.handler();
+          return;
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [shortcuts, enabled]);
+
+  const shortcutList: ShortcutInfo[] = useMemo(
+    () =>
+      Object.entries(shortcuts).map(([keys, entry]) => ({
+        keys,
+        description: entry.description,
+      })),
+    [shortcuts]
+  );
+
+  return { shortcuts: shortcutList };
+}
