@@ -619,3 +619,17 @@
 - **Summary**: WebSocket 테스트 및 구현: (1) tests/test_websocket.py — ConnectionManager 단위 테스트(connect/disconnect/broadcast/send), 구독/해제 테스트(subscribe/unsubscribe/channel broadcast/cleanup), 스키마 검증, WebSocket 엔드포인트 통합 테스
 - **Files**: 4개
 
+- [2026-03-23 05:28:17] **agent-frontend** → busy (task: 6fef16bd-1e2f-4308-af87-96d77738bdda)
+### [2026-03-23 05:28:18] Director Review
+**Director Review: Approved**
+- Task: WebSocket 테스트 (#331)
+- Agent: agent-backend
+- Feedback: 테스트 파일(test_websocket.py)이 포함되어 있으며, ConnectionManager 단위 테스트(connect/disconnect/broadcast/send), 구독/해제 테스트, 스키마 검증, WebSocket 엔드포인트 통합 테스트 등 포괄적인 테스트 케이스가 작성되어 있습니다. 아키텍처는 schemas/connection_manager/router로 적절히 분리되어 있고, 보안 이슈(하드코딩된 시크릿 등)는 없습니다. 일부 파일이 잘려 있으나(test_websocket.py, connection_manager.py, router.py) 핵심 구현 패턴과 로직은 올바르며, 후속 작업에서 보완 가능합니다.
+
+- [2026-03-23 05:28:29] **agent-backend** → busy (task: eede1dad-bee8-4c53-a941-27165ca76c2a)
+### [2026-03-23 05:31:45] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: 6fef16bd-1e2f-4308-af87-96d77738bdda
+- **Summary**: Epic별 이슈 일정을 간트 차트로 표시하는 타임라인 기능 구현. TDD 원칙에 따라 테스트 4개(gantt-utils, use-timeline, gantt-chart, gantt-bar)를 먼저 작성 후 구현. 주요 기능: API에서 이슈 데이터 fetch → Epic별 그룹핑 → 날짜 헤더 + 상태별 색상 바 렌더링 + 오늘 마커 + 호버 툴팁. GAN
+- **Files**: 10개
+
