@@ -713,3 +713,15 @@
 - **Summary**: 번다운 차트 구현: BurndownChart 컴포넌트(recharts 기반), useBurndownData 훅(API 연동), burndown 유틸리티(이상선 생성/완료율/속도 계산/스프린트 활성 여부). 이상선(점선) vs 실제선(실선) 시각화, 오늘 기준선 표시, 빈 상태 처리 포함. 테스트: 컴포넌트 10건, 훅 7건, 유틸리티 14건.
 - **Files**: 8개
 
+### [2026-03-23 05:44:11] Director Review
+**Director Review: Approved**
+- Task: 번다운 차트 (스프린트/마일스톤 진행률) (#344)
+- Agent: agent-frontend
+- Feedback: 번다운 차트 구현이 태스크 요구사항에 부합합니다. recharts 기반 BurndownChart 컴포넌트, useBurndownData 훅(API 연동), burndown 유틸리티(이상선 생성/완료율/속도 계산/스프린트 활성 여부) 모두 포함되어 있습니다. 타입 정의(BurndownPoint, BurndownData, BurndownChartProps, UseBurndownDataReturn)가 명확하고, 유틸리티 함수들의 엣지 케이스 처리(0일, 0포인트, 1일 스프린트 등)도 적절합니다. 테스트는 컴포넌트/훅/유틸리티 3개 영역 모두 존재하며, 일부 파일이 잘려 있으나 핵심 로직과 테스트 구조는 확인 가능합니다. 보안 이슈 없음.
+
+### [2026-03-23 05:45:29] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 0ea20b7a-3e64-464f-bae9-bae08263236a
+- **Summary**: 이슈 템플릿 CRUD, 템플릿 기반 이슈 생성, 이슈 복제(Deep Copy) API 구현. 테스트 파일(tests/test_issue_template.py)에 7개 클래스 30개 테스트 케이스 포함: TestIssueTemplateSchema(8개 - 생성/최소/필수/업데이트/빈body/클론기본/커스텀/템플릿요청), TestIssueTemplateMode
+- **Files**: 6개
+
