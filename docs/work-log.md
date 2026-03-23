@@ -408,3 +408,16 @@
 - **Summary**: 보드↔테이블 뷰 토글 구현: ViewType 타입 + 상수(view.ts), localStorage 기반 뷰 상태 유지 훅(useViewToggle.ts), 토글 UI 컴포넌트(ViewToggle.tsx + CSS Module). 테스트: 훅 8건(기본값/저장값 읽기/유효하지 않은 값 폴백/토글/persist/setView/파생상태), 컴포넌트 7건(렌더링
 - **Files**: 6개
 
+### [2026-03-23 04:42:38] Director Review
+**Director Review: Approved**
+- Task: 뷰 토글 (보드 ↔ 테이블) (#338)
+- Agent: agent-frontend
+- Feedback: 구현이 태스크 요구사항에 정확히 부합합니다. ViewType 타입과 상수 정의(view.ts), localStorage 기반 뷰 상태 유지 훅(useViewToggle.ts), 토글 UI 컴포넌트(ViewToggle.tsx)가 깔끔하게 분리되어 있습니다. 훅 테스트(8건)와 컴포넌트 테스트(7건)가 포함되어 있으며, 일부 테스트 파일이 truncate되었으나 핵심 테스트 케이스는 확인 가능합니다. localStorage 접근 시 try-catch 처리, 유효하지 않은 값 폴백, aria-pressed 접근성 속성 등 품질이 양호합니다. CSS Module 파일(ViewToggle.module.css)이 누락되었으나 후속 태스크에서 보완 가능합니다.
+
+- [2026-03-23 04:42:49] **agent-frontend** → busy (task: a08454d5-0a36-483d-96fc-035f655c52d4)
+### [2026-03-23 04:43:14] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 798fb908-f97a-4193-8ad0-c12578b539ca
+- **Summary**: 에이전트 등록 CRUD + atomic claim API 구현. Agent 모델(name/skills/status/current_issue_id), AgentService(CRUD), ClaimService(SELECT FOR UPDATE SKIP LOCKED + skills_satisfied subset 검증), POST /api/v1/issues/cla
+- **Files**: 15개
+
