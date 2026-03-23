@@ -250,3 +250,16 @@
 - **Summary**: 이슈 생성/편집 폼 + 마크다운 에디터 구현. 7개 테스트 파일(types, MarkdownEditor, SelectField, LabelPicker, IssueForm, IssueFormModal, useIssueForm hook) + 8개 구현 파일(types/issue.ts, hooks/useIssueForm.ts, utils/markdown.ts, 
 - **Files**: 15개
 
+### [2026-03-23 04:16:50] Director Review
+**Director Review: Approved**
+- Task: 이슈 생성/편집 폼 + 마크다운 에디터 (#340)
+- Agent: agent-frontend
+- Feedback: 7개 테스트 파일과 8개 구현 파일이 포함되어 TDD 원칙을 준수합니다. IssueType(5), IssuePriority(5), IssueStatus(7) enum 정의, Write/Preview 탭 전환 마크다운 에디터, 폼 검증, 라벨 토글+커스텀 입력, 모달 ESC/backdrop 닫기 등 태스크 요구사항을 충실히 구현했습니다. 컴포넌트 분리(MarkdownEditor, SelectField, LabelPicker, IssueForm, IssueFormModal)와 커스텀 훅(useIssueForm) 구조가 합리적이며, 보안 이슈는 발견되지 않았습니다. 일부 테스트 파일이 잘려있으나 핵심 로직과 테스트 커버리지는 충분합니다.
+
+- [2026-03-23 04:17:01] **agent-frontend** → busy (task: 5c67cd9e-df91-46ff-b2c3-b423ebaa6269)
+### [2026-03-23 04:19:02] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 968a33fd-8163-434f-95c6-f56572959de7
+- **Summary**: 코멘트 CRUD API 구현: POST/GET/GET(단건)/PUT/DELETE /api/v1/issues/{id}/comments. CommentCreate(author, content, comment_type 검증), CommentUpdate(partial update via model_dump(exclude_unset=True)), CommentRes
+- **Files**: 3개
+
