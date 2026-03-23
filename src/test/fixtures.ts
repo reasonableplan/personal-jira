@@ -1,0 +1,73 @@
+import type { Issue } from '@/types/issue';
+import { ISSUE_STATUS, ISSUE_PRIORITY } from '@/types/issue';
+
+export const MOCK_ISSUES: Issue[] = [
+  {
+    id: '11111111-1111-1111-1111-111111111111',
+    title: 'Set up CI pipeline',
+    description: 'Configure GitHub Actions for the project',
+    status: ISSUE_STATUS.TODO,
+    priority: ISSUE_PRIORITY.HIGH,
+    assignee: 'alice',
+    parent_id: null,
+    created_at: '2026-03-20T10:00:00Z',
+    updated_at: '2026-03-20T10:00:00Z',
+  },
+  {
+    id: '22222222-2222-2222-2222-222222222222',
+    title: 'Write API docs',
+    description: 'Document all REST endpoints',
+    status: ISSUE_STATUS.IN_PROGRESS,
+    priority: ISSUE_PRIORITY.MEDIUM,
+    assignee: 'bob',
+    parent_id: null,
+    created_at: '2026-03-19T08:00:00Z',
+    updated_at: '2026-03-21T14:00:00Z',
+  },
+  {
+    id: '33333333-3333-3333-3333-333333333333',
+    title: 'Fix login bug',
+    description: 'Users cannot log in with SSO',
+    status: ISSUE_STATUS.DONE,
+    priority: ISSUE_PRIORITY.URGENT,
+    assignee: 'alice',
+    parent_id: null,
+    created_at: '2026-03-18T12:00:00Z',
+    updated_at: '2026-03-22T09:00:00Z',
+  },
+  {
+    id: '44444444-4444-4444-4444-444444444444',
+    title: 'Add dark mode',
+    description: '',
+    status: ISSUE_STATUS.BACKLOG,
+    priority: ISSUE_PRIORITY.LOW,
+    assignee: null,
+    parent_id: null,
+    created_at: '2026-03-21T16:00:00Z',
+    updated_at: '2026-03-21T16:00:00Z',
+  },
+  {
+    id: '55555555-5555-5555-5555-555555555555',
+    title: 'Review PR #42',
+    description: 'Code review for auth refactor',
+    status: ISSUE_STATUS.IN_REVIEW,
+    priority: ISSUE_PRIORITY.HIGH,
+    assignee: 'bob',
+    parent_id: '11111111-1111-1111-1111-111111111111',
+    created_at: '2026-03-22T11:00:00Z',
+    updated_at: '2026-03-22T11:00:00Z',
+  },
+];
+
+export const createMockIssue = (overrides: Partial<Issue> = {}): Issue => ({
+  id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+  title: 'Test issue',
+  description: 'Test description',
+  status: ISSUE_STATUS.TODO,
+  priority: ISSUE_PRIORITY.MEDIUM,
+  assignee: null,
+  parent_id: null,
+  created_at: '2026-03-23T00:00:00Z',
+  updated_at: '2026-03-23T00:00:00Z',
+  ...overrides,
+});

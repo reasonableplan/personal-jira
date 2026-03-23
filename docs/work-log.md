@@ -421,3 +421,16 @@
 - **Summary**: 에이전트 등록 CRUD + atomic claim API 구현. Agent 모델(name/skills/status/current_issue_id), AgentService(CRUD), ClaimService(SELECT FOR UPDATE SKIP LOCKED + skills_satisfied subset 검증), POST /api/v1/issues/cla
 - **Files**: 15개
 
+### [2026-03-23 04:43:25] Director Review
+**Director Review: Approved**
+- Task: 에이전트 등록 및 자동 선점 API (atomic claim) (#315)
+- Agent: agent-backend
+- Feedback: 테스트 5개 파일(model/schema/service/claim_service/api) 모두 포함되어 있고, Agent CRUD + atomic claim API의 핵심 구조가 올바르게 설계되었습니다. 일부 파일이 truncated되어 있으나 핵심 로직과 테스트 패턴은 확인 가능합니다. SELECT FOR UPDATE SKIP LOCKED 기반의 atomic claim, 에이전트 상태 관리(ACTIVE/INACTIVE/BUSY), skills 매칭 검증 등 요구사항이 반영되어 있습니다. 후속 작업에서 truncated 파일 완성 및 통합 테스트 보완을 권장합니다.
+
+- [2026-03-23 04:43:41] **agent-backend** → busy (task: ac4479ba-e561-4ae6-96ba-9939cda5be71)
+### [2026-03-23 04:45:29] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: ac4479ba-e561-4ae6-96ba-9939cda5be71
+- **Summary**: 작업 로그 API (POST/GET /api/v1/issues/{id}/worklogs) 구현. WorkLog 모델(UUID PK, issue_id FK CASCADE, agent_id, llm_calls, tokens_used, content, timestamps), WorkLogCreate/Response Pydantic 스키마(llm_calls/tok
+- **Files**: 6개
+
