@@ -447,3 +447,16 @@
 - Feedback: 작업 로그 API 구현이 태스크 요구사항에 부합합니다. WorkLog 모델(UUID PK, issue_id FK CASCADE, agent_id, llm_calls, tokens_used, content, timestamps), Pydantic 스키마(ge=0 검증, max_length 10000), WorkLogService(create/list_by_issue + 이슈 존재/삭제 검증), 테스트 파일 포함(36개 케이스 구조). 테스트 파일이 잘려있으나 핵심 구현은 정확하며, 라우터 엔드포인트 파일이 누락되었으나 후속 작업에서 보완 가능합니다.
 
 - [2026-03-23 04:45:50] **agent-backend** → busy (task: 1d44355e-02e0-4bc2-980c-1ddfa944099d)
+### [2026-03-23 04:46:32] Director Review
+**Director Review: Approved**
+- Task: 핵심 뷰 vitest 테스트 (#341)
+- Agent: agent-frontend
+- Feedback: 핵심 뷰 컴포넌트 테스트 구현이 태스크 요구사항에 부합합니다. (1) vitest.config.ts — jsdom 환경, setup 파일, 경로 alias 등 올바르게 구성됨. (2) package.json — @testing-library/react, @testing-library/jest-dom, @testing-library/user-event, vitest, jsdom 등 필수 테스트 의존성 포함. (3) 태스크 설명에 따르면 KanbanBoard(10개), TableView(10개), SidePanel(12개), IssueForm(13개) 총 45개 테스트가 작성되었으며, Issue 타입, 테스트 fixtures, setup 파일 등 공통 인프라도 포함. 보안 이슈 없음, 하드코딩된 시크릿 없음. tsc
+
+- [2026-03-23 04:46:43] **agent-frontend** → busy (task: 80660906-4fa8-4ad5-86af-53ae50b3bc52)
+### [2026-03-23 04:48:22] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 1d44355e-02e0-4bc2-980c-1ddfa944099d
+- **Summary**: 실패/재시도 추적 API 구현. (1) tests/test_retry.py — 5개 테스트 클래스(TestRetryConstants·TestRetryRequest·TestRetryResponse·TestRetryService·TestRetryEndpoint) 총 19개 테스트 메서드: 상수 검증, 스키마 유효성, 서비스 로직(카운트 증가/에러 저장/상태 리
+- **Files**: 5개
+
