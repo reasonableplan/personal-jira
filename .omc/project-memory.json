@@ -1,0 +1,285 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1774231132855,
+  "projectRoot": "C:\\Users\\juwon\\OneDrive\\Desktop\\agent\\backend\\workspace",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "pyproject.toml"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "fastapi",
+        "version": null,
+        "category": "backend"
+      },
+      {
+        "name": "pytest",
+        "version": null,
+        "category": "testing"
+      }
+    ],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": "pytest",
+    "lintCommand": "ruff check",
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "src",
+      "tests"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "alembic": {
+      "path": "alembic",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1774231132839,
+      "keyFiles": [
+        "alembic.ini",
+        "env.py",
+        "script.py.mako"
+      ]
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 3,
+      "lastAccessed": 1774231132840,
+      "keyFiles": [
+        "API_GUIDE.md",
+        "PROJECT.md",
+        "work-log.md"
+      ]
+    },
+    "personal_jira": {
+      "path": "personal_jira",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1774231132840,
+      "keyFiles": [
+        "exceptions.py"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 2,
+      "lastAccessed": 1774231132841,
+      "keyFiles": [
+        "database.py",
+        "__init__.py"
+      ]
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 46,
+      "lastAccessed": 1774231132841,
+      "keyFiles": [
+        "conftest.py",
+        "test_agent_metrics_api.py",
+        "test_agent_metrics_schema.py",
+        "test_agent_metrics_service.py",
+        "test_alembic.py"
+      ]
+    },
+    "__pycache__": {
+      "path": "__pycache__",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1774231132842,
+      "keyFiles": [
+        "conftest.cpython-313-pytest-9.0.2.pyc"
+      ]
+    },
+    "personal_jira\\api": {
+      "path": "personal_jira\\api",
+      "purpose": "API routes",
+      "fileCount": 1,
+      "lastAccessed": 1774231132844,
+      "keyFiles": [
+        "labels.py"
+      ]
+    },
+    "personal_jira\\schemas": {
+      "path": "personal_jira\\schemas",
+      "purpose": "Schema definitions",
+      "fileCount": 2,
+      "lastAccessed": 1774231132845,
+      "keyFiles": [
+        "comment.py",
+        "label.py"
+      ]
+    },
+    "personal_jira\\services": {
+      "path": "personal_jira\\services",
+      "purpose": "Business logic services",
+      "fileCount": 1,
+      "lastAccessed": 1774231132845,
+      "keyFiles": [
+        "label.py"
+      ]
+    },
+    "src\\api": {
+      "path": "src\\api",
+      "purpose": "API routes",
+      "fileCount": 1,
+      "lastAccessed": 1774231132845,
+      "keyFiles": [
+        "review.py"
+      ]
+    },
+    "src\\models": {
+      "path": "src\\models",
+      "purpose": "Data models",
+      "fileCount": 3,
+      "lastAccessed": 1774231132845,
+      "keyFiles": [
+        "comment.py",
+        "issue.py",
+        "__init__.py"
+      ]
+    },
+    "src\\schemas": {
+      "path": "src\\schemas",
+      "purpose": "Schema definitions",
+      "fileCount": 1,
+      "lastAccessed": 1774231132846,
+      "keyFiles": [
+        "review.py"
+      ]
+    },
+    "src\\services": {
+      "path": "src\\services",
+      "purpose": "Business logic services",
+      "fileCount": 1,
+      "lastAccessed": 1774231132846,
+      "keyFiles": [
+        "review.py"
+      ]
+    },
+    "tests\\api": {
+      "path": "tests\\api",
+      "purpose": "API routes",
+      "fileCount": 1,
+      "lastAccessed": 1774231132846,
+      "keyFiles": [
+        "__init__.py"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "src\\personal_jira\\services\\dependency.py",
+      "accessCount": 5,
+      "lastAccessed": 1774231373119,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\models\\issue_dependency.py",
+      "accessCount": 2,
+      "lastAccessed": 1774231328550,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\models\\issue.py",
+      "accessCount": 2,
+      "lastAccessed": 1774231335555,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\models\\comment.py",
+      "accessCount": 2,
+      "lastAccessed": 1774231341473,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\services\\hierarchy.py",
+      "accessCount": 2,
+      "lastAccessed": 1774231348305,
+      "type": "file"
+    },
+    {
+      "path": "tests\\conftest.py",
+      "accessCount": 2,
+      "lastAccessed": 1774231407789,
+      "type": "file"
+    },
+    {
+      "path": "tests\\test_dependency_api.py",
+      "accessCount": 1,
+      "lastAccessed": 1774231196878,
+      "type": "file"
+    },
+    {
+      "path": "tests\\api\\v1\\test_delete_issue.py",
+      "accessCount": 1,
+      "lastAccessed": 1774231236265,
+      "type": "file"
+    },
+    {
+      "path": "tests\\api\\v1\\test_comment_crud.py",
+      "accessCount": 1,
+      "lastAccessed": 1774231237197,
+      "type": "file"
+    },
+    {
+      "path": "tests\\api\\v1\\test_retry.py",
+      "accessCount": 1,
+      "lastAccessed": 1774231237386,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\app.py",
+      "accessCount": 1,
+      "lastAccessed": 1774231247719,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\schemas\\dependency.py",
+      "accessCount": 1,
+      "lastAccessed": 1774231378562,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\routers\\comments.py",
+      "accessCount": 1,
+      "lastAccessed": 1774231441822,
+      "type": "file"
+    },
+    {
+      "path": "src\\personal_jira\\routers\\delete_issue.py",
+      "accessCount": 1,
+      "lastAccessed": 1774231449132,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
