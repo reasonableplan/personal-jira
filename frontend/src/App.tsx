@@ -1,12 +1,20 @@
-import { DarkModeToggle } from './components/DarkModeToggle';
+import { Routes, Route } from 'react-router-dom';
+import { AppLayout } from '@/layouts/AppLayout';
+import { DashboardPage } from '@/pages/DashboardPage';
+import { BoardPage } from '@/pages/BoardPage';
+import { IssueDetailPage } from '@/pages/IssueDetailPage';
+import { NotFoundPage } from '@/pages/NotFoundPage';
+import { ROUTES } from '@/constants/routes';
 
-export function App() {
+export default function App() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
-      <header className="flex items-center justify-between border-b border-gray-200 px-6 py-4 dark:border-gray-700">
-        <h1 className="text-xl font-bold text-gray-900 dark:text-white">Personal Jira</h1>
-        <DarkModeToggle />
-      </header>
-    </div>
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
+        <Route path={ROUTES.BOARD} element={<BoardPage />} />
+        <Route path={ROUTES.ISSUE_DETAIL} element={<IssueDetailPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }

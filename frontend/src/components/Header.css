@@ -1,0 +1,15 @@
+.header {
+  height: 56px;
+  background-color: var(--color-header-bg, #ffffff);
+  border-bottom: 1px solid var(--color-header-border, #e0e0e0);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  flex-shrink: 0;
+}
+
+.header-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-header-text, #1a1a2e);
+}
