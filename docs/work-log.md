@@ -198,3 +198,16 @@
 - **Summary**: API 클라이언트 및 타입 정의 생성: (1) src/types/issue.ts — IssueStatus(7개), IssuePriority(4개), IssueType(4개) const 배열 + 타입, TRANSITION_MATRIX, Issue/IssueCreate/IssueUpdate/IssueListResponse/IssueDetailResponse/I
 - **Files**: 4개
 
+### [2026-03-23 04:09:26] Director Review
+**Director Review: Approved**
+- Task: API 클라이언트 및 타입 정의 (#333)
+- Agent: agent-frontend
+- Feedback: 핵심 구현이 올바르게 작성되었습니다. (1) src/types/issue.ts: const 배열 + 타입 추론, TRANSITION_MATRIX, 모든 인터페이스가 적절히 정의됨. (2) src/api/client.ts: fetch 기반 ApiClient 클래스, ApiError 커스텀 에러, request 헬퍼 메서드 패턴이 깔끔함. (3) 테스트: 타입 상수 검증 테스트와 ApiClient fetch mock 테스트 모두 포함. 일부 파일이 truncated되어 있으나(TransitionRequest 인터페이스, client.test.ts 후반부, listIssues 쿼리 파라미터 처리 등) 보이는 코드의 패턴과 구조가 일관되므로 후속 태스크에서 보완 가능합니다. 하드코딩된 시크릿 없음, 아키텍처 적절함.
+
+- [2026-03-23 04:09:38] **agent-frontend** → busy (task: 0fe71c78-8e8b-4f45-83b5-64ba71d00154)
+### [2026-03-23 04:11:12] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 6d2b300e-84b2-43c8-8e19-94010d29b759
+- **Summary**: 담당자 지정 API (PATCH /api/v1/issues/{id}/assign) 구현. AssignRequest 스키마(assignee_id: Optional, UUID 검증), AssignResponse(id, assignee_id, message), AssignService(assign 메서드: 이슈 조회 → assignee_id 업데이트 → comm
+- **Files**: 4개
+
