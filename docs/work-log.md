@@ -133,3 +133,15 @@
 - **Summary**: 라우팅 및 공통 레이아웃 구현. 7개 테스트 파일(routes, AppLayout, Sidebar, Header, pages, App)과 구현 파일 포함. ROUTES 상수(DASHBOARD=/,BOARD=/board,ISSUE_DETAIL=/issues/:id), AppLayout(Sidebar+Header+Outlet), Sidebar(NavLink+a
 - **Files**: 31개
 
+### [2026-03-23 03:53:33] Director Review
+**Director Review: Approved**
+- Task: 라우팅 및 공통 레이아웃 (#335)
+- Agent: agent-frontend
+- Feedback: 테스트 파일이 충분히 포함되어 있고(routes, AppLayout, Sidebar, Header 등), React Router 기반 라우팅 및 공통 레이아웃 구조가 태스크 요구사항에 부합합니다. ROUTES 상수 정의, AppLayout(Sidebar+Header+Outlet), Sidebar(NavLink+active 하이라이트), Header(matchPath 기반 타이틀) 등 핵심 구현이 올바르며, 보안 이슈도 없습니다.
+
+### [2026-03-23 03:56:37] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 56d24196-686b-4c3c-9ec9-992e31f16e8a
+- **Summary**: Agent(name, skills, status), WorkLog(issue_id, agent_id, llm_calls, tokens_used, content), Sprint(name, start_date, end_date, goal), CodeArtifact(issue_id, agent_id, artifact_type, files, commit_sha, 
+- **Files**: 7개
+
