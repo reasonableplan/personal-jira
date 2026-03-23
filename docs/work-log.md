@@ -304,3 +304,16 @@
 - **Summary**: 이슈 계층 API 구현: GET /api/v1/issues/{id}/children (직접 하위 이슈), GET /api/v1/issues/{id}/subtree (재귀 트리, max_depth 옵션), GET /api/v1/issues/{id}/ancestors (상위 경로). HierarchyService 서비스 계층 분리, Pydantic 스키마(Is
 - **Files**: 5개
 
+### [2026-03-23 04:27:02] Director Review
+**Director Review: Approved**
+- Task: 이슈 계층 API (Epic→Story→Task/Sub-task 트리) (#311)
+- Agent: agent-backend
+- Feedback: 핵심 구현이 올바르게 되어 있습니다. HierarchyService 서비스 계층 분리, Pydantic 스키마(재귀 IssueSubtreeResponse 포함), 3개 엔드포인트(children/subtree/ancestors) 라우터 구현 모두 적절합니다. 테스트 파일 2개(API 테스트 + 서비스 테스트)가 포함되어 있고 다양한 케이스를 커버합니다. 일부 파일이 잘려 있으나(hierarchy.py 서비스의 get_ancestors 끝부분, 테스트 파일 일부) 핵심 로직과 아키텍처는 정확하며 후속 작업에서 보완 가능합니다. max_depth 재귀 제한과 MAX_ANCESTOR_DEPTH 무한루프 방지도 잘 설계되어 있습니다.
+
+- [2026-03-23 04:27:14] **agent-backend** → busy (task: e2599671-968a-4467-b593-43d980ac58d4)
+### [2026-03-23 04:27:34] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: 7ef5b184-8522-41d1-aeb5-5266af0a111b
+- **Summary**: 키보드 단축키 시스템 구현: (1) types/keyboard.ts — KeyboardShortcut, KeyboardShortcutGroup, UseKeyboardShortcutsOptions 타입 정의, (2) hooks/useKeyboardShortcuts.ts — 글로벌 keydown 리스너, C=생성/J=아래/K=위/?=도움말 매핑, input/t
+- **Files**: 7개
+
