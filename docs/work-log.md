@@ -224,3 +224,16 @@
 - **Summary**: Zustand 글로벌 스토어 3개 생성: (1) useIssueStore — CRUD + 선택/로딩/에러 상태, (2) useFilterStore — status/priority/type 필터 + 검색어 + toggle/clear/hasActive, (3) useUIStore — 사이드패널(open/close/toggle + contentType) + 뷰모
 - **Files**: 8개
 
+### [2026-03-23 04:12:02] Director Review
+**Director Review: Approved**
+- Task: Zustand 글로벌 스토어 설정 (#334)
+- Agent: agent-frontend
+- Feedback: 핵심 구현이 올바르게 되어 있습니다. Zustand 스토어 3개(Issue/Filter/UI)가 태스크 요구사항에 맞게 설계되었고, 테스트 파일 3개가 포함되어 있습니다(일부 truncated되었으나 충분한 테스트 케이스 확인 가능). INITIAL_STATE 분리 패턴과 reset() 포함, addIssue 중복 방지, removeIssue 시 selectedIssueId 정리 등 세부 로직도 적절합니다. 보안 이슈 없음.
+
+- [2026-03-23 04:12:15] **agent-frontend** → busy (task: 650552a8-1956-428c-b1e8-5038d9004f70)
+### [2026-03-23 04:13:34] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 30bed7fa-917f-4c6b-b4df-036652897bf6
+- **Summary**: 라벨/태그 API 구현: POST/DELETE/GET /api/v1/issues/{id}/labels (이슈별 라벨 추가/제거/조회) + GET /api/v1/labels (전체 라벨 목록). LabelService가 Issue.labels ARRAY 필드를 직접 조작하며, 중복 방지/정렬 처리. 스키마에서 빈 라벨 리스트 거부, 공백 trim, 중복 제거
+- **Files**: 5개
+
