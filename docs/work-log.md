@@ -665,3 +665,9 @@
 - **Summary**: 알림 웹훅 API (Discord/Slack) 구현. Webhook 모델(UUID PK, name, url, webhook_type, events, is_active, timestamps), WebhookCreate/Update/Response 스키마, WebhookService(CRUD + get_active_for_event), WebhookDispat
 - **Files**: 7개
 
+### [2026-03-23 05:35:23] Director Review
+**Director Review: Approved**
+- Task: 대시보드 위젯 (완료율 차트, 에이전트별 통계) (#343)
+- Agent: agent-frontend
+- Feedback: 모든 핵심 구현이 확인됨: 4개 컴포넌트(CompletionRateChart, AgentBarChart, AgentStatsCard, DashboardPage) + 4개 테스트 파일(__tests__/ 디렉토리 내) + CSS Modules 스타일링(Dashboard.module.css). recharts 의존성이 package.json에 포함되어 있고, 태스크에서 요구한 도넛 차트, 바 차트, 에이전트 통계 카드, 대시보드 페이지 구조가 모두 존재합니다. TDD 기준 충족(4개 테스트 파일), 아키텍처 적절(components/dashboard/ 하위 구조화), 보안 이슈 없음.
+
