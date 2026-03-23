@@ -1,107 +1,95 @@
-import json
 import uuid
-from typing import Any
 
 from sqlalchemy import select
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from personal_jira.models.template import IssueTemplate
 from personal_jira.models.issue import Issue
+from personal_jira.models.template import IssueTemplate
+from personal_jira.schemas.template import CloneIssueRequest, TemplateCreate
 
-
-class DuplicateTemplateNameError(Exception):
-    pass
+DEFAULT_STATUS = "backlog"
 
 
 class TemplateService:
-    def __init__(self, session: AsyncSession) -> None:
-        self._session = session
-
-    async def create(
-        self,
-        name: str,
-        title_pattern: str,
-        description: str | None = None,
-        priority: str | None = None,
-        labels: list[str] | None = None,
-    ) -> IssueTemplate:
+    async def create(self, db: AsyncSession, data: TemplateCreate) -> IssueTemplate:
         template = IssueTemplate(
-            name=name,
-            title_pattern=title_pattern,
-            description=description,
-            priority=priority,
-            labels=json.dumps(labels or []),
+            name=data.name,
+            title_pattern=data.title_pattern,
+            description_template=data.description_template,
+            default_priority=data.default_priority,
+            default_issue_type=data.default_issue_type,
+            default_labels=data.default_labels,
         )
-        self._session.add(template)
-        try:
-            await self._session.commit()
-        except IntegrityError:
-            await self._session.rollback()
-            raise DuplicateTemplateNameError(f"Template '{name}' already exists")
-        await self._session.refresh(template)
+        db.add(template)
+        await db.commit()
+        await db.refresh(template)
         return template
 
-    async def list_all(self) -> list[IssueTemplate]:
-        result = await self._session.execute(select(IssueTemplate))
+    async def get_by_id(
+        self, db: AsyncSession, template_id: uuid.UUID
+    ) -> IssueTemplate | None:
+        stmt = select(IssueTemplate).where(IssueTemplate.id == template_id)
+        result = await db.execute(stmt)
+        return result.scalar_one_or_none()
+
+    async def list_all(self, db: AsyncSession) -> list[IssueTemplate]:
+        stmt = select(IssueTemplate).order_by(IssueTemplate.name)
+        result = await db.execute(stmt)
         return list(result.scalars().all())
 
-    async def get(self, template_id: uuid.UUID) -> IssueTemplate | None:
-        return await self._session.get(IssueTemplate, template_id)
-
-    async def delete(self, template_id: uuid.UUID) -> bool:
-        template = await self._session.get(IssueTemplate, template_id)
-        if not template:
-            return False
-        await self._session.delete(template)
-        await self._session.commit()
-        return True
-
     async def create_issue_from_template(
-        self, template_id: uuid.UUID, summary: str
-    ) -> Issue | None:
-        template = await self._session.get(IssueTemplate, template_id)
-        if not template:
-            return None
-        title = template.title_pattern.replace("{summary}", summary)
-        labels_list: list[str] = json.loads(template.labels)
+        self,
+        db: AsyncSession,
+        template_id: uuid.UUID,
+        variables: dict[str, str],
+    ) -> Issue:
+        template = await self.get_by_id(db, template_id)
+        if template is None:
+            raise ValueError("Template not found")
+
+        title = template.title_pattern.format_map(variables)
+        description = None
+        if template.description_template:
+            description = template.description_template.format_map(variables)
+
         issue = Issue(
             title=title,
-            description=template.description,
-            priority=template.priority or "medium",
-            labels=json.dumps(labels_list) if labels_list else None,
+            description=description,
+            priority=template.default_priority,
+            issue_type=template.default_issue_type,
+            status=DEFAULT_STATUS,
         )
-        self._session.add(issue)
-        await self._session.commit()
-        await self._session.refresh(issue)
+        db.add(issue)
+        await db.commit()
+        await db.refresh(issue)
         return issue
 
     async def clone_issue(
-        self, issue_id: uuid.UUID, title_override: str | None = None
-    ) -> Issue | None:
-        original = await self._session.get(Issue, issue_id)
-        if not original:
-            return None
-        clone = Issue(
-            title=title_override or f"[CLONE] {original.title}",
+        self,
+        db: AsyncSession,
+        issue_id: uuid.UUID,
+        request: CloneIssueRequest,
+    ) -> Issue:
+        stmt = select(Issue).where(Issue.id == issue_id)
+        result = await db.execute(stmt)
+        original = result.scalar_one_or_none()
+        if original is None:
+            raise ValueError("Issue not found")
+
+        title = original.title
+        if request.title_prefix:
+            title = f"{request.title_prefix} {original.title}"
+
+        status = DEFAULT_STATUS if request.reset_status else original.status
+
+        cloned = Issue(
+            title=title,
             description=original.description,
             priority=original.priority,
-            labels=original.labels,
-            parent_id=original.parent_id,
+            issue_type=original.issue_type,
+            status=status,
         )
-        self._session.add(clone)
-        await self._session.commit()
-        await self._session.refresh(clone)
-        return clone
-
-    def _to_response(self, template: IssueTemplate) -> dict[str, Any]:
-        return {
-            "id": str(template.id),
-            "name": template.name,
-            "title_pattern": template.title_pattern,
-            "description": template.description,
-            "priority": template.priority,
-            "labels": json.loads(template.labels),
-            "created_at": str(template.created_at),
-            "updated_at": str(template.updated_at),
-        }
+        db.add(cloned)
+        await db.commit()
+        await db.refresh(cloned)
+        return cloned

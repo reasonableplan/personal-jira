@@ -2,9 +2,9 @@ import enum
 import uuid
 from datetime import date, datetime
 
-from sqlalchemy import String, Text, Date, DateTime, Enum, func
+from sqlalchemy import Date, DateTime, Enum, String, Text, func
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
 from personal_jira.models.base import Base
 
@@ -25,19 +25,13 @@ class Sprint(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     goal: Mapped[str | None] = mapped_column(Text, nullable=True)
     status: Mapped[SprintStatus] = mapped_column(
-        Enum(SprintStatus, name="sprint_status", values_callable=lambda x: [e.value for e in x]),
-        default=SprintStatus.PLANNING,
-        nullable=False,
+        Enum(SprintStatus), nullable=False, default=SprintStatus.PLANNING
     )
     start_date: Mapped[date] = mapped_column(Date, nullable=False)
     end_date: Mapped[date] = mapped_column(Date, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
+        DateTime(timezone=True), server_default=func.now()
     )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
-    )
-
-    issues: Mapped[list["Issue"]] = relationship(
-        "Issue", back_populates="sprint", lazy="selectin"
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )

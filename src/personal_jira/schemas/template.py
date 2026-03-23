@@ -1,29 +1,41 @@
-import uuid
-from typing import Optional
+from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, model_validator
 
 
 class TemplateCreate(BaseModel):
-    name: str = Field(..., min_length=1, max_length=200)
-    title_pattern: str = Field(..., min_length=1, max_length=500)
-    description: Optional[str] = None
-    priority: Optional[str] = None
-    labels: list[str] = Field(default_factory=list)
+    name: str
+    title_pattern: str
+    description_template: str | None = None
+    default_priority: str | None = None
+    default_issue_type: str | None = None
+    default_labels: list[str] | None = None
+
+    @model_validator(mode="after")
+    def validate_fields(self) -> "TemplateCreate":
+        if not self.name.strip():
+            raise ValueError("name must not be empty")
+        if not self.title_pattern.strip():
+            raise ValueError("title_pattern must not be empty")
+        return self
 
 
 class TemplateResponse(BaseModel):
-    id: uuid.UUID
+    id: UUID
     name: str
     title_pattern: str
-    description: Optional[str]
-    priority: Optional[str]
-    labels: list[str]
-    created_at: str
-    updated_at: str
+    description_template: str | None = None
+    default_priority: str | None = None
+    default_issue_type: str | None = None
+    default_labels: list[str] | None = None
 
     model_config = {"from_attributes": True}
 
 
-class TemplateIssueCreate(BaseModel):
-    summary: str = Field(..., min_length=1)
+class CreateFromTemplateRequest(BaseModel):
+    variables: dict[str, str] = {}
+
+
+class CloneIssueRequest(BaseModel):
+    title_prefix: str | None = None
+    reset_status: bool = True
