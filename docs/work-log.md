@@ -237,3 +237,16 @@
 - **Summary**: 라벨/태그 API 구현: POST/DELETE/GET /api/v1/issues/{id}/labels (이슈별 라벨 추가/제거/조회) + GET /api/v1/labels (전체 라벨 목록). LabelService가 Issue.labels ARRAY 필드를 직접 조작하며, 중복 방지/정렬 처리. 스키마에서 빈 라벨 리스트 거부, 공백 trim, 중복 제거
 - **Files**: 5개
 
+### [2026-03-23 04:13:53] Director Review
+**Director Review: Approved**
+- Task: 라벨/태그 API (POST/DELETE /api/v1/issues/{id}/labels) (#308)
+- Agent: agent-backend
+- Feedback: 라벨/태그 API 구현이 태스크 요구사항에 부합합니다. POST/DELETE/GET /api/v1/issues/{id}/labels 및 GET /api/v1/labels 엔드포인트가 모두 구현되어 있고, LabelService가 Issue.labels ARRAY 필드를 직접 조작하며 중복 방지/정렬 처리를 올바르게 수행합니다. 스키마에서 빈 라벨 리스트 거부, 공백 trim, 중복 제거 검증이 field_validator로 구현되어 있습니다. 테스트 2파일(test_label_api.py, test_label_service.py)이 포함되어 있으며, 스키마 검증 및 서비스 로직 테스트가 작성되어 있습니다. 일부 파일이 잘린 부분이 있으나(test_lab
+
+- [2026-03-23 04:14:04] **agent-backend** → busy (task: 968a33fd-8163-434f-95c6-f56572959de7)
+### [2026-03-23 04:16:37] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: 650552a8-1956-428c-b1e8-5038d9004f70
+- **Summary**: 이슈 생성/편집 폼 + 마크다운 에디터 구현. 7개 테스트 파일(types, MarkdownEditor, SelectField, LabelPicker, IssueForm, IssueFormModal, useIssueForm hook) + 8개 구현 파일(types/issue.ts, hooks/useIssueForm.ts, utils/markdown.ts, 
+- **Files**: 15개
+
