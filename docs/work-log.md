@@ -356,3 +356,15 @@
 - **Summary**: 이슈 의존성 그래프 시각화 컴포넌트 구현. @xyflow/react(ReactFlow) 기반 노드/엣지 그래프. BFS 토폴로지 정렬로 레이아웃 자동 배치, 상태별 색상 배지, 우선순위 표시, 포커스 이슈 하이라이트, 로딩/에러/빈 상태 처리. 테스트 4파일(DependencyGraph, IssueNode, api, graph-utils) → 구현 7파일(
 - **Files**: 11개
 
+### [2026-03-23 04:34:36] Director Review
+**Director Review: Approved**
+- Task: 이슈 간 의존성 그래프 (노드 그래프) (#345)
+- Agent: agent-frontend
+- Feedback: 테스트 4파일(DependencyGraph, IssueNode, api, graph-utils) 모두 포함되어 있고, @xyflow/react 기반 노드/엣지 그래프 시각화 구현이 태스크 요구사항에 부합합니다. 타입 정의(types.ts)가 잘 구조화되어 있으며, BFS 레이아웃, 상태별 색상, 우선순위 표시 등 핵심 기능이 테스트에 반영되어 있습니다. 일부 파일이 잘려있으나(DependencyGraph.test.tsx, graph-utils.test.ts) 핵심 로직과 테스트 커버리지는 충분합니다. 보안 이슈 없음.
+
+### [2026-03-23 04:34:49] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: aee1ea58-0267-4ef0-bfbc-821e3444a3e2
+- **Summary**: 검색/필터 API 구현: GET /api/v1/issues에 다중 조건 필터링(status, priority, assignee, label, issue_type, q 키워드), 정렬(sort_by/sort_order), 페이지네이션(offset/limit) 지원. IssueSearchParams(Pydantic 검증: sort_by 허용 필드, limit 
+- **Files**: 5개
+
