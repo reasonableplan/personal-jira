@@ -645,3 +645,23 @@
 - **Summary**: 대시보드 통계 API 구현: GET /api/v1/dashboard/stats 엔드포인트. DashboardService가 Issue 테이블에서 상태별/우선순위별/담당자별 GROUP BY 집계 수행. DashboardStats 스키마(total, by_status, by_priority, by_assignee, done_count, completion_ra
 - **Files**: 4개
 
+### [2026-03-23 05:32:18] Director Review
+**Director Review: Approved**
+- Task: 대시보드 통계 API (#326)
+- Agent: agent-backend
+- Feedback: 대시보드 통계 API 구현이 태스크 요구사항에 부합합니다. 스키마(DashboardStats, StatusCount, PriorityCount, AssigneeCount), 서비스(DashboardService with GROUP BY 집계), API 엔드포인트(GET /api/v1/dashboard/stats) 모두 적절히 구현되었습니다. 테스트 파일이 존재하며 스키마 검증 6건이 포함되어 있습니다(서비스/API 테스트는 truncated되었으나 이는 reject 사유가 아님). completion_rate 계산 시 total=0 케이스도 처리되어 있고, 보안 이슈 없습니다. 아키텍처도 schemas/services/api 레이어 분리가 잘 되어 있습니다.
+
+- [2026-03-23 05:32:28] **agent-frontend** → busy (task: 7442ea67-bacc-4636-8abc-76c60001f2a3)
+- [2026-03-23 05:32:30] **agent-backend** → busy (task: 9fc617bc-8464-4a2e-a3e4-1c7aa83efc79)
+### [2026-03-23 05:34:48] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: 7442ea67-bacc-4636-8abc-76c60001f2a3
+- **Summary**: 대시보드 위젯 구현: CompletionRateChart(도넛 차트 - 상태별 이슈 분포 + 완료율), AgentBarChart(바 차트 - 에이전트별 완료/진행중 비교), AgentStatsCard(에이전트 통계 카드 - 전체/완료/진행중/완료율/평균시간), DashboardPage(요약 카드 + 차트 + 에이전트 통계 그리드). recharts 사용, 
+- **Files**: 18개
+
+### [2026-03-23 05:35:15] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 9fc617bc-8464-4a2e-a3e4-1c7aa83efc79
+- **Summary**: 알림 웹훅 API (Discord/Slack) 구현. Webhook 모델(UUID PK, name, url, webhook_type, events, is_active, timestamps), WebhookCreate/Update/Response 스키마, WebhookService(CRUD + get_active_for_event), WebhookDispat
+- **Files**: 7개
+
