@@ -336,3 +336,9 @@
 - **Summary**: 의존성 관리 API 구현: POST/GET/DELETE /api/v1/issues/{id}/dependencies 엔드포인트, IssueDependency 모델(UniqueConstraint + CheckConstraint), BFS 기반 순환 의존성 검증, DependencyService/DependencyReleaseService 계층, 5개 테스트 파
 - **Files**: 17개
 
+### [2026-03-23 04:31:48] Director Review
+**Director Review: Approved**
+- Task: Epic 프로그레스 바 + 드래그 우선순위 변경 (#342)
+- Agent: agent-frontend
+- Feedback: 핵심 구현이 태스크 요구사항에 부합합니다. (1) EpicProgressBar: done/in_progress 세그먼트 진행률 시각화 구현 완료, (2) useKanbanDrag: reorderItems 순수 함수 분리 + batchReorder API 호출 + 옵티미스틱 UI/롤백 패턴 적용, (3) computeProgress: DONE/IN_PROGRESS/IN_REVIEW 상태별 카운트 정상, (4) 테스트: EpicProgressBar 8케이스 포함 다수 테스트 파일 존재. useKanbanDrag.ts의 handleDragEnd가 truncated되어 있으나 이는 후속 작업에서 보완 가능한 수준입니다. 보안 이슈 없으며, API 레이어/훅/컴포넌트 분리 구조도 적절합니다.
+
