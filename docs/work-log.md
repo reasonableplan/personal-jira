@@ -342,3 +342,17 @@
 - Agent: agent-frontend
 - Feedback: 핵심 구현이 태스크 요구사항에 부합합니다. (1) EpicProgressBar: done/in_progress 세그먼트 진행률 시각화 구현 완료, (2) useKanbanDrag: reorderItems 순수 함수 분리 + batchReorder API 호출 + 옵티미스틱 UI/롤백 패턴 적용, (3) computeProgress: DONE/IN_PROGRESS/IN_REVIEW 상태별 카운트 정상, (4) 테스트: EpicProgressBar 8케이스 포함 다수 테스트 파일 존재. useKanbanDrag.ts의 handleDragEnd가 truncated되어 있으나 이는 후속 작업에서 보완 가능한 수준입니다. 보안 이슈 없으며, API 레이어/훅/컴포넌트 분리 구조도 적절합니다.
 
+### [2026-03-23 04:31:55] Director Review
+**Director Review: Approved**
+- Task: 의존성 관계 API (blocked-by/blocks + 자동 해제) (#312)
+- Agent: agent-backend
+- Feedback: 테스트 파일 5개(conftest, model, service, api, release) 모두 포함되어 있고, 핵심 로직(의존성 CRUD, 순환 의존성 검증, 자동 Ready 전이)이 올바르게 구현되어 있습니다. 파일이 일부 잘려 있으나 핵심 구조와 테스트 커버리지는 충분합니다. UniqueConstraint/CheckConstraint 모델 제약조건, BFS 순환 검증, DependencyService/DependencyReleaseService 계층 분리 등 아키텍처도 적절합니다. 보안 이슈 없음.
+
+- [2026-03-23 04:31:59] **agent-frontend** → busy (task: 97de17a7-4f11-4d71-92f4-5731f546c3b4)
+- [2026-03-23 04:32:07] **agent-backend** → busy (task: aee1ea58-0267-4ef0-bfbc-821e3444a3e2)
+### [2026-03-23 04:34:26] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: 97de17a7-4f11-4d71-92f4-5731f546c3b4
+- **Summary**: 이슈 의존성 그래프 시각화 컴포넌트 구현. @xyflow/react(ReactFlow) 기반 노드/엣지 그래프. BFS 토폴로지 정렬로 레이아웃 자동 배치, 상태별 색상 배지, 우선순위 표시, 포커스 이슈 하이라이트, 로딩/에러/빈 상태 처리. 테스트 4파일(DependencyGraph, IssueNode, api, graph-utils) → 구현 7파일(
+- **Files**: 11개
+
