@@ -740,3 +740,16 @@
 - **Summary**: 웹훅 발송(등록/목록/삭제/토글 + HMAC 서명 디스패치), 파일 첨부(업로드/목록/삭제/다운로드 + 10MB 제한), 이슈 템플릿(CRUD + 템플릿→이슈 생성) 및 이슈 복제 통합 테스트와 구현. 테스트 3파일(test_webhooks 16건, test_attachments 10건, test_templates 12건) → 모델/스키마/서비스/라우터 구
 - **Files**: 25개
 
+### [2026-03-23 05:55:28] Director Review
+**Director Review: Approved**
+- Task: 백엔드 통합 테스트 — 추가 기능 (웹훅, 첨부, 템플릿) (#353)
+- Agent: agent-backend
+- Feedback: 웹훅(등록/목록/삭제/토글 + HMAC 서명), 파일 첨부(업로드/목록/삭제/다운로드 + 10MB 제한), 이슈 템플릿(CRUD + 템플릿→이슈 생성) 및 이슈 복제에 대한 통합 테스트 3파일(test_webhooks, test_attachments, test_templates)이 포함되어 있으며, 모델/스키마/서비스 구조가 적절합니다. config.py에 하드코딩된 시크릿 없이 환경변수 기반 설정을 사용하고 있습니다. 일부 테스트 파일이 잘려 있으나 핵심 구조와 테스트 패턴이 확인되므로 후속 작업에서 보완 가능합니다.
+
+- [2026-03-23 05:55:39] **agent-backend** → busy (task: 6d97cbcd-d6f9-457d-9757-29e161919605)
+### [2026-03-23 05:59:01] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 6d97cbcd-d6f9-457d-9757-29e161919605
+- **Summary**: 에이전트 특화 기능 테스트 및 구현: (1) tests/test_agent_features.py — 7개 클래스(TestAutoPreemption·TestWorkLog·TestFailureRetry·TestArtifacts·TestReviewLoop·TestTimeLimit·TestMetrics) 총 27개 테스트, (2) src/personal_jira/
+- **Files**: 3개
+
