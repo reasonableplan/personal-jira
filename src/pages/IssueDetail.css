@@ -1,0 +1,12 @@
+.issue-detail h1 {
+  margin: 0 0 16px;
+}
+
+.issue-detail__id {
+  font-size: 14px;
+  color: var(--color-text-secondary, #757575);
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border, #e0e0e0);
+}

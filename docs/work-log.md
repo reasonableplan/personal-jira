@@ -120,3 +120,16 @@
 - **Summary**: Comment(issue_id FK, author, body_md, comment_type enum), Label(name unique, color), IssueLabel(M2M with unique constraint + 양방향 인덱스), IssueDependency(blocked_by/blocks, unique from/to + 양방향 인덱스) 모델 정
 - **Files**: 11개
 
+### [2026-03-23 03:53:03] Director Review
+**Director Review: Approved**
+- Task: 관계 모델 정의 — Comment, Label, IssueLabel, Dependency (#302)
+- Agent: agent-backend
+- Feedback: 모든 관계 모델(Comment, Label, IssueLabel, IssueDependency)이 태스크 요구사항에 맞게 정의되었고, 각 모델별 테스트 파일(스키마 검증, FK, 인덱스, CRUD)이 포함되어 있습니다. 테스트 파일 일부가 truncated되어 있으나 핵심 구조와 테스트 패턴이 확인되므로 승인합니다. __init__.py에서 모든 모델을 올바르게 re-export하고 있습니다.
+
+- [2026-03-23 03:53:14] **agent-backend** → busy (task: 56d24196-686b-4c3c-9ec9-992e31f16e8a)
+### [2026-03-23 03:53:22] Review Request — SUCCESS
+- **Agent**: agent-frontend
+- **Task**: edca23ec-6a42-4c64-b994-a6c3d8bb0c5b
+- **Summary**: 라우팅 및 공통 레이아웃 구현. 7개 테스트 파일(routes, AppLayout, Sidebar, Header, pages, App)과 구현 파일 포함. ROUTES 상수(DASHBOARD=/,BOARD=/board,ISSUE_DETAIL=/issues/:id), AppLayout(Sidebar+Header+Outlet), Sidebar(NavLink+a
+- **Files**: 31개
+
