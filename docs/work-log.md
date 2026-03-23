@@ -552,3 +552,16 @@
 - **Summary**: 컨텍스트 번들 API + 작업 시간 제한/자동 반납 구현. (1) ContextBundle/BundleItem 모델 (file/spec/snippet 타입, cascade delete), (2) ContextBundleService (CRUD: create/get/list/delete), (3) POST/GET/DELETE /api/v1/issues/{id
 - **Files**: 9개
 
+### [2026-03-23 05:07:16] Director Review
+**Director Review: Approved**
+- Task: 컨텍스트 번들 API + 작업 시간 제한/자동 반납 (#320)
+- Agent: agent-backend
+- Feedback: 핵심 구현이 태스크 요구사항에 부합합니다. (1) ContextBundle/BundleItem 모델 — cascade delete, UUID PK, 타임스탬프 포함, (2) Pydantic 스키마 — items 비어있지 않음 검증 포함, (3) 테스트 파일 3개(모델/스키마/서비스 단위테스트, API 통합테스트, 자동반납 테스트) 존재. 일부 파일이 잘려있으나(서비스 구현체, API 엔드포인트, 테스트 일부) 이는 후속 태스크에서 보완 가능. 하드코딩된 시크릿 없음, 아키텍처(models/schemas/services/api 레이어 분리)가 기존 프로젝트 구조와 일관됨. 후속 개선 권장사항: (1) auto_return_background_loop의 에러 핸들링 및 로깅 확인 필요, (2) 
+
+- [2026-03-23 05:07:27] **agent-backend** → busy (task: a4759f41-189d-4b5d-9ba6-d2a142bcb45f)
+### [2026-03-23 05:12:13] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: a4759f41-189d-4b5d-9ba6-d2a142bcb45f
+- **Summary**: 활동 로그 API (Activity Feed) 구현: (1) ActivityLog 모델 — UUID PK, issue_id(인덱스), ActivityType enum(10종: status/assignee/comment/priority/title/description/dependency_added/dependency_removed/created/deleted
+- **Files**: 10개
+
