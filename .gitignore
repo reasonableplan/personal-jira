@@ -29,3 +29,6 @@ Thumbs.db
 
 # Docker
 docker-compose.override.yml
+
+# Worktrees (agent workspace)
+.worktrees/
