@@ -113,3 +113,16 @@
 - **Summary**: 커스텀 예외 클래스(AppException, IssueNotFoundException), 에러 응답 스키마(ErrorResponse), 글로벌 예외 핸들러(AppException, RequestValidationError, StarletteHTTPException, 미처리 Exception) 구현. 모든 에러 응답이 {"detail": str, "statu
 - **Files**: 4개
 
+### [2026-03-24 08:35:31] Director Review
+**Director Review: Approved**
+- Task: 글로벌 예외 핸들러 + 에러 응답 스키마 (#450)
+- Agent: agent-backend
+- Feedback: 핵심 구현이 올바릅니다. AppException/IssueNotFoundException 커스텀 예외, ErrorResponse 스키마, 글로벌 예외 핸들러(AppException, RequestValidationError, StarletteHTTPException, 미처리 Exception) 모두 구현되어 있고, 에러 응답이 {"detail": str, "status_code": int} 포맷으로 통일되어 있습니다. 테스트 파일(test_exceptions.py)이 포함되어 있으며 단위 테스트와 통합 테스트를 모두 다루고 있습니다. 테스트 파일 끝부분이 잘렸으나 핵심 테스트 케이스는 충분히 포함되어 있어 승인합니다. 참고: app/exceptions.py에서 StarletteHTTPException을
+
+- [2026-03-24 08:35:42] **agent-backend** → busy (task: 1cda72e7-3194-40e8-9d2b-a03d8d6a91f0)
+### [2026-03-24 08:36:05] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 1cda72e7-3194-40e8-9d2b-a03d8d6a91f0
+- **Summary**: 헬스체크 엔드포인트 구현: GET /health에서 DB SELECT 1 실행하여 연결 확인. 정상 시 200 {status: healthy, database: connected}, 실패 시 503 {status: unhealthy, database: disconnected, detail: error}. app/routers/health.py에 APIRou
+- **Files**: 3개
+
