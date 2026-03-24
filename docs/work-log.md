@@ -144,3 +144,44 @@ help: Inherit from `enum.StrEnum`
 - **Summary**: app/routers/health.py에 GET /health 엔드포인트를 구현했습니다. async_session_factory를 사용해 SELECT 1 쿼리로 DB 연결을 확인하며, 성공 시 200 {status: ok, database: connected}, 실패 시 503 {status: degraded, database: disconnected}를 
 - **Files**: 4개
 
+### [2026-03-24 08:10:55] Director Review
+**Director Review: Approved**
+- Task: 헬스체크 엔드포인트 (#428)
+- Agent: agent-backend
+- Feedback: 핵심 구현이 태스크 요구사항을 정확히 충족합니다. GET /health 엔드포인트가 async_session_factory를 통해 SELECT 1 쿼리로 DB 연결을 확인하고, 성공 시 200 {status: ok, database: connected}, 실패 시 503 {status: degraded, database: disconnected}를 반환합니다. try/except로 DB 실패를 감싸 서버 자체는 항상 응답하며, 라우터 분리 구조도 적절합니다. 테스트는 정상/실패 두 케이스를 모두 커버합니다. 사소한 개선점: HTTP 상태코드 상수(HTTP_OK, HTTP_SERVICE_UNAVAILABLE)는 starlette.status 모듈의 기존 상수를 사용하는 것이 관례적이나, 기능상 문제는 없습니다.
+
+- [2026-03-24 08:11:06] **agent-backend** → busy (task: bad7ae28-ee6f-47ed-b184-96fb2e5f7158)
+### [2026-03-24 08:11:35] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: bad7ae28-ee6f-47ed-b184-96fb2e5f7158
+- **Summary**: app/core/exceptions.py에 DomainError 기반 커스텀 예외 계층(NotFoundError, UnauthorizedError, ForbiddenError, ConflictError)을 정의하고, register_exception_handlers()로 DomainError·HTTPException·RequestValidationError
+- **Files**: 3개
+
+### [2026-03-24 08:11:36] Director Review
+**Director Review: Changes Requested**
+- Task: 글로벌 예외 핸들러 및 응답 형식 통일 (#430)
+- Agent: agent-backend
+- Feedback: 테스트 실패로 reject합니다.
+
+```
+=== LINT ===
+F401 [*] `unittest.mock.AsyncMock` imported but unused
+ --> .worktrees\task-bad7ae28\tests\test_exceptions.py:1:27
+  |
+1 | from unittest.mock import AsyncMock, patch
+  |                           ^^^^^^^^^
+2 |
+3 | import pytest
+  |
+help: Remove unused import
+
+F401 [*] `unittest.mock.patch` imported but unused
+ --> .worktrees\task-bad7ae28\tests\test_
+
+- [2026-03-24 08:11:47] **agent-backend** → busy (task: bad7ae28-ee6f-47ed-b184-96fb2e5f7158)
+### [2026-03-24 08:12:23] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: bad7ae28-ee6f-47ed-b184-96fb2e5f7158
+- **Summary**: 글로벌 예외 핸들러 및 통일된 응답 형식을 구현했습니다. AppException 기반 도메인 예외 계층(NotFoundError 404, AlreadyExistsError 409, UnauthorizedError 401, ForbiddenError 403)을 만들고, 모든 에러가 {"detail": "message"} 형태로 반환되도록 FastAPI exc
+- **Files**: 3개
+
