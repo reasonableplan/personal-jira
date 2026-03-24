@@ -1,6 +1,5 @@
-from collections.abc import AsyncGenerator
-from contextlib import asynccontextmanager
 import logging
+from collections.abc import AsyncGenerator
 
 from fastapi import FastAPI
 
@@ -9,7 +8,6 @@ from app.config import settings
 logger = logging.getLogger(__name__)
 
 
-@asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     logger.info("Starting %s", settings.APP_NAME)
     yield
@@ -25,7 +23,7 @@ app = FastAPI(
 
 @app.get("/")
 async def root() -> dict[str, str]:
-    return {"message": f"{settings.APP_NAME} is running"}
+    return {"message": "Personal Jira API"}
 
 
 @app.get("/health")
