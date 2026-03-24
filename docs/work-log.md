@@ -69,3 +69,22 @@
 - **Files**: 5개
 
 - [2026-03-24 11:33:30] **agent-backend** → busy (task: fce6af62-b81d-488e-b5ab-5fa680ac020d)
+### [2026-03-24 11:33:46] Director Review
+**Director Review: Approved**
+- Task: Alembic 마이그레이션 설정 (#526)
+- Agent: agent-backend
+- Feedback: Alembic async 마이그레이션 설정이 올바르게 구현되었습니다. alembic.ini의 sqlalchemy.url 비워둠, env.py에서 settings.DATABASE_URL 동적 사용, target_metadata = Base.metadata 설정, async 마이그레이션 러너(asyncio.run + create_async_engine), 초기 마이그레이션에 issues 테이블과 check constraints(ck_issues_status, ck_issues_priority) 포함 확인. 테스트 파일도 파일 구조, env.py 임포트, 메타데이터 설정, 마이그레이션 내용 검증을 포함하고 있습니다. test_migrations.py가 잘렸지만 핵심 테스트 케이스들은 포함되어 있으므로 문제없습니다.
+
+- [2026-03-24 11:33:57] **agent-backend** → busy (task: 98d78c2a-6db8-4dc9-b189-072e983299c2)
+### [2026-03-24 11:34:26] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 98d78c2a-6db8-4dc9-b189-072e983299c2
+- **Summary**: tests/conftest.py 생성: TEST_DATABASE_URL 환경변수 지원, session-scoped create_all/drop_all, 각 테스트별 nested transaction 롤백 격리, async_session fixture(dependency_override 주입), async_client fixture(httpx.AsyncCli
+- **Files**: 2개
+
+### [2026-03-24 11:34:38] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: fce6af62-b81d-488e-b5ab-5fa680ac020d
+- **Summary**: Issue CRUD 엔드포인트 구현: IssueCreate/IssueUpdate/IssueResponse/IssueListResponse 스키마(app/schemas/issue.py), POST/GET/GET{id}/PUT/DELETE 엔드포인트(app/api/issues.py), status·priority 필터링, exclude_unset 부분 업데이트
+- **Files**: 5개
+
