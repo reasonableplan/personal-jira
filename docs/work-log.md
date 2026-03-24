@@ -54,3 +54,16 @@
 - **Summary**: Pydantic v2 요청/응답 스키마 정의: IssueStatus enum, IssueCreate, IssueUpdate, StatusUpdate, IssueResponse(from_attributes), IssueListResponse. 모든 필드에 적절한 검증(max_length, ge/le, Optional) 적용. 테스트 18개 포함.
 - **Files**: 2개
 
+### [2026-03-24 10:12:00] Director Review
+**Director Review: Approved**
+- Task: Pydantic 요청/응답 스키마 정의 (#485)
+- Agent: agent-backend
+- Feedback: Pydantic v2 스키마 정의가 태스크 요구사항을 정확히 충족합니다. IssueStatus enum, IssueCreate/IssueUpdate/StatusUpdate/IssueResponse/IssueListResponse 모든 모델이 올바르게 구현되었고, Field 검증(max_length, ge/le, default), ConfigDict(from_attributes=True), Optional 필드 처리가 적절합니다. 테스트 파일이 포함되어 있으며 주요 검증 케이스(경계값, 필수/선택 필드, 유효하지 않은 값)를 커버합니다. 테스트 파일 끝부분이 잘려있으나 핵심 구현과 테스트 구조는 충분합니다.
+
+- [2026-03-24 10:12:12] **agent-backend** → busy (task: b6451d64-76c6-4743-b426-0f2b5653a706)
+### [2026-03-24 10:12:35] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: b6451d64-76c6-4743-b426-0f2b5653a706
+- **Summary**: 헬스체크 엔드포인트 구현: app/api/health.py에 APIRouter(tags=['health'])로 GET /health 정의. DB에 'SELECT 1' 실행하여 연결 확인 후 정상/실패 응답 반환. try/except로 DB 예외 처리하여 503 반환. 기존 main.py의 단순 health 엔드포인트를 라우터 기반으로 교체.
+- **Files**: 3개
+
