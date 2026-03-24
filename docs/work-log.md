@@ -100,3 +100,16 @@
 - **Summary**: 
 - **Files**: 0개
 
+### [2026-03-24 08:34:28] Director Review
+**Director Review: Approved**
+- Task: Issue 모델 정의 + Alembic 마이그레이션 (#444)
+- Agent: agent-backend
+- Feedback: 핵심 구현이 올바릅니다. Issue 모델(컬럼, 제약조건, 인덱스, 기본값), models/__init__.py export, Alembic env.py(동적 DATABASE_URL, async 마이그레이션), 테스트(컬럼 검증, CRUD, conftest) 모두 태스크 요구사항에 부합합니다. test_models_issue.py 끝부분이 잘려있으나(test_issue_create_and_read의 마지막 assert), 핵심 로직과 테스트 구조는 충분하며 후속 작업에서 보완 가능합니다. created_at/updated_at의 Mapped 타입이 str로 선언된 점은 datetime으로 수정하면 더 정확하지만, 기능상 문제는 없습니다.
+
+- [2026-03-24 08:34:41] **agent-backend** → busy (task: 0c3d9f9b-fa10-4e0c-9c87-dc3439ab55c3)
+### [2026-03-24 08:35:10] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 0c3d9f9b-fa10-4e0c-9c87-dc3439ab55c3
+- **Summary**: 커스텀 예외 클래스(AppException, IssueNotFoundException), 에러 응답 스키마(ErrorResponse), 글로벌 예외 핸들러(AppException, RequestValidationError, StarletteHTTPException, 미처리 Exception) 구현. 모든 에러 응답이 {"detail": str, "statu
+- **Files**: 4개
+
