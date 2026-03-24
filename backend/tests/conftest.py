@@ -2,6 +2,7 @@ from collections.abc import AsyncGenerator
 
 import httpx
 import pytest
+
 from app.main import app
 
 
