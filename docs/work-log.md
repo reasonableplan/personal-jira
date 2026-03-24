@@ -42,3 +42,29 @@
 - Feedback: Worker reported failure
 
 - [2026-03-24 08:32:06] **agent-git** → busy (task: af9f6918-5d05-412a-8c98-a4326684c4ac)
+### [2026-03-24 08:32:19] Director Review
+**Director Review: Approved**
+- Task: FastAPI 앱 설정 + Pydantic 스키마 정의 (#442)
+- Agent: agent-backend
+- Feedback: 코어 구현이 태스크 요구사항과 정확히 일치합니다. IssueStatus/IssuePriority StrEnum, IssueCreate/IssueUpdate/IssueResponse/IssueListResponse Pydantic 스키마, pydantic-settings 기반 Settings 클래스(ECHO_SQL 포함), lifespan 이벤트 기반 DB 연결 관리 모두 올바르게 구현되었습니다. test_schemas_issue.py와 test_lifespan.py 테스트 파일이 포함되어 있으며, test_schemas_issue.py가 잘려있으나 핵심 테스트 케이스(enum 값 검증, 필수/선택 필드, ValidationError, from_attributes 등)는 충분히 커버되어 있
+
+### [2026-03-24 08:32:27] Review Request — FAILED
+- **Agent**: agent-git
+- **Task**: af9f6918-5d05-412a-8c98-a4326684c4ac
+- **Summary**: 
+- **Files**: 0개
+
+### [2026-03-24 08:32:28] Director Review
+**Director Review: Changes Requested**
+- Task: Docker Compose 로컬 개발환경 구성 (#441)
+- Agent: agent-git
+- Feedback: Worker reported failure
+
+- [2026-03-24 08:32:31] **agent-backend** → busy (task: 7e30da0d-8b92-4a30-a9ef-812120897f49)
+- [2026-03-24 08:32:38] **agent-git** → busy (task: af9f6918-5d05-412a-8c98-a4326684c4ac)
+### [2026-03-24 08:32:52] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 7e30da0d-8b92-4a30-a9ef-812120897f49
+- **Summary**: Updated app/database.py with metadata naming_convention (ix, uq, ck, fk, pk), ECHO_SQL-based engine echo, and proper get_db async generator. Added ECHO_SQL to app/config.py. Enhanced tests to verify n
+- **Files**: 3개
+
