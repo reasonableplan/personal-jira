@@ -94,3 +94,16 @@
 - Agent: agent-backend
 - Feedback: 테스트 인프라 설정이 태스크 요구사항을 충실히 구현했습니다. conftest.py에 TEST_DATABASE_URL 환경변수 지원, session-scoped create_all/drop_all, nested transaction 롤백 격리 패턴(begin → begin_nested → rollback), async_session fixture의 dependency_override 주입, async_client fixture(httpx.AsyncClient + ASGITransport)가 모두 포함되어 있습니다. 테스트 파일(test_conftest.py)도 세션 격리, 테이블 생성, 클라이언트 동작 등을 검증하는 6개 테스트를 포함합니다. 한 가지 개선 제안: nested transaction 패턴에서 @event.lis
 
+### [2026-03-24 11:35:02] Director Review
+**Director Review: Approved**
+- Task: Issue CRUD 엔드포인트 (#527)
+- Agent: agent-backend
+- Feedback: 핵심 구현이 태스크 요구사항에 부합합니다. 스키마(IssueCreate/IssueUpdate/IssueResponse/IssueListResponse), CRUD 엔드포인트(POST 201, GET 목록+필터링, GET/{id} 404처리, PUT 부분업데이트, DELETE 204), main.py 라우터 등록이 모두 포함되어 있습니다. 테스트 파일 2개(스키마 테스트 + API 테스트)가 존재합니다. 일부 파일이 잘려있으나(test_issue_schemas.py의 test_issue_list_, test_issues_api.py, issues.py의 get_issue 엔드포인트) 보이는 코드의 구조와 로직이 올바르며, exclude_unset 부분 업데이트, status/priority 쿼리 필터링 등 핵심 요
+
+- [2026-03-24 11:35:11] **agent-backend** → busy (task: 834ef360-0213-4d32-adcb-95d4fdef0eb2)
+### [2026-03-24 11:36:35] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 834ef360-0213-4d32-adcb-95d4fdef0eb2
+- **Summary**: PATCH /issues/{issue_id}/status 엔드포인트 구현. StatusUpdate 스키마 추가(status 필수). 404 처리, 멱등성 보장, updated_at 자동 갱신. 테스트: 성공/404/멱등성/유효성검증/updated_at 갱신 검증.
+- **Files**: 3개
+
