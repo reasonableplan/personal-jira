@@ -67,3 +67,16 @@
 - **Summary**: 헬스체크 엔드포인트 구현: app/api/health.py에 APIRouter(tags=['health'])로 GET /health 정의. DB에 'SELECT 1' 실행하여 연결 확인 후 정상/실패 응답 반환. try/except로 DB 예외 처리하여 503 반환. 기존 main.py의 단순 health 엔드포인트를 라우터 기반으로 교체.
 - **Files**: 3개
 
+### [2026-03-24 10:12:55] Director Review
+**Director Review: Approved**
+- Task: 헬스체크 엔드포인트 (#487)
+- Agent: agent-backend
+- Feedback: 핵심 구현이 태스크 요구사항을 정확히 충족합니다. app/api/health.py에 APIRouter(tags=['health'])로 GET /health 엔드포인트 정의, SELECT 1로 DB 연결 확인, 정상 시 200 응답, 실패 시 503 응답, try/except 예외 처리 모두 구현됨. 테스트도 정상/연결실패/일반에러 3가지 케이스를 커버합니다. main.py에서 기존 단순 엔드포인트를 라우터 기반으로 교체한 점도 적절합니다.
+
+- [2026-03-24 10:13:07] **agent-backend** → busy (task: 7ea2fdde-7083-40bd-b2f3-78a99e7f129e)
+### [2026-03-24 10:13:36] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 7ea2fdde-7083-40bd-b2f3-78a99e7f129e
+- **Summary**: 커스텀 예외 클래스(AppException, IssueNotFoundException)와 FastAPI 글로벌 예외 핸들러를 정의하여 모든 에러 응답을 {"detail": str, "status_code": int} 포맷으로 표준화. 422 검증 에러, 500 서버 에러도 동일 포맷으로 반환. app/main.py에 register_exception_han
+- **Files**: 3개
+
