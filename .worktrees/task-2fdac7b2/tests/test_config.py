@@ -10,7 +10,7 @@ class TestSettings:
         settings = Settings(
             DATABASE_URL="postgresql+asyncpg://user:pass@localhost:5432/testdb",
         )
-        assert settings.APP_NAME == "fastapi-app"
+        assert settings.APP_NAME == "Personal Jira"
         assert settings.DEBUG is False
         assert settings.API_V1_PREFIX == "/api/v1"
         assert "postgresql+asyncpg" in settings.DATABASE_URL

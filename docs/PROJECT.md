@@ -1,10 +1,10 @@
-# Personal Jira Backend API
+# Personal Jira 백엔드 API
 
 ## 프로젝트 개요
-개인용 이슈 트래킹 시스템의 백엔드 API. FastAPI + SQLAlchemy(async) + PostgreSQL 기반 MVP.
+개인용 이슈 트래커 백엔드 MVP. FastAPI + SQLAlchemy(async) + PostgreSQL 기반 Issue CRUD, 상태관리, 필터링, 헬스체크 API를 제공한다.
 
 ## 목적
-개인용 이슈 트래킹 시스템의 백엔드 서버
+개인용 이슈 트래커 백엔드 - Issue 관리 및 상태 추적
 
 ## 대상 사용자
 개인 사용자 (1인)
@@ -19,44 +19,42 @@ MVP
 
 ## 설계 결정사항
 
-- 기술 스택 확정: FastAPI + SQLAlchemy(async) + PostgreSQL + Alembic + pytest/httpx
-- 스코프: MVP 수준, 백엔드 API only
-- Issue 상태: TODO/IN_PROGRESS/DONE, 전이 제약 없음
-- Issue 우선순위: LOW/MEDIUM/HIGH/CRITICAL
-- 요구사항 확정 → 태스크 분해 단계로 진행
+- 백엔드 전용 MVP, 인증 없음
+- Issue 모델: status(todo/in_progress/done), priority 필드 포함
+- 테스트는 pytest + httpx로 API 레벨 테스트 작성
 
 ## 제약사항
 
-- 백엔드 API만 구현
-- 인증/인가 없음
 - 태스크 10개 이내
 - 테스트 필수
+- 인증 없음
+- 백엔드만
 
 ## Non-Goals
 
 - 프론트엔드
-- 인증/인가 시스템
+- 인증/인가
 
 ## Stories
 
 ### 프로젝트 초기 설정
-프로젝트 디렉토리 구조, 의존성 관리(pyproject.toml), 환경 설정 파일 구성
+Git 저장소, 프로젝트 구조, 의존성, DB 연결 설정 등 인프라 기반 작업
+- Sub-tasks: 2개
+
+### 데이터베이스 모델 & 마이그레이션
+Issue 모델 정의 및 Alembic 마이그레이션 생성
 - Sub-tasks: 1개
 
-### 데이터베이스 계층
-SQLAlchemy async 모델 정의, Alembic 마이그레이션 설정, DB 세션 및 앱 설정 관리
-- Sub-tasks: 2개
-
 ### Issue CRUD API
-Issue 생성, 단건/목록 조회, 수정, 삭제 엔드포인트 및 Pydantic 스키마
+Issue 생성, 조회, 수정, 삭제 엔드포인트 구현
 - Sub-tasks: 2개
 
-### 상태변경 & 필터링 API
-Issue 상태 전이 엔드포인트와 상태/우선순위/키워드 기반 필터링 기능
-- Sub-tasks: 2개
+### 상태 변경 & 필터링 API
+Issue 상태 전환 엔드포인트 및 status/priority 기반 필터링 구현
+- Sub-tasks: 1개
 
 ### 헬스체크 & 테스트
-헬스체크 엔드포인트 구현 및 전체 API에 대한 pytest+httpx 테스트
+헬스체크 엔드포인트 및 전체 API 테스트 작성
 - Sub-tasks: 3개
 
 
