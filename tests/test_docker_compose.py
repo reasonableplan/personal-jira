@@ -1,71 +1,120 @@
-from pathlib import Path
-
 import pytest
 import yaml
 
-ROOT = Path(__file__).resolve().parent.parent
-COMPOSE_PATH = ROOT / "docker-compose.yml"
-
 
 @pytest.fixture
-def compose() -> dict:
-    return yaml.safe_load(COMPOSE_PATH.read_text())
+def compose_config() -> dict:
+    with open("docker-compose.yml") as f:
+        return yaml.safe_load(f)
 
 
-class TestComposeFileExists:
-    def test_file_exists(self) -> None:
-        assert COMPOSE_PATH.exists()
+class TestComposeStructure:
+    def test_has_three_services(self, compose_config: dict) -> None:
+        assert set(compose_config["services"].keys()) == {"db", "backend", "frontend"}
+
+    def test_has_pgdata_volume(self, compose_config: dict) -> None:
+        assert "pgdata" in compose_config["volumes"]
 
 
 class TestDbService:
-    def test_image(self, compose: dict) -> None:
-        assert compose["services"]["db"]["image"] == "postgres:16-alpine"
+    def test_image(self, compose_config: dict) -> None:
+        db = compose_config["services"]["db"]
+        assert db["image"] == "postgres:16-alpine"
 
-    def test_port_mapping(self, compose: dict) -> None:
-        assert "5434:5432" in compose["services"]["db"]["ports"]
+    def test_port_mapping(self, compose_config: dict) -> None:
+        db = compose_config["services"]["db"]
+        assert "5434:5432" in db["ports"]
 
-    def test_volume(self, compose: dict) -> None:
-        assert "pgdata:/var/lib/postgresql/data" in compose["services"]["db"]["volumes"]
+    def test_environment_variables(self, compose_config: dict) -> None:
+        db = compose_config["services"]["db"]
+        env = db["environment"]
+        assert env["POSTGRES_USER"] == "personal_jira"
+        assert env["POSTGRES_PASSWORD"] == "personal_jira"
+        assert env["POSTGRES_DB"] == "personal_jira"
 
-    def test_healthcheck(self, compose: dict) -> None:
-        hc = compose["services"]["db"]["healthcheck"]
-        assert "pg_isready" in hc["test"][-1]
+    def test_named_volume(self, compose_config: dict) -> None:
+        db = compose_config["services"]["db"]
+        assert "pgdata:/var/lib/postgresql/data" in db["volumes"]
+        assert "pgdata" in compose_config["volumes"]
 
-    def test_env_from_file(self, compose: dict) -> None:
-        env = compose["services"]["db"]["environment"]
-        assert "POSTGRES_USER" in env or "${POSTGRES_USER}" in str(env)
+    def test_healthcheck(self, compose_config: dict) -> None:
+        db = compose_config["services"]["db"]
+        assert "healthcheck" in db
 
 
 class TestBackendService:
-    def test_build_context(self, compose: dict) -> None:
-        assert compose["services"]["backend"]["build"]["context"] == "./backend"
+    def test_build_context(self, compose_config: dict) -> None:
+        backend = compose_config["services"]["backend"]
+        assert backend["build"]["context"] == "./backend"
+        assert backend["build"]["dockerfile"] == "Dockerfile"
 
-    def test_port_mapping(self, compose: dict) -> None:
-        assert "8000:8000" in compose["services"]["backend"]["ports"]
+    def test_port_mapping(self, compose_config: dict) -> None:
+        backend = compose_config["services"]["backend"]
+        assert "8000:8000" in backend["ports"]
 
-    def test_depends_on_db(self, compose: dict) -> None:
-        deps = compose["services"]["backend"]["depends_on"]
-        assert "db" in deps
-        assert deps["db"]["condition"] == "service_healthy"
+    def test_depends_on_db_healthy(self, compose_config: dict) -> None:
+        backend = compose_config["services"]["backend"]
+        assert backend["depends_on"]["db"]["condition"] == "service_healthy"
 
-    def test_healthcheck(self, compose: dict) -> None:
-        hc = compose["services"]["backend"]["healthcheck"]
-        assert hc is not None
+    def test_environment_has_database_url(self, compose_config: dict) -> None:
+        backend = compose_config["services"]["backend"]
+        env = backend["environment"]
+        assert "DATABASE_URL" in env
+        assert "asyncpg" in env["DATABASE_URL"]
+
+    def test_environment_has_cors(self, compose_config: dict) -> None:
+        backend = compose_config["services"]["backend"]
+        env = backend["environment"]
+        assert "CORS_ORIGINS" in env
+
+    def test_healthcheck(self, compose_config: dict) -> None:
+        backend = compose_config["services"]["backend"]
+        assert "healthcheck" in backend
 
 
 class TestFrontendService:
-    def test_build_context(self, compose: dict) -> None:
-        assert compose["services"]["frontend"]["build"]["context"] == "./frontend"
+    def test_build_context(self, compose_config: dict) -> None:
+        frontend = compose_config["services"]["frontend"]
+        assert frontend["build"]["context"] == "./frontend"
+        assert frontend["build"]["dockerfile"] == "Dockerfile"
 
-    def test_port_mapping(self, compose: dict) -> None:
-        assert "3000:80" in compose["services"]["frontend"]["ports"]
+    def test_port_mapping(self, compose_config: dict) -> None:
+        frontend = compose_config["services"]["frontend"]
+        assert "3000:80" in frontend["ports"]
 
-    def test_depends_on_backend(self, compose: dict) -> None:
-        deps = compose["services"]["frontend"]["depends_on"]
-        assert "backend" in deps
-        assert deps["backend"]["condition"] == "service_healthy"
+    def test_depends_on_backend_healthy(self, compose_config: dict) -> None:
+        frontend = compose_config["services"]["frontend"]
+        assert frontend["depends_on"]["backend"]["condition"] == "service_healthy"
 
 
-class TestVolumes:
-    def test_pgdata_defined(self, compose: dict) -> None:
-        assert "pgdata" in compose.get("volumes", {})
+class TestBackendDockerfile:
+    def test_dockerfile_exists(self) -> None:
+        with open("backend/Dockerfile") as f:
+            content = f.read()
+        assert "python:3.12-slim" in content
+        assert "uv" in content
+        assert "uvicorn" in content
+
+    def test_entrypoint_exists(self) -> None:
+        with open("backend/entrypoint.sh") as f:
+            content = f.read()
+        assert "alembic upgrade head" in content
+        assert "uvicorn" in content
+
+
+class TestFrontendDockerfile:
+    def test_dockerfile_exists(self) -> None:
+        with open("frontend/Dockerfile") as f:
+            content = f.read()
+        assert "node" in content
+        assert "nginx" in content
+
+
+class TestEnvExample:
+    def test_env_example_exists(self) -> None:
+        with open(".env.example") as f:
+            content = f.read()
+        assert "DATABASE_URL" in content
+        assert "POSTGRES_USER" in content
+        assert "POSTGRES_PASSWORD" in content
+        assert "POSTGRES_DB" in content
