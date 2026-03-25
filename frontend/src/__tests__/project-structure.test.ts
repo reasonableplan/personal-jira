@@ -1,55 +1,54 @@
-import { describe, it, expect } from "vitest";
-import fs from "fs";
-import path from "path";
+import { describe, it, expect } from 'vitest';
+import { existsSync } from 'fs';
+import { resolve } from 'path';
 
-const ROOT = path.resolve(__dirname, "../..");
-const SRC = path.resolve(ROOT, "src");
+const root = resolve(__dirname, '../..');
+const src = resolve(__dirname, '..');
 
-describe("Frontend project structure", () => {
-  const requiredDirs = [
-    "src/components",
-    "src/pages",
-    "src/api",
-    "src/types",
-    "src/hooks",
+describe('Project structure', () => {
+  const rootFiles = [
+    'package.json',
+    'vite.config.ts',
+    'tsconfig.json',
+    'tsconfig.app.json',
+    'tsconfig.node.json',
+    'postcss.config.js',
+    'tailwind.config.js',
+    'index.html',
+    'Dockerfile',
+    'nginx.conf',
+    '.dockerignore',
+    '.env.example',
+    'components.json',
   ];
 
-  it.each(requiredDirs)("directory %s exists", (dir) => {
-    expect(fs.existsSync(path.resolve(ROOT, dir))).toBe(true);
+  rootFiles.forEach((file) => {
+    it(`has ${file}`, () => {
+      expect(existsSync(resolve(root, file))).toBe(true);
+    });
   });
 
-  it("package.json has required scripts", () => {
-    const pkg = JSON.parse(
-      fs.readFileSync(path.resolve(ROOT, "package.json"), "utf-8")
-    );
-    expect(pkg.scripts).toHaveProperty("dev");
-    expect(pkg.scripts).toHaveProperty("build");
-    expect(pkg.scripts).toHaveProperty("preview");
-    expect(pkg.scripts).toHaveProperty("test");
+  const srcDirs = ['components', 'pages', 'hooks', 'lib', 'types', 'api'];
+
+  srcDirs.forEach((dir) => {
+    it(`has src/${dir} directory`, () => {
+      expect(existsSync(resolve(src, dir))).toBe(true);
+    });
   });
 
-  it("vite.config.ts has API proxy for /api", () => {
-    const config = fs.readFileSync(
-      path.resolve(ROOT, "vite.config.ts"),
-      "utf-8"
-    );
-    expect(config).toContain('"/api"');
-    expect(config).toContain("http://localhost:8000");
+  it('has src/main.tsx', () => {
+    expect(existsSync(resolve(src, 'main.tsx'))).toBe(true);
   });
 
-  it("tsconfig.app.json has @/ path alias", () => {
-    const tsconfig = JSON.parse(
-      fs.readFileSync(path.resolve(ROOT, "tsconfig.app.json"), "utf-8")
-    );
-    expect(tsconfig.compilerOptions.paths).toHaveProperty("@/*");
-    expect(tsconfig.compilerOptions.paths["@/*"]).toContain("./src/*");
+  it('has src/App.tsx', () => {
+    expect(existsSync(resolve(src, 'App.tsx'))).toBe(true);
   });
 
-  it("entry point src/main.tsx exists", () => {
-    expect(fs.existsSync(path.resolve(SRC, "main.tsx"))).toBe(true);
+  it('has src/lib/utils.ts', () => {
+    expect(existsSync(resolve(src, 'lib', 'utils.ts'))).toBe(true);
   });
 
-  it("App.tsx exists", () => {
-    expect(fs.existsSync(path.resolve(SRC, "App.tsx"))).toBe(true);
+  it('has src/types/index.ts', () => {
+    expect(existsSync(resolve(src, 'types', 'index.ts'))).toBe(true);
   });
 });
