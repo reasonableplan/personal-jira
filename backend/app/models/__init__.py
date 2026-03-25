@@ -1,23 +1,27 @@
-from app.models.base import Base
 from app.models.issue import (
-    Activity,
-    Agent,
+    Base,
+    BoardColumn,
     Epic,
+    EpicStatus,
     Label,
+    Priority,
     Story,
+    StoryStatus,
     Task,
-    task_dependencies,
+    TaskStatus,
     task_labels,
 )
 
 __all__ = [
-    "Activity",
-    "Agent",
     "Base",
+    "BoardColumn",
     "Epic",
+    "EpicStatus",
     "Label",
+    "Priority",
     "Story",
+    "StoryStatus",
     "Task",
-    "task_dependencies",
+    "TaskStatus",
     "task_labels",
 ]

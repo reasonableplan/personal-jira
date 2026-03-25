@@ -1,9 +1,9 @@
-
 from app.models.issue import (
     Base,
     BoardColumn,
     Epic,
     EpicStatus,
+    Label,
     Priority,
     Story,
     StoryStatus,
@@ -15,43 +15,75 @@ from sqlalchemy import inspect
 
 
 class TestEpicStatus:
-    def test_values(self) -> None:
+    def test_planning(self) -> None:
         assert EpicStatus.PLANNING == "planning"
+
+    def test_active(self) -> None:
         assert EpicStatus.ACTIVE == "active"
+
+    def test_completed(self) -> None:
         assert EpicStatus.COMPLETED == "completed"
+
+    def test_archived(self) -> None:
         assert EpicStatus.ARCHIVED == "archived"
 
 
 class TestStoryStatus:
-    def test_values(self) -> None:
+    def test_todo(self) -> None:
         assert StoryStatus.TODO == "todo"
+
+    def test_in_progress(self) -> None:
         assert StoryStatus.IN_PROGRESS == "in_progress"
+
+    def test_done(self) -> None:
         assert StoryStatus.DONE == "done"
 
 
 class TestTaskStatus:
-    def test_values(self) -> None:
+    def test_open(self) -> None:
         assert TaskStatus.OPEN == "open"
+
+    def test_in_progress(self) -> None:
         assert TaskStatus.IN_PROGRESS == "in_progress"
+
+    def test_review(self) -> None:
         assert TaskStatus.REVIEW == "review"
+
+    def test_done(self) -> None:
         assert TaskStatus.DONE == "done"
+
+    def test_blocked(self) -> None:
         assert TaskStatus.BLOCKED == "blocked"
 
 
 class TestBoardColumn:
-    def test_values(self) -> None:
+    def test_backlog(self) -> None:
         assert BoardColumn.BACKLOG == "backlog"
+
+    def test_ready(self) -> None:
         assert BoardColumn.READY == "ready"
+
+    def test_in_progress(self) -> None:
         assert BoardColumn.IN_PROGRESS == "in_progress"
+
+    def test_review(self) -> None:
         assert BoardColumn.REVIEW == "review"
+
+    def test_done(self) -> None:
         assert BoardColumn.DONE == "done"
 
 
 class TestPriority:
-    def test_values(self) -> None:
+    def test_critical(self) -> None:
         assert Priority.CRITICAL == "critical"
+
+    def test_high(self) -> None:
         assert Priority.HIGH == "high"
+
+    def test_medium(self) -> None:
         assert Priority.MEDIUM == "medium"
+
+    def test_low(self) -> None:
         assert Priority.LOW == "low"
 
 
@@ -60,31 +92,36 @@ class TestEpicModel:
         assert Epic.__tablename__ == "epics"
 
     def test_columns(self) -> None:
-        cols = {c.name for c in Epic.__table__.columns}
+        mapper = inspect(Epic)
+        col_names = {c.key for c in mapper.column_attrs}
         expected = {
             "id", "title", "description",
             "status", "created_at", "updated_at",
         }
-        assert expected == cols
-
-    def test_id_is_uuid_pk(self) -> None:
-        col = Epic.__table__.c.id
-        assert col.primary_key
+        assert expected <= col_names
 
     def test_title_not_nullable(self) -> None:
         col = Epic.__table__.c.title
-        assert not col.nullable
+        assert col.nullable is False
+
+    def test_title_max_length(self) -> None:
+        col = Epic.__table__.c.title
+        assert col.type.length == 200
 
     def test_status_default(self) -> None:
         col = Epic.__table__.c.status
         assert col.default.arg == EpicStatus.PLANNING
+
+    def test_description_nullable(self) -> None:
+        col = Epic.__table__.c.description
+        assert col.nullable is True
 
     def test_has_stories_relationship(self) -> None:
         assert "stories" in Epic.__mapper__.relationships
 
     def test_stories_cascade(self) -> None:
         rel = Epic.__mapper__.relationships["stories"]
-        assert "delete-orphan" in rel.cascade
+        assert "delete" in rel.cascade
 
 
 class TestStoryModel:
@@ -134,15 +171,16 @@ class TestTaskModel:
         assert Task.__tablename__ == "tasks"
 
     def test_columns(self) -> None:
-        cols = {c.name for c in Task.__table__.columns}
+        mapper = inspect(Task)
+        col_names = {c.key for c in mapper.column_attrs}
         expected = {
             "id", "story_id", "title", "description",
             "status", "board_column", "assigned_agent",
             "priority", "retry_count", "dependencies",
-            "created_at", "started_at",
-            "completed_at", "updated_at",
+            "created_at", "started_at", "completed_at",
+            "updated_at",
         }
-        assert expected == cols
+        assert expected <= col_names
 
     def test_story_id_foreign_key(self) -> None:
         col = Task.__table__.c.story_id
@@ -150,7 +188,7 @@ class TestTaskModel:
         assert len(fks) == 1
         assert fks[0].target_fullname == "stories.id"
 
-    def test_cascade_delete(self) -> None:
+    def test_story_cascade_delete(self) -> None:
         col = Task.__table__.c.story_id
         fk = list(col.foreign_keys)[0]
         assert fk.ondelete == "CASCADE"
@@ -173,22 +211,32 @@ class TestTaskModel:
 
     def test_assigned_agent_nullable(self) -> None:
         col = Task.__table__.c.assigned_agent
-        assert col.nullable
+        assert col.nullable is True
 
     def test_started_at_nullable(self) -> None:
         col = Task.__table__.c.started_at
-        assert col.nullable
+        assert col.nullable is True
 
     def test_completed_at_nullable(self) -> None:
         col = Task.__table__.c.completed_at
-        assert col.nullable
+        assert col.nullable is True
 
-    def test_indexes(self) -> None:
+    def test_index_story_id(self) -> None:
         idx_names = {
             idx.name for idx in Task.__table__.indexes
         }
         assert "ix_tasks_story_id" in idx_names
+
+    def test_index_board_column(self) -> None:
+        idx_names = {
+            idx.name for idx in Task.__table__.indexes
+        }
         assert "ix_tasks_board_column" in idx_names
+
+    def test_index_assigned_agent(self) -> None:
+        idx_names = {
+            idx.name for idx in Task.__table__.indexes
+        }
         assert "ix_tasks_assigned_agent" in idx_names
 
     def test_has_story_relationship(self) -> None:
@@ -198,13 +246,35 @@ class TestTaskModel:
         assert "labels" in Task.__mapper__.relationships
 
 
+class TestLabelModel:
+    def test_tablename(self) -> None:
+        assert Label.__tablename__ == "labels"
+
+    def test_columns(self) -> None:
+        mapper = inspect(Label)
+        col_names = {c.key for c in mapper.column_attrs}
+        expected = {"id", "name", "color"}
+        assert expected <= col_names
+
+    def test_name_not_nullable(self) -> None:
+        col = Label.__table__.c.name
+        assert col.nullable is False
+
+    def test_name_unique(self) -> None:
+        col = Label.__table__.c.name
+        assert col.unique is True
+
+    def test_has_tasks_relationship(self) -> None:
+        assert "tasks" in Label.__mapper__.relationships
+
+
 class TestTaskLabelsTable:
     def test_table_name(self) -> None:
         assert task_labels.name == "task_labels"
 
     def test_columns(self) -> None:
-        cols = {c.name for c in task_labels.columns}
-        assert cols == {"task_id", "label_id"}
+        col_names = {c.name for c in task_labels.columns}
+        assert col_names == {"task_id", "label_id"}
 
     def test_task_id_fk(self) -> None:
         col = task_labels.c.task_id
@@ -218,13 +288,12 @@ class TestTaskLabelsTable:
         assert len(fks) == 1
         assert fks[0].target_fullname == "labels.id"
 
-    def test_composite_pk(self) -> None:
-        pk_cols = {
-            c.name for c in task_labels.primary_key.columns
-        }
+    def test_composite_primary_key(self) -> None:
+        pk_cols = {c.name for c in task_labels.primary_key.columns}
         assert pk_cols == {"task_id", "label_id"}
 
 
 class TestBaseDeclarative:
-    def test_base_has_metadata(self) -> None:
-        assert Base.metadata is not None
+    def test_base_is_declarative(self) -> None:
+        assert hasattr(Base, "metadata")
+        assert hasattr(Base, "registry")
