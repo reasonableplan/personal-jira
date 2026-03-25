@@ -1,52 +1,45 @@
+import { describe, it, expect } from 'vitest';
 import { existsSync } from 'fs';
 import { resolve } from 'path';
-import { describe, expect, it } from 'vitest';
 
-const ROOT = resolve(__dirname, '../..');
+const ROOT = resolve(__dirname, '..', '..');
 const SRC = resolve(ROOT, 'src');
 
-describe('project structure', () => {
-  const requiredRootFiles = [
-    'package.json',
+describe('Frontend project structure', () => {
+  const requiredDirs = [
+    'src/components',
+    'src/pages',
+    'src/hooks',
+    'src/lib',
+    'src/types',
+    'src/api',
+  ];
+
+  it.each(requiredDirs)('directory %s exists', (dir) => {
+    expect(existsSync(resolve(ROOT, dir))).toBe(true);
+  });
+
+  const requiredFiles = [
+    'src/main.tsx',
+    'src/App.tsx',
+    'src/index.css',
+    'src/lib/utils.ts',
+    'src/types/index.ts',
+    'src/vite-env.d.ts',
+    'index.html',
+    'vite.config.ts',
     'tsconfig.json',
     'tsconfig.app.json',
     'tsconfig.node.json',
-    'vite.config.ts',
+    'package.json',
     'postcss.config.js',
-    'tailwind.config.js',
-    'index.html',
     'nginx.conf',
     'Dockerfile',
     '.dockerignore',
     '.env.example',
   ];
 
-  requiredRootFiles.forEach((file) => {
-    it(`has ${file}`, () => {
-      expect(existsSync(resolve(ROOT, file))).toBe(true);
-    });
-  });
-
-  const requiredDirs = [
-    'components',
-    'pages',
-    'hooks',
-    'lib',
-    'types',
-    'api',
-  ];
-
-  requiredDirs.forEach((dir) => {
-    it(`has src/${dir}/ directory`, () => {
-      expect(existsSync(resolve(SRC, dir))).toBe(true);
-    });
-  });
-
-  it('has src/types/index.ts with type exports', () => {
-    expect(existsSync(resolve(SRC, 'types/index.ts'))).toBe(true);
-  });
-
-  it('has src/lib/utils.ts with cn utility', () => {
-    expect(existsSync(resolve(SRC, 'lib/utils.ts'))).toBe(true);
+  it.each(requiredFiles)('file %s exists', (file) => {
+    expect(existsSync(resolve(ROOT, file))).toBe(true);
   });
 });
