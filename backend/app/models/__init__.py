@@ -1,5 +1,7 @@
+from app.models.activity import ActionType, Activity
+from app.models.agent import Agent, AgentStatus
+from app.models.base import Base
 from app.models.issue import (
-    Base,
     BoardColumn,
     Epic,
     EpicStatus,
@@ -13,6 +15,10 @@ from app.models.issue import (
 )
 
 __all__ = [
+    "ActionType",
+    "Activity",
+    "Agent",
+    "AgentStatus",
     "Base",
     "BoardColumn",
     "Epic",
