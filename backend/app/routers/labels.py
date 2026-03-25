@@ -1,5 +1,5 @@
 from app.database import get_db as get_session
-from app.models.base import Task
+from app.models import Task
 from app.schemas.label import (
     LabelCreate,
     LabelResponse,

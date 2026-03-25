@@ -1,4 +1,6 @@
 from app.config import settings
+from app.exceptions import register_exception_handlers
+from app.routers.labels import router as labels_router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -11,6 +13,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+register_exception_handlers(app)
+
+app.include_router(labels_router)
 
 
 @app.get("/health")

@@ -32,6 +32,9 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 pythonpath = [".", "app"]
 asyncio_mode = "auto"
 
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

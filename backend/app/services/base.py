@@ -1,6 +1,6 @@
 from typing import Any
 
-from app.models.base import Base
+from app.models import Base
 from pydantic import BaseModel
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession

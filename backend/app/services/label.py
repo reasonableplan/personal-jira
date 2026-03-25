@@ -1,6 +1,6 @@
 from typing import Optional
 
-from app.models.base import Label, TaskLabel
+from app.models import Label, task_labels
 from app.schemas.label import LabelCreate, LabelUpdate
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -60,14 +60,14 @@ class LabelService:
         task_id: str,
         label_ids: list[str],
     ) -> list[str]:
-        stmt = select(TaskLabel.label_id).where(TaskLabel.task_id == task_id)
+        stmt = select(task_labels.c.label_id).where(task_labels.c.task_id == task_id)
         result = await session.execute(stmt)
         existing = set(result.scalars().all())
         for lid in label_ids:
             if lid not in existing:
-                session.add(TaskLabel(task_id=task_id, label_id=lid))
+                await session.execute(task_labels.insert().values(task_id=task_id, label_id=lid))
         await session.commit()
-        stmt2 = select(TaskLabel.label_id).where(TaskLabel.task_id == task_id)
+        stmt2 = select(task_labels.c.label_id).where(task_labels.c.task_id == task_id)
         result2 = await session.execute(stmt2)
         return list(result2.scalars().all())
 
@@ -77,16 +77,12 @@ class LabelService:
         task_id: str,
         label_id: str,
     ) -> bool:
-        stmt = select(TaskLabel).where(
-            TaskLabel.task_id == task_id, TaskLabel.label_id == label_id
+        stmt = task_labels.delete().where(
+            (task_labels.c.task_id == task_id) & (task_labels.c.label_id == label_id)
         )
         result = await session.execute(stmt)
-        link = result.scalar_one_or_none()
-        if not link:
-            return False
-        await session.delete(link)
         await session.commit()
-        return True
+        return result.rowcount > 0
 
 
 label_service = LabelService()
