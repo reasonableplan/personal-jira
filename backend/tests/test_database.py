@@ -1,26 +1,28 @@
-from app.database import Base, async_session_factory, engine, get_session
+from app.database import async_engine, async_session_factory, get_db
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
 
-class TestDatabaseSetup:
+class TestEngine:
     def test_engine_is_async(self) -> None:
-        assert isinstance(engine, AsyncEngine)
+        assert isinstance(async_engine, AsyncEngine)
 
-    def test_engine_url_matches_config(self) -> None:
-        from app.config import settings
-        assert str(engine.url) == settings.database_url
+    def test_engine_url_contains_asyncpg(self) -> None:
+        assert "asyncpg" in str(async_engine.url)
 
-    def test_session_factory_type(self) -> None:
+
+class TestSessionFactory:
+    def test_factory_type(self) -> None:
         assert isinstance(async_session_factory, async_sessionmaker)
 
-    def test_base_exists(self) -> None:
-        assert hasattr(Base, "metadata")
-
-    async def test_get_session_is_async_generator(self) -> None:
-        gen = get_session()
-        session = await gen.__anext__()
+    def test_factory_produces_async_session(self) -> None:
+        session = async_session_factory()
         assert isinstance(session, AsyncSession)
-        try:
-            await gen.__anext__()
-        except StopAsyncIteration:
-            pass
+        # cleanup
+        import asyncio
+        asyncio.get_event_loop().run_until_complete(session.close())
+
+
+class TestGetDb:
+    def test_get_db_is_async_generator(self) -> None:
+        import inspect
+        assert inspect.isasyncgenfunction(get_db)

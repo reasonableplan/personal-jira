@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"git add ruff.toml backend/pyproject.toml && git commit -m \\\"$(cat <<'EOF'\\nfix: ruff 설정 단일화 — pyproject.toml 중복 제거, LLM 친화 규칙 정리\\n\\n- backend/pyproject.toml의 [tool.ruff] 섹션 삭제 (ruff.toml과 ...",
+  "error": "Exit code 2\n/usr/bin/bash: eval: line 15: unexpected EOF while looking for matching `\"'",
+  "timestamp": "2026-03-25T10:19:28.281Z",
+  "retry_count": 1
+}
