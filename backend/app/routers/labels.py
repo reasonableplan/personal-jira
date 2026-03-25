@@ -1,5 +1,5 @@
-from app.database import get_session
-from app.models.issue import Task
+from app.database import get_db as get_session
+from app.models.base import Task
 from app.schemas.label import (
     LabelCreate,
     LabelResponse,
@@ -11,18 +11,15 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-router = APIRouter(tags=["labels"])
-
 HTTP_404_LABEL = "Label not found"
 HTTP_404_TASK = "Task not found"
-HTTP_404_ASSOCIATION = "Label association not found"
-HTTP_409_DUPLICATE = "Label with this name already exists"
+HTTP_409_DUPLICATE = "Label name already exists"
+
+router = APIRouter(tags=["labels"])
 
 
 @router.post(
-    "/api/labels",
-    response_model=LabelResponse,
-    status_code=status.HTTP_201_CREATED,
+    "/api/labels", response_model=LabelResponse, status_code=status.HTTP_201_CREATED
 )
 async def create_label(
     body: LabelCreate, session: AsyncSession = Depends(get_session)
@@ -39,7 +36,10 @@ async def list_labels(
     session: AsyncSession = Depends(get_session),
 ) -> list[LabelResponse]:
     labels = await label_service.list_all(session)
-    return [LabelResponse.model_validate(l, from_attributes=True) for l in labels]
+    return [
+        LabelResponse.model_validate(label, from_attributes=True)
+        for label in labels
+    ]
 
 
 @router.patch("/api/labels/{label_id}", response_model=LabelResponse)
@@ -93,8 +93,8 @@ async def detach_label_from_task(
     label_id: str,
     session: AsyncSession = Depends(get_session),
 ) -> None:
-    removed = await label_service.detach_label_from_task(
+    detached = await label_service.detach_label_from_task(
         session, task_id, label_id
     )
-    if not removed:
-        raise HTTPException(status_code=404, detail=HTTP_404_ASSOCIATION)
+    if not detached:
+        raise HTTPException(status_code=404, detail=HTTP_404_LABEL)

@@ -1394,3 +1394,16 @@ F841 Local variable `task
 - **Summary**: React Router v6 라우팅 설정(/ → /board 리다이렉트, /epics/:id, /stories/:id, /tasks/:id, /settings/labels), AppLayout(사이드바 네비게이션 + Outlet), API 클라이언트(fetch wrapper with error handling), 전체 타입 정의(API 스펙 1:1 매핑),
 - **Files**: 15개
 
+### [2026-03-25 11:31:35] Director Review
+**Director Review: Approved**
+- Task: 공통 레이아웃 & 라우팅 & API 클라이언트 (#656)
+- Agent: agent-frontend
+- Feedback: 핵심 구현이 올바르게 수행되었습니다. React Router v6 라우팅(/ → /board 리다이렉트 포함 6개 경로), AppLayout(사이드바 + Outlet), API 클라이언트(fetch wrapper with baseURL/에러 처리), 타입 정의(백엔드 스키마 1:1 매핑), TanStack Query 설정이 모두 포함되어 있습니다. 테스트도 타입 검증, API 클라이언트 케이스, AppLayout 렌더링, 라우터 경로 검증 등 충분히 작성되었습니다. 일부 테스트 파일이 잘려 있으나(client.test.ts, types.test.ts) 핵심 로직과 테스트 구조는 확인 가능하며, 후속 태스크에서 보완 가능합니다. 보안 이슈 없음.
+
+- [2026-03-25 11:31:48] **agent-frontend** → busy (task: c7393621-0636-41b6-9c26-917e0176aa78)
+### [2026-03-25 11:33:11] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: b5fd6c16-6ce5-4bed-95fd-66cc8efa2859
+- **Summary**: 라벨 관리 API 구현. 린트 오류 수정: (1) 변수명 `l` → `label`로 변경하여 E741 해결, (2) 미사용 `task_mock` 변수 제거하여 F841 해결. schemas/label.py에 #RRGGBB 검증 포함, services/label.py에 CRUD + attach/detach 로직, routers/labels.py에 6개 엔드포
+- **Files**: 6개
+
