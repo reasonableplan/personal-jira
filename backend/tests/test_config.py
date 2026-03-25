@@ -1,18 +1,22 @@
-import os
+from app.config import Settings, settings
 
 
-def test_settings_loads_defaults() -> None:
-    os.environ.setdefault(
-        "DATABASE_URL",
-        "postgresql://postgres:postgres@localhost:5434/personal_jira",
-    )
-    from app.config import settings
+class TestSettings:
+    def test_default_database_url(self) -> None:
+        s = Settings()
+        assert "postgresql+asyncpg://" in s.database_url
 
-    assert settings.DATABASE_URL is not None
-    assert "postgresql" in settings.DATABASE_URL
+    def test_default_cors_origins(self) -> None:
+        s = Settings()
+        assert "http://localhost:5173" in s.cors_origins
 
+    def test_default_debug(self) -> None:
+        s = Settings()
+        assert s.debug is True
 
-def test_settings_has_app_name() -> None:
-    from app.config import settings
+    def test_default_log_level(self) -> None:
+        s = Settings()
+        assert s.log_level == "INFO"
 
-    assert settings.APP_NAME == "personal-jira"
+    def test_singleton_instance(self) -> None:
+        assert settings.database_url is not None

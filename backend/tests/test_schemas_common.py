@@ -1,6 +1,5 @@
-from pydantic import BaseModel
-
 from app.schemas.common import PaginatedResponse, PaginationParams
+from pydantic import BaseModel
 
 
 class ItemSchema(BaseModel):
