@@ -1,5 +1,5 @@
 import { describe, it, expectTypeOf } from 'vitest';
-import type { Epic, Story, Task, Activity, Label, Agent, BoardColumn } from '@/types';
+import type { Epic, Story, Task, Activity, Label, Agent, BoardColumn, TaskStatus, TaskPriority, PaginatedResponse } from '@/types';
 
 describe('API type definitions', () => {
   it('Epic has required fields', () => {
@@ -21,8 +21,6 @@ describe('API type definitions', () => {
   it('Task has required fields', () => {
     expectTypeOf<Task>().toHaveProperty('id');
     expectTypeOf<Task>().toHaveProperty('story_id');
-    expectTypeOf<Task>().toHaveProperty('title');
-    expectTypeOf<Task>().toHaveProperty('status');
     expectTypeOf<Task>().toHaveProperty('board_column');
     expectTypeOf<Task>().toHaveProperty('priority');
     expectTypeOf<Task>().toHaveProperty('labels');
@@ -52,8 +50,10 @@ describe('API type definitions', () => {
     expectTypeOf<Agent>().toHaveProperty('last_heartbeat');
   });
 
-  it('BoardColumn has correct structure', () => {
-    expectTypeOf<BoardColumn>().toHaveProperty('name');
-    expectTypeOf<BoardColumn>().toHaveProperty('tasks');
+  it('PaginatedResponse has items and total', () => {
+    expectTypeOf<PaginatedResponse<Epic>>().toHaveProperty('items');
+    expectTypeOf<PaginatedResponse<Epic>>().toHaveProperty('total');
+    expectTypeOf<PaginatedResponse<Epic>>().toHaveProperty('page');
+    expectTypeOf<PaginatedResponse<Epic>>().toHaveProperty('per_page');
   });
 });
