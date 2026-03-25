@@ -1238,3 +1238,43 @@ The path `./workspac
 - **Summary**: Alembic 초기 마이그레이션 설정 완료. alembic.ini, env.py(async 패턴, settings.database_url 오버라이드, target_metadata=Base.metadata), script.py.mako 템플릿, 그리고 7개 테이블(epics, stories, tasks, labels, task_labels, activitie
 - **Files**: 5개
 
+### [2026-03-25 10:02:50] Director Review
+**Director Review: Approved**
+- Task: Alembic 초기 마이그레이션 (#638)
+- Agent: agent-backend
+- Feedback: Alembic 초기 마이그레이션 설정이 올바르게 구현됨. async 패턴(asyncpg) 사용, env.py에서 settings.database_url 오버라이드, Base.metadata 연결, 모든 모델 import 포함. 마이그레이션 파일에 7개 테이블(epics, stories, tasks, labels, task_labels, activities, agents) 생성, FK CASCADE, 인덱스, Unique 제약조건 반영. 테스트 파일(test_alembic.py)에서 설정 파일 존재, 모든 테이블/인덱스 반영 여부 검증. alembic.ini의 하드코딩된 DB URL은 env.py에서 settings.database_url로 런타임 오버라이드되므로 보안 이슈 없음. 일부 파일이 truncated되
+
+- [2026-03-25 10:03:06] **agent-backend** → busy (task: 9ad41f48-e614-4132-a335-788aeca006df)
+### [2026-03-25 10:06:44] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 9ad41f48-e614-4132-a335-788aeca006df
+- **Summary**: Created Epic CRUD API: `app/schemas/epic.py` (EpicCreate, EpicUpdate, EpicResponse, StoryResponse, EpicDetailResponse), `app/routers/epics.py` (APIRouter with prefix='/api/epics' — POST /, GET /, GET 
+- **Files**: 4개
+
+### [2026-03-25 10:06:46] Director Review
+**Director Review: Changes Requested**
+- Task: Epic CRUD API (#640)
+- Agent: agent-backend
+- Feedback: 테스트 실패로 reject합니다.
+
+```
+Session = Depends(get_session),
+   |                             ^^^^^^^^^^^^^^^^^^^^
+48 | ) -> dict:
+49 |     query = select(Epic)
+   |
+
+B008 Do not perform function call `Depends` in argument defaults; instead, perform the call within the function, or read the default from a module-level singleton variable
+  --> backend\app\routers\epics.py:74:29
+   |
+72 | async def ge
+
+- [2026-03-25 10:06:58] **agent-backend** → busy (task: 9ad41f48-e614-4132-a335-788aeca006df)
+- [2026-03-25 10:11:59] **agent-backend** → error
+- [2026-03-25 10:12:10] **agent-backend** → busy (task: e9211566-4a8d-4127-9ec2-c9739e5e132b)
+### [2026-03-25 10:14:15] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: e9211566-4a8d-4127-9ec2-c9739e5e132b
+- **Summary**: 에이전트 등록 & 하트비트 API 구현: (1) POST /api/agents — AgentCreate 스키마로 에이전트 생성, id 중복 시 409, (2) GET /api/agents — 전체 목록 + status 필터, (3) GET /api/agents/{agent_id} — 상세 조회 + stale heartbeat(5분 초과) → offline 
+- **Files**: 4개
+
