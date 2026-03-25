@@ -1,6 +1,7 @@
 import os
-import yaml
+
 import pytest
+import yaml
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 COMPOSE_PATH = os.path.join(PROJECT_ROOT, "docker-compose.yml")
