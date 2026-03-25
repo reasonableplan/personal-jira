@@ -1,9 +1,14 @@
-export default function App() {
+function App() {
   return (
-    <main className="min-h-screen bg-gray-50">
-      <div className="mx-auto max-w-7xl px-4 py-8">
-        <h1 className="text-3xl font-bold text-gray-900">Personal Jira</h1>
-      </div>
-    </main>
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="border-b px-6 py-4">
+        <h1 className="text-xl font-bold">Personal Jira</h1>
+      </header>
+      <main className="p-6">
+        <p className="text-muted-foreground">Board will appear here.</p>
+      </main>
+    </div>
   );
 }
+
+export default App;
