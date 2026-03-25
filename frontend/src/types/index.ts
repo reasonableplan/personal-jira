@@ -1,16 +1,8 @@
-export type EpicStatus = "active" | "completed" | "archived";
-export type StoryStatus = "active" | "completed";
-export type TaskStatus = "backlog" | "ready" | "in-progress" | "review" | "done" | "failed";
-export type BoardColumn = "Backlog" | "Ready" | "In Progress" | "Review" | "Done";
-export type Priority = "low" | "medium" | "high" | "critical";
-export type ActionType = "status_change" | "comment" | "review_feedback" | "code_change";
-export type AgentStatus = "idle" | "busy" | "offline";
-
 export interface Epic {
   id: string;
   title: string;
   description: string | null;
-  status: EpicStatus;
+  status: 'active' | 'completed' | 'archived';
   created_at: string;
   updated_at: string;
 }
@@ -20,11 +12,15 @@ export interface Story {
   epic_id: string;
   title: string;
   description: string | null;
-  status: StoryStatus;
+  status: 'active' | 'completed';
   sort_order: number;
   created_at: string;
   updated_at: string;
 }
+
+export type TaskStatus = 'backlog' | 'ready' | 'in-progress' | 'review' | 'done' | 'failed';
+export type BoardColumn = 'Backlog' | 'Ready' | 'In Progress' | 'Review' | 'Done';
+export type Priority = 'low' | 'medium' | 'high' | 'critical';
 
 export interface Task {
   id: string;
@@ -43,6 +39,8 @@ export interface Task {
   completed_at: string | null;
 }
 
+export type ActionType = 'status_change' | 'comment' | 'review_feedback' | 'code_change';
+
 export interface Activity {
   id: string;
   task_id: string;
@@ -58,6 +56,8 @@ export interface Label {
   color: string;
 }
 
+export type AgentStatus = 'idle' | 'busy' | 'offline';
+
 export interface Agent {
   id: string;
   name: string;
@@ -71,4 +71,15 @@ export interface PaginatedResponse<T> {
   total: number;
   page: number;
   per_page: number;
+}
+
+export interface ErrorResponse {
+  detail: string;
+}
+
+export interface BoardResponse {
+  columns: {
+    name: BoardColumn;
+    tasks: Task[];
+  }[];
 }

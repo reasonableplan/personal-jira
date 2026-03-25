@@ -1,13 +1,12 @@
 import pytest
-from fastapi import FastAPI
-from fastapi.testclient import TestClient
-
 from app.exceptions import (
     ConflictError,
     NotFoundError,
     ValidationError,
     register_exception_handlers,
 )
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 
 
 @pytest.fixture
