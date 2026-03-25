@@ -10,9 +10,7 @@ describe('cn utility', () => {
     expect(cn('foo', false && 'bar', 'baz')).toBe('foo baz');
   });
 
-  it('merges tailwind conflicts', () => {
-    const result = cn('px-2 py-1', 'px-4');
-    expect(result).toContain('px-4');
-    expect(result).not.toContain('px-2');
+  it('deduplicates tailwind conflicts', () => {
+    expect(cn('p-4', 'p-2')).toBe('p-2');
   });
 });
