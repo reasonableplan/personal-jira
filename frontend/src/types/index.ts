@@ -1,16 +1,8 @@
-export type EpicStatus = 'active' | 'completed' | 'archived';
-export type StoryStatus = 'active' | 'completed';
-export type TaskStatus = 'backlog' | 'ready' | 'in-progress' | 'review' | 'done' | 'failed';
-export type BoardColumn = 'Backlog' | 'Ready' | 'In Progress' | 'Review' | 'Done';
-export type Priority = 'low' | 'medium' | 'high' | 'critical';
-export type ActionType = 'status_change' | 'comment' | 'review_feedback' | 'code_change';
-export type AgentStatus = 'idle' | 'busy' | 'offline';
-
 export interface Epic {
   id: string;
   title: string;
   description: string | null;
-  status: EpicStatus;
+  status: 'active' | 'completed' | 'archived';
   created_at: string;
   updated_at: string;
 }
@@ -20,7 +12,7 @@ export interface Story {
   epic_id: string;
   title: string;
   description: string | null;
-  status: StoryStatus;
+  status: 'active' | 'completed';
   sort_order: number;
   created_at: string;
   updated_at: string;
@@ -31,10 +23,10 @@ export interface Task {
   story_id: string;
   title: string;
   description: string | null;
-  status: TaskStatus;
-  board_column: BoardColumn;
+  status: 'backlog' | 'ready' | 'in-progress' | 'review' | 'done' | 'failed';
+  board_column: 'Backlog' | 'Ready' | 'In Progress' | 'Review' | 'Done';
   assigned_agent: string | null;
-  priority: Priority;
+  priority: 'low' | 'medium' | 'high' | 'critical';
   labels: string[];
   dependencies: string[];
   retry_count: number;
@@ -47,7 +39,7 @@ export interface Activity {
   id: string;
   task_id: string;
   actor: string;
-  action_type: ActionType;
+  action_type: 'status_change' | 'comment' | 'review_feedback' | 'code_change';
   content: Record<string, unknown>;
   created_at: string;
 }
@@ -62,7 +54,7 @@ export interface Agent {
   id: string;
   name: string;
   domain: string;
-  status: AgentStatus;
+  status: 'idle' | 'busy' | 'offline';
   last_heartbeat: string;
 }
 
@@ -73,13 +65,15 @@ export interface PaginatedResponse<T> {
   per_page: number;
 }
 
-export interface ErrorResponse {
-  detail: string;
+export interface BoardColumn {
+  name: 'Backlog' | 'Ready' | 'In Progress' | 'Review' | 'Done';
+  tasks: Task[];
 }
 
 export interface BoardResponse {
-  columns: {
-    name: BoardColumn;
-    tasks: Task[];
-  }[];
+  columns: BoardColumn[];
+}
+
+export interface ErrorResponse {
+  detail: string;
 }
