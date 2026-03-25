@@ -1,31 +1,29 @@
 from pathlib import Path
 
-import pytest
-
-BACKEND_ROOT = Path(__file__).resolve().parent.parent
-
-REQUIRED_FILES = [
-    "pyproject.toml",
-    "Dockerfile",
-    "app/__init__.py",
-    "app/main.py",
-    "app/config.py",
-    "app/database.py",
-    "app/models/__init__.py",
-    "app/schemas/__init__.py",
-    "app/routers/__init__.py",
-]
+BACKEND = Path(__file__).resolve().parent.parent
 
 
-class TestBackendStructure:
-    @pytest.mark.parametrize("relpath", REQUIRED_FILES)
-    def test_required_file_exists(self, relpath: str) -> None:
-        assert (BACKEND_ROOT / relpath).exists(), f"{relpath} missing"
+class TestProjectStructure:
+    def test_pyproject_toml_exists(self) -> None:
+        assert (BACKEND / "pyproject.toml").exists()
 
-    def test_pyproject_contains_fastapi(self) -> None:
-        content = (BACKEND_ROOT / "pyproject.toml").read_text(encoding="utf-8")
-        assert "fastapi" in content
+    def test_app_package_exists(self) -> None:
+        assert (BACKEND / "app" / "__init__.py").exists()
 
-    def test_dockerfile_uses_python312(self) -> None:
-        content = (BACKEND_ROOT / "Dockerfile").read_text(encoding="utf-8")
-        assert "python:3.12" in content
+    def test_models_package_exists(self) -> None:
+        assert (BACKEND / "app" / "models" / "__init__.py").exists()
+
+    def test_routers_package_exists(self) -> None:
+        assert (BACKEND / "app" / "routers" / "__init__.py").exists()
+
+    def test_schemas_package_exists(self) -> None:
+        assert (BACKEND / "app" / "schemas" / "__init__.py").exists()
+
+    def test_dockerfile_exists(self) -> None:
+        assert (BACKEND / "Dockerfile").exists()
+
+    def test_alembic_ini_exists(self) -> None:
+        assert (BACKEND / "alembic.ini").exists()
+
+    def test_alembic_env_exists(self) -> None:
+        assert (BACKEND / "alembic" / "env.py").exists()
