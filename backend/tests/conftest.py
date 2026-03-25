@@ -1,17 +1,12 @@
-from collections.abc import AsyncGenerator
+from collections.abc import Generator
 
-import httpx
 import pytest
+from fastapi.testclient import TestClient
 
 from app.main import app
 
 
-@pytest.fixture
-def anyio_backend() -> str:
-    return "asyncio"
-
-
-@pytest.fixture
-async def client() -> AsyncGenerator[httpx.AsyncClient, None]:
-    async with httpx.AsyncClient(app=app, base_url="http://test") as ac:
-        yield ac
+@pytest.fixture()
+def client() -> Generator[TestClient, None, None]:
+    with TestClient(app) as c:
+        yield c

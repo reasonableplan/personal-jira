@@ -1,15 +1,11 @@
-import httpx
-import pytest
+from fastapi.testclient import TestClient
 
 
-@pytest.mark.anyio
-async def test_health_returns_200(client: httpx.AsyncClient) -> None:
-    resp = await client.get("/health")
+def test_health_returns_200(client: TestClient) -> None:
+    resp = client.get("/health")
     assert resp.status_code == 200
 
 
-@pytest.mark.anyio
-async def test_health_body(client: httpx.AsyncClient) -> None:
-    resp = await client.get("/health")
-    body = resp.json()
-    assert body["status"] == "ok"
+def test_health_returns_status_ok(client: TestClient) -> None:
+    resp = client.get("/health")
+    assert resp.json() == {"status": "ok"}

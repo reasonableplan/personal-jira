@@ -213,3 +213,70 @@ tests\test_project_structure.p
 - **Summary**: Backend project initialized with: pyproject.toml (fastapi, uvicorn, sqlalchemy, alembic, psycopg2-binary, pydantic-settings), app/ package (main.py with /health endpoint, config.py with pydantic-setti
 - **Files**: 8개
 
+- [2026-03-25 02:18:27] **agent-git** → busy (task: f089992c-3989-4df2-b00f-89069bc460ab)
+- [2026-03-25 02:18:27] **agent-backend** → busy (task: 94c8c108-2f97-4174-b815-a5f56a15b0e6)
+### [2026-03-25 02:19:13] Review Request — SUCCESS
+- **Agent**: agent-git
+- **Task**: f089992c-3989-4df2-b00f-89069bc460ab
+- **Summary**: Backend 프로젝트 초기 설정 완료: pyproject.toml(uv + FastAPI 의존성, ruff line-length=100), app/ 패키지(main.py, config.py, db.py, models/, routers/, schemas/), Alembic 마이그레이션 환경(DATABASE_URL 환경변수 지원), Dockerfile, /h
+- **Files**: 13개
+
+- [2026-03-25 02:19:24] **agent-git** → busy (task: 581e26ab-5ffa-49eb-9e8b-3353fd0629d7)
+### [2026-03-25 02:19:30] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 94c8c108-2f97-4174-b815-a5f56a15b0e6
+- **Summary**: CORS 미들웨어(allow_origins=settings.cors_origins, allow_methods=['*'], allow_headers=['*']), 공통 예외 클래스(NotFoundError/ConflictError/ValidationError + FastAPI exception_handler), PaginatedResponse[T] 제네릭 스
+- **Files**: 8개
+
+### [2026-03-25 02:19:31] Director Review
+**Director Review: Changes Requested**
+- Task: 공통 인프라 — CORS, 에러 핸들링, 페이지네이션 (#639)
+- Agent: agent-backend
+- Feedback: 테스트 실패로 reject합니다.
+
+```
+=== LINT ===
+UP046 Generic class `PaginatedResponse` uses `Generic` subclass instead of type parameters
+  --> backend\app\schemas\common.py:17:36
+   |
+17 | class PaginatedResponse(BaseModel, Generic[T]):
+   |                                    ^^^^^^^^^^
+18 |     items: list[T]
+19 |     total: int
+   |
+help: Use type parameters
+```
+
+- [2026-03-25 02:19:43] **agent-backend** → busy (task: 94c8c108-2f97-4174-b815-a5f56a15b0e6)
+### [2026-03-25 02:20:45] Review Request — SUCCESS
+- **Agent**: agent-git
+- **Task**: 581e26ab-5ffa-49eb-9e8b-3353fd0629d7
+- **Summary**: Frontend 프로젝트 초기 설정 완료: Vite + React + TypeScript 구성, /api → localhost:8000 프록시, @/ → src/ path alias, Tailwind CSS, 디렉토리 구조(components, pages, api, types, hooks), API 스펙 기반 TypeScript 타입 정의, 구조 검증 테스
+- **Files**: 17개
+
+### [2026-03-25 02:20:46] Director Review
+**Director Review: Changes Requested**
+- Task: Frontend 프로젝트 초기 설정 (Vite + React + TypeScript) (#632)
+- Agent: agent-git
+- Feedback: 테스트 실패로 reject합니다.
+
+```
+=== LINT ===
+UP046 Generic class `PaginatedResponse` uses `Generic` subclass instead of type parameters
+  --> backend\app\schemas\common.py:17:36
+   |
+17 | class PaginatedResponse(BaseModel, Generic[T]):
+   |                                    ^^^^^^^^^^
+18 |     items: list[T]
+19 |     total: int
+   |
+help: Use type parameters
+```
+
+- [2026-03-25 02:20:58] **agent-git** → busy (task: 581e26ab-5ffa-49eb-9e8b-3353fd0629d7)
+### [2026-03-25 02:22:02] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 94c8c108-2f97-4174-b815-a5f56a15b0e6
+- **Summary**: 공통 인프라 구현: CORS 미들웨어(allow_origins=settings.cors_origins, allow_methods/headers=['*']), 예외 처리(NotFoundError→404, ConflictError→409, ValidationError→422 + register_exception_handlers), PaginatedRespons
+- **Files**: 7개
+
