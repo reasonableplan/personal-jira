@@ -11,4 +11,8 @@ select = ["E", "F", "I", "B"]
 # E501: LLM이 줄 길이 맞추기 어려움 (autofix 불가)
 # B008: FastAPI Depends() 표준 패턴 (autofix 불가)
 # B904: raise from 누락 — LLM이 자주 빠뜨림 (autofix 불가)
-ignore = ["E501", "B008", "B904"]
+# E501: 줄 길이 — LLM이 맞추기 어려움
+# E741: 변수명 모호(l, O, I) — LLM이 리스트 컴프리헨션에서 자주 사용
+# B008: FastAPI Depends() 표준 패턴
+# B904: raise from 누락
+ignore = ["E501", "E741", "B008", "B904"]
