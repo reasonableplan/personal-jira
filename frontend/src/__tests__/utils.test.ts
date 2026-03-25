@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { cn } from '../lib/utils';
+import { cn } from '@/lib/utils';
 
 describe('cn utility', () => {
   it('merges class names', () => {
@@ -7,7 +7,7 @@ describe('cn utility', () => {
   });
 
   it('handles conditional classes', () => {
-    expect(cn('base', false && 'hidden', 'visible')).toBe('base visible');
+    expect(cn('foo', false && 'bar', 'baz')).toBe('foo baz');
   });
 
   it('merges tailwind conflicts', () => {
