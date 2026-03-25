@@ -1,4 +1,3 @@
-import enum
 import uuid
 from datetime import datetime
 
@@ -26,20 +25,20 @@ class Base(DeclarativeBase):
     pass
 
 
-class EpicStatus(enum.StrEnum):
+class EpicStatus:
     PLANNING = "planning"
     ACTIVE = "active"
     COMPLETED = "completed"
     ARCHIVED = "archived"
 
 
-class StoryStatus(enum.StrEnum):
+class StoryStatus:
     TODO = "todo"
     IN_PROGRESS = "in_progress"
     DONE = "done"
 
 
-class TaskStatus(enum.StrEnum):
+class TaskStatus:
     OPEN = "open"
     IN_PROGRESS = "in_progress"
     REVIEW = "review"
@@ -47,7 +46,7 @@ class TaskStatus(enum.StrEnum):
     BLOCKED = "blocked"
 
 
-class BoardColumn(enum.StrEnum):
+class BoardColumn:
     BACKLOG = "backlog"
     READY = "ready"
     IN_PROGRESS = "in_progress"
@@ -55,7 +54,7 @@ class BoardColumn(enum.StrEnum):
     DONE = "done"
 
 
-class Priority(enum.StrEnum):
+class Priority:
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -243,8 +242,30 @@ class Task(Base):
     story: Mapped["Story"] = relationship(
         "Story", back_populates="tasks",
     )
-    labels: Mapped[list] = relationship(
+    labels: Mapped[list["Label"]] = relationship(
         "Label",
         secondary=task_labels,
         back_populates="tasks",
+    )
+
+
+class Label(Base):
+    __tablename__ = "labels"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    name: Mapped[str] = mapped_column(
+        String(50), nullable=False, unique=True,
+    )
+    color: Mapped[str] = mapped_column(
+        String(7), nullable=False,
+    )
+
+    tasks: Mapped[list["Task"]] = relationship(
+        "Task",
+        secondary=task_labels,
+        back_populates="labels",
     )
