@@ -1,15 +1,22 @@
+import pytest
 from app.main import app
-from fastapi.testclient import TestClient
-
-client = TestClient(app)
+from httpx import ASGITransport, AsyncClient
 
 
-class TestHealth:
-    def test_health_returns_ok(self) -> None:
-        resp = client.get("/api/health")
-        assert resp.status_code == 200
-        assert resp.json() == {"status": "ok"}
+@pytest.mark.anyio
+async def test_health_returns_200() -> None:
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        resp = await client.get("/health")
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["status"] == "ok"
 
-    def test_health_content_type(self) -> None:
-        resp = client.get("/api/health")
-        assert resp.headers["content-type"] == "application/json"
+
+@pytest.mark.anyio
+async def test_health_response_shape() -> None:
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        resp = await client.get("/health")
+    body = resp.json()
+    assert set(body.keys()) == {"status"}

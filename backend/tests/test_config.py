@@ -5,6 +5,7 @@ class TestSettings:
     def test_default_database_url(self) -> None:
         s = Settings()
         assert "postgresql+asyncpg://" in s.database_url
+        assert "personal_jira" in s.database_url
 
     def test_default_cors_origins(self) -> None:
         s = Settings()
@@ -19,4 +20,4 @@ class TestSettings:
         assert s.log_level == "INFO"
 
     def test_singleton_instance(self) -> None:
-        assert settings.database_url is not None
+        assert isinstance(settings, Settings)

@@ -1238,3 +1238,20 @@ The path `./workspac
 - **Summary**: Alembic 초기 마이그레이션 설정 완료. alembic.ini, env.py(async 패턴, settings.database_url 오버라이드, target_metadata=Base.metadata), script.py.mako 템플릿, 그리고 7개 테이블(epics, stories, tasks, labels, task_labels, activitie
 - **Files**: 5개
 
+### [2026-03-25 10:14:46] Director Review
+**Director Review: Approved**
+- Task: 에이전트 등록 & 하트비트 API (#646)
+- Agent: agent-backend
+- Feedback: 코어 구현이 태스크 요구사항에 부합합니다. (1) POST / — AgentCreate 스키마 + 409 중복 처리, (2) GET / — status 필터 지원, (3) GET /{agent_id} — 상세 조회 + stale heartbeat 5분 초과 시 offline 판정 로직 포함, (4) PATCH /{agent_id}/heartbeat — last_heartbeat=now() + 선택적 status 업데이트. 테스트 파일 2개(스키마 테스트 + 라우터 테스트) 존재. 파일 일부가 truncated 되어 있으나 구현 방향과 핵심 로직은 정확합니다. _to_response 헬퍼의 stale 판정 로직도 적절합니다.
+
+- [2026-03-25 10:23:48] **agent-backend** → busy (task: 6b406a1f-737e-4577-a4cf-4e1a5f9f8119)
+- [2026-03-25 10:28:49] **agent-backend** → error
+- [2026-03-25 10:28:58] **agent-git** → busy (task: f089992c-3989-4df2-b00f-89069bc460ab)
+- [2026-03-25 10:28:58] **agent-frontend** → busy (task: 7964d20d-63a8-46ca-a4ed-82bae131e934)
+- [2026-03-25 10:29:00] **agent-backend** → busy (task: 7b4bf303-028d-4796-8501-499d1dd55cd9)
+### [2026-03-25 10:30:30] Review Request — SUCCESS
+- **Agent**: agent-git
+- **Task**: f089992c-3989-4df2-b00f-89069bc460ab
+- **Summary**: Backend 프로젝트 초기 설정 완료: pyproject.toml(uv + FastAPI 의존성, ruff line-length=100), app/ 패키지(main.py with /health endpoint, config.py with pydantic-settings, database.py with async engine/session), models/
+- **Files**: 11개
+
