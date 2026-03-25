@@ -1,18 +1,14 @@
-export type EpicStatus = 'active' | 'completed' | 'archived';
-export type StoryStatus = 'active' | 'completed';
-export type TaskStatus = 'backlog' | 'ready' | 'in-progress' | 'review' | 'done' | 'failed';
-export type BoardColumn = 'Backlog' | 'Ready' | 'In Progress' | 'Review' | 'Done';
-export type TaskPriority = 'low' | 'medium' | 'high' | 'critical';
-export type ActionType = 'status_change' | 'comment' | 'review_feedback' | 'code_change';
-export type AgentStatus = 'idle' | 'busy' | 'offline';
-
 export interface Epic {
   id: string;
   title: string;
   description: string | null;
-  status: EpicStatus;
+  status: "active" | "completed" | "archived";
   created_at: string;
   updated_at: string;
+}
+
+export interface EpicWithStories extends Epic {
+  stories: Story[];
 }
 
 export interface Story {
@@ -20,11 +16,20 @@ export interface Story {
   epic_id: string;
   title: string;
   description: string | null;
-  status: StoryStatus;
+  status: "active" | "completed";
   sort_order: number;
   created_at: string;
   updated_at: string;
 }
+
+export interface StoryWithTasks extends Story {
+  tasks: Task[];
+}
+
+export type TaskStatus = "backlog" | "ready" | "in-progress" | "review" | "done" | "failed";
+export type BoardColumn = "Backlog" | "Ready" | "In Progress" | "Review" | "Done";
+export type Priority = "low" | "medium" | "high" | "critical";
+export type ActionType = "status_change" | "comment" | "review_feedback" | "code_change";
 
 export interface Task {
   id: string;
@@ -34,13 +39,17 @@ export interface Task {
   status: TaskStatus;
   board_column: BoardColumn;
   assigned_agent: string | null;
-  priority: TaskPriority;
+  priority: Priority;
   labels: string[];
   dependencies: string[];
   retry_count: number;
   created_at: string;
   started_at: string | null;
   completed_at: string | null;
+}
+
+export interface TaskWithActivities extends Task {
+  activities: Activity[];
 }
 
 export interface Activity {
@@ -57,6 +66,8 @@ export interface Label {
   name: string;
   color: string;
 }
+
+export type AgentStatus = "idle" | "busy" | "offline";
 
 export interface Agent {
   id: string;
@@ -78,4 +89,8 @@ export interface BoardResponse {
     name: BoardColumn;
     tasks: Task[];
   }[];
+}
+
+export interface ApiError {
+  detail: string;
 }
