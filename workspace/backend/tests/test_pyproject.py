@@ -8,11 +8,12 @@ def test_pyproject_exists():
 
 
 def test_core_imports():
-    import alembic
     import fastapi
     import pydantic_settings
     import sqlalchemy
     import uvicorn
+
+    import alembic
 
     assert fastapi
     assert uvicorn
