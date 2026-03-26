@@ -1,14 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
 
 import { AppLayout } from '@/components/layout/AppLayout';
-import { BoardPage } from '@/pages/BoardPage';
-import { DashboardPage } from '@/pages/DashboardPage';
-import { EpicDetailPage } from '@/pages/EpicDetailPage';
-import { EpicsPage } from '@/pages/EpicsPage';
-import { LabelsPage } from '@/pages/LabelsPage';
-import { NotFoundPage } from '@/pages/NotFoundPage';
+import {
+  BoardPage,
+  DashboardPage,
+  EpicDetailPage,
+  EpicsPage,
+  LabelsPage,
+  NotFoundPage,
+} from '@/pages';
 
-export const router = createBrowserRouter([
+export const routeConfig: RouteObject[] = [
   {
     element: <AppLayout />,
     children: [
@@ -20,4 +23,6 @@ export const router = createBrowserRouter([
       { path: '*', element: <NotFoundPage /> },
     ],
   },
-]);
+];
+
+export const router = createBrowserRouter(routeConfig);
