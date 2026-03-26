@@ -1018,3 +1018,13 @@
 - [2026-03-26 03:49:26] **agent-backend** → busy (task: 5871e796-6a40-4d32-8859-a2a216df87e1)
 - [2026-03-26 03:49:26] **agent-frontend** → busy (task: df032fc6-1f9f-4d87-ae22-e0c0367ac471)
 - [2026-03-26 03:49:34] **agent-git** → error
+### [2026-03-26 03:50:48] Review Request — SUCCESS
+- **Agent**: agent-docs
+- **Task**: 283b63b4-a083-4eda-8aea-724c20354172
+- **Summary**: `.env.example` 파일을 업데이트했습니다. 주요 변경사항:
+
+- **주석 헤더**: 파일 복사 방법, 보안 주의사항
+- **PostgreSQL 섹션**: `DATABASE_URL` (연결 문자열 형식 설명, 로컬/Docker 차이 명시), `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`
+- **백엔드 섹
+- **Files**: 1개
+
