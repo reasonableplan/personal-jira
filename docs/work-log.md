@@ -1071,3 +1071,13 @@
 - 
 - **Files**: 7개
 
+### [2026-03-26 04:14:57] Review Request — SUCCESS
+- **Agent**: agent-backend
+- **Task**: 7c30e7cc-e969-4bcd-96e2-a0e42b51981d
+- **Summary**: 모든 검증 통과. 결과 요약:
+
+**생성된 파일:**
+- `backend/app/core/exceptions.py` — `AppError` 기본 클래스 + `NotFoundError`(404), `ConflictError`(409), `ValidationError`(400) 커스텀 예외
+- `backend/app/core/error_handlers.py` 
+- **Files**: 4개
+
