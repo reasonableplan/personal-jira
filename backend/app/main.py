@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 
 from app.core.database import engine
+from app.core.error_handlers import register_error_handlers
 from app.routers import dashboard, epics, labels, stories, tasks
 
 logger = logging.getLogger(__name__)
@@ -32,6 +33,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+register_error_handlers(app)
 
 app.include_router(epics.router)
 app.include_router(stories.router)
