@@ -327,11 +327,16 @@ services:
 ```
 
 프론트엔드는 백엔드 API 완성 후 시작. 각 레이어는 하위 레이어에만 의존한다.
+
 <!-- AUTO-UPDATED -->
-## 자동 갱신 (2026-03-26 03:49 UTC)
+## 자동 갱신 (2026-03-26 11:13 UTC)
 
 ### 등록된 라우터 (main.py)
-- 없음
+- `app.include_router(epics.router)`
+- `app.include_router(stories.router)`
+- `app.include_router(tasks.router)`
+- `app.include_router(labels.router)`
+- `app.include_router(dashboard.router)`
 
 ### 모델 exports (models/__init__.py)
-- 없음
+- ]
