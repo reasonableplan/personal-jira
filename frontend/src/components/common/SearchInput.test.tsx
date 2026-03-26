@@ -15,24 +15,20 @@ describe('SearchInput', () => {
   });
 
   it('calls onSearch with debounced value', async () => {
-    vi.useFakeTimers();
     const onSearch = vi.fn();
-    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
 
     render(<SearchInput onSearch={onSearch} />);
-
-    const input = screen.getByPlaceholderText('Search...');
-    await user.type(input, 'test');
 
     // onSearch should have been called with '' initially (mount)
     expect(onSearch).toHaveBeenCalledWith('');
 
-    // Advance timers to trigger debounce
-    vi.advanceTimersByTime(300);
+    const input = screen.getByPlaceholderText('Search...');
+    await userEvent.type(input, 'test');
 
-    expect(onSearch).toHaveBeenCalledWith('test');
-
-    vi.useRealTimers();
+    // Wait for debounce (300ms) to trigger
+    await vi.waitFor(() => {
+      expect(onSearch).toHaveBeenCalledWith('test');
+    });
   });
 
   it('accepts external value prop', () => {
