@@ -3,6 +3,9 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from '@/App';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { GlobalLoadingIndicator } from '@/components/GlobalLoadingIndicator';
+import { Toaster } from '@/components/ui/sonner';
 import '@/index.css';
 import { queryClient } from '@/lib/query-client';
 
@@ -13,8 +16,12 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <GlobalLoadingIndicator />
+        <App />
+        <Toaster position="top-right" richColors closeButton />
+      </QueryClientProvider>
+    </ErrorBoundary>
   </StrictMode>,
 );
