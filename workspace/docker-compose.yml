@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: personal-jira-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: personal_jira
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: personal-jira-backend
+    entrypoint: ["/app/scripts/start.sh"]
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@postgres:5432/personal_jira
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:
