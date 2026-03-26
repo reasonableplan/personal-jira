@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"sleep 50 && curl -s http://127.0.0.1:3002/health 2>/dev/null && echo \\\"---\\\" && cd /c/Users/juwon/OneDrive/Desktop/agent/backend && uv run python3 -c \\\"\\nimport asyncio, json\\nfrom sqlalch...",
-  "error": "Exit code 7",
-  "timestamp": "2026-03-25T10:41:31.863Z",
-  "retry_count": 1
-}
