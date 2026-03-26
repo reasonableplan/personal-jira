@@ -284,5 +284,3 @@ async def test_create_task_returns_201(client: AsyncClient) -> None:
 - 새 디렉토리 생성 시 `__init__.py` 누락 금지
 - 새 라우터 생성 후 `main.py` 등록 누락 금지
 - 환경변수 추가 시 `config.py` + `.env.example` 동기화 누락 금지
-
-- [2026-03-26 04:00] DB 세션 및 의존성 주입 설정: 리뷰할 파일이 없음 — 코드 생성 결과를 확인할 수 없어 reject
