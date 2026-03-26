@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd C:/Users/juwon/OneDrive/Desktop/agent/backend/workspace && \\\\\\ngit worktree prune && \\\\\\ngit branch -D wt/task-ARCHITECTURE-md-51bbd575 wt/task-Git-a1fb81d8 2>&1 && \\\\\\necho \\\"=== clean...",
+  "error": "Exit code 1\nerror: cannot delete branch 'wt/task-ARCHITECTURE-md-51bbd575' used by worktree at 'C:/Users/juwon/OneDrive/Desktop/agent/backend/workspace/workspace/.worktrees/task-ARCHITECTURE-md-51bbd575'\nerror: cannot delete branch 'wt/task-Git-a1fb81d8' used by worktree at 'C:/Users/juwon/OneDrive/Desktop/agent/backend/workspace/workspace/.worktrees/task-Git-a1fb81d8'",
+  "timestamp": "2026-03-26T02:17:02.888Z",
+  "retry_count": 1
+}
