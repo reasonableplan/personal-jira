@@ -1,8 +1,6 @@
 import axios from 'axios';
 import type { AxiosError } from 'axios';
 
-import { showApiError } from '@/lib/toast';
-
 export interface AppError {
   message: string;
   status: number;
@@ -24,7 +22,6 @@ apiClient.interceptors.response.use(
       status: error.response?.status ?? 0,
       detail: error.response?.data?.detail ?? error.message,
     };
-    showApiError(appError);
     return Promise.reject(appError);
   },
 );
