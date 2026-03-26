@@ -1,7 +1,6 @@
 import uuid
 from datetime import UTC, datetime
 
-from sqlalchemy import Column, ForeignKey, Table
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
@@ -20,11 +19,3 @@ class TimestampMixin:
     )
     created_at: Mapped[datetime] = mapped_column(default=_utcnow)
     updated_at: Mapped[datetime] = mapped_column(default=_utcnow, onupdate=_utcnow)
-
-
-task_labels = Table(
-    "task_labels",
-    Base.metadata,
-    Column("task_id", ForeignKey("tasks.id", ondelete="CASCADE"), primary_key=True),
-    Column("label_id", ForeignKey("labels.id", ondelete="CASCADE"), primary_key=True),
-)

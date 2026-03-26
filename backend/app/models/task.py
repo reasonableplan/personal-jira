@@ -7,7 +7,8 @@ from typing import TYPE_CHECKING
 from sqlalchemy import CheckConstraint, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models.base import Base, TimestampMixin, task_labels
+from app.models.base import Base, TimestampMixin
+from app.models.task_label import task_labels
 
 if TYPE_CHECKING:
     from app.models.label import Label
@@ -38,4 +39,4 @@ class Task(TimestampMixin, Base):
     position: Mapped[int] = mapped_column(default=0)
 
     story: Mapped[Story] = relationship(back_populates="tasks")
-    labels: Mapped[list[Label]] = relationship(secondary=task_labels)
+    labels: Mapped[list[Label]] = relationship(secondary=task_labels, back_populates="tasks")
