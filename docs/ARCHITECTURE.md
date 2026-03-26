@@ -351,3 +351,11 @@ services:
 자세한 API 명세는 `/docs/API.md`를 참조하세요.
 개발 환경 설정은 `/docs/SETUP.md`를 참조하세요.
 에이전트 전용 규칙은 `/docs/agents/agent-docs.md`를 참조하세요.
+<!-- AUTO-UPDATED -->
+## 자동 갱신 (2026-03-26 22:38 UTC)
+
+### 등록된 라우터 (main.py)
+- 없음
+
+### 모델 exports (models/__init__.py)
+- 없음
