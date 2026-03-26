@@ -1015,3 +1015,9 @@
 - **Summary**: pyproject.toml 생성 (메타데이터, dependencies, dev dependencies, pytest/ruff 설정). requirements.txt에 ruff 추가. `pip install -e .[dev]`로 전체 설치 가능. 기존 sync SQLAlchemy + psycopg2-binary 패턴 유지.
 - **Files**: 3개
 
+### [2026-03-26 03:54:36] Director Review
+**Director Review: Approved**
+- Task: 프로젝트 의존성 및 pyproject.toml 설정 (#728)
+- Agent: agent-backend
+- Feedback: pyproject.toml 메타데이터, dependencies, dev dependencies, pytest/ruff 설정 모두 정상. requirements.txt도 동기화됨. 테스트 파일(test_pyproject.py)이 pyproject 존재 여부, 코어/dev import, app/database/config import를 검증하여 수용 기준을 충족. 태스크 설명에는 sqlalchemy[asyncio]+asyncpg였으나 Summary에 'sync SQLAlchemy + psycopg2-binary 패턴 유지'로 명시되어 있으므로 의도된 설계 결정으로 판단. pytest-asyncio 누락도 sync 패턴에서는 불필요하므로 문제 없음.
+
