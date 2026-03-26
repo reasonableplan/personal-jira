@@ -1150,3 +1150,19 @@
 4. **`frontend/src/App.test.tsx`** — Complete rewrite add
 - **Files**: 5개
 
+### [2026-03-26 11:13:16] Review Request — SUCCESS
+- **Agent**: agent-git
+- **Task**: 394603c9-a9a0-42f5-8449-6beb4bc8245b
+- **Summary**: CI 워크플로우가 생성되었습니다.
+
+## 생성 파일: `workspace/.github/workflows/ci.yml`
+
+### 구성 요약
+
+**트리거**: `main` 브랜치 push + PR
+
+**Backend job**:
+- PostgreSQL 16-alpine service container (포트 5432, `personal_jira` DB)
+- 
+- **Files**: 1개
+
