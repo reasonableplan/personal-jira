@@ -1028,3 +1028,14 @@
 - **백엔드 섹
 - **Files**: 1개
 
+### [2026-03-26 03:52:32] Review Request — SUCCESS
+- **Agent**: agent-docs
+- **Task**: 5ad7615b-977b-4bbd-ac5e-c946e9e92e98
+- **Summary**: README.md 작성 완료. 포함된 내용:
+
+- **프로젝트 소개** — Epic/Story/Task 기반 프로젝트 관리 도구
+- **기술 스택** — React+Vite, FastAPI+SQLAlchemy, PostgreSQL, Docker Compose
+- **아키텍처 다이어그램** — Mermaid flowchart
+- **디렉토리 구조** — ba
+- **Files**: 1개
+
