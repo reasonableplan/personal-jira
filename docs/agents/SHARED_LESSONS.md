@@ -55,3 +55,11 @@
 2. **Line/Section**: 전체
 3. **Problem**: Generated Files 섹션에 실제 소스 코드 파일이 하나도 포함되지 않았습니다. node_modules 내부 파일(LICENSE, README.md, dist 파일 등)만 10개 나열되어 있어 리뷰 대상 코드를 확인할 수 없습니다. 8개 리뷰 기준 중 어느 것도 검증이 불가합니다.
 4. **Fix**:
+
+- [2026-03-27 10:09] 프로젝트 기초 문서 작성 (ARCHITECTURE.md + CLAUDE.md): 실제 파일 내용을 검증할 수 없어 승인 불가합니다. 구체적 이슈:
+
+**이슈 1 — TDD 미충족: 문서 검증 스크립트 부재**
+1. **File**: (missing) scripts/validate-docs.sh 또는 tests/test_docs.py
+2. **Line/Section**: 전체
+3. **Problem**: 검증 기준에 '마크다운 린트 경고 없음'이 명시되어 있으나, 이를 자동 검증하는 테스트/스크립트가 Generated Files에 포함되지 않았습니다. Summary에서 '58 backticks in CLAUDE.md, 10 in ARCHITECTURE.md' 균형 확인을 언급하지만, 이를 CI에서 반복 검증할 수단이 없습니다.
+4. **Fix**: `scripts/validate-docs.sh` 생성. 최소 검증 항목: (1) 마크다운 코드 블록 백틱 균형 검증 (열린 블록 수 == 닫힌 블록 수), (2) Mermaid 블록 존재 여부 확인 (`grep -c '
