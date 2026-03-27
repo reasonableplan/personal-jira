@@ -47,3 +47,11 @@
 2. **Line/Section**: 테스트 파일 전체
 3. **Problem**: 문서 태스크이지만 마크다운 린트 검증 또는 Mermaid 다이어그램 유효성 검증 스크립트가 없습니다. 검증 기준에 '마크다운 린트 경고 없음'이 명시되어 있으나 이를 자동 검증하는 수단이 없습니다.
 4. **Fix**: `scripts/validate-docs.sh` 또는 `tests/test_docs.py`를 생성하여 최소한: (1) 모든 마크다운 코드 블록의 백틱이 균형 맞는지 검증, (2) Mermaid 블록이 파싱 가능한지 검증, (3) CLAUDE.md 필수 섹션(코딩 컨벤션, 커밋 메시
+
+- [2026-03-27 00:44] Frontend 프로젝트 스캐폴딩 (Vite + React + TypeScript 초기 설정): 실제 소스 파일 내용을 검증할 수 없어 리뷰 판단 근거가 불충분합니다. Generated Files에 핵심 소스 파일 내용이 포함되지 않았습니다 (node_modules 파일만 나열됨). 다음 이슈들이 확인됩니다:
+
+**이슈 1 — 산출물 미제공: 핵심 소스 파일 누락**
+1. **File**: frontend/package.json, frontend/vite.config.ts, frontend/tsconfig.json, frontend/src/App.tsx, frontend/src/main.tsx 등 전체
+2. **Line/Section**: 전체
+3. **Problem**: Generated Files 섹션에 실제 소스 코드 파일이 하나도 포함되지 않았습니다. node_modules 내부 파일(LICENSE, README.md, dist 파일 등)만 10개 나열되어 있어 리뷰 대상 코드를 확인할 수 없습니다. 8개 리뷰 기준 중 어느 것도 검증이 불가합니다.
+4. **Fix**:
