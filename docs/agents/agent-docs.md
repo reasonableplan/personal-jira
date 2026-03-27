@@ -21,3 +21,11 @@
 2. **Line/Section**: 테스트 파일 전체
 3. **Problem**: 문서 태스크이지만 마크다운 린트 검증 또는 Mermaid 다이어그램 유효성 검증 스크립트가 없습니다. 검증 기준에 '마크다운 린트 경고 없음'이 명시되어 있으나 이를 자동 검증하는 수단이 없습니다.
 4. **Fix**: `scripts/validate-docs.sh` 또는 `tests/test_docs.py`를 생성하여 최소한: (1) 모든 마크다운 코드 블록의 백틱이 균형 맞는지 검증, (2) Mermaid 블록이 파싱 가능한지 검증, (3) CLAUDE.md 필수 섹션(코딩 컨벤션, 커밋 메시
+
+- [2026-03-27 10:09] 프로젝트 기초 문서 작성 (ARCHITECTURE.md + CLAUDE.md): 실제 파일 내용을 검증할 수 없어 승인 불가합니다. 구체적 이슈:
+
+**이슈 1 — TDD 미충족: 문서 검증 스크립트 부재**
+1. **File**: (missing) scripts/validate-docs.sh 또는 tests/test_docs.py
+2. **Line/Section**: 전체
+3. **Problem**: 검증 기준에 '마크다운 린트 경고 없음'이 명시되어 있으나, 이를 자동 검증하는 테스트/스크립트가 Generated Files에 포함되지 않았습니다. Summary에서 '58 backticks in CLAUDE.md, 10 in ARCHITECTURE.md' 균형 확인을 언급하지만, 이를 CI에서 반복 검증할 수단이 없습니다.
+4. **Fix**: `scripts/validate-docs.sh` 생성. 최소 검증 항목: (1) 마크다운 코드 블록 백틱 균형 검증 (열린 블록 수 == 닫힌 블록 수), (2) Mermaid 블록 존재 여부 확인 (`grep -c '
